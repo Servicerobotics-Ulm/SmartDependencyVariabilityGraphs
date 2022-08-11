@@ -3,7 +3,9 @@ This is a proof of concept implementation of a general method for variability ma
 
 The model-driven implementation allows users to describe via DSLs: 
 1) Building blocks at different levels of abstraction, their variability entities and the decomposition relationship between building blocks.
-2) The graph-based dependency relationship between variability entities (including their values by applying function composition).   
+2) The graph-based dependency relationship between variability entities (including their values by applying function composition).
+
+A code generator is then able to generate a solver for such models that determines requirements-related variant bindings. Requirements of the user can be constraints to specific properties (a property is a special subtype of a variability entity) and/or preference specifications for modeled conflict of objectives between properties.  
 
 # Installation
 To try it out, you need to do the following:
