@@ -1,9 +1,9 @@
 # SmartDependencyVariabilityGraphs
-This is a proof of concept implementation of a general method for variability management in service robotics based on Dependency Variability Graphs which allows to model, compose and resolve variability of software building blocks.
+This is a proof of concept implementation of a general method for variability management in service robotics based on separation of roles and composition which allows to model, compose and resolve variability of software building blocks.
 
 The model-driven implementation allows users to describe via DSLs: 
 1) Building blocks at different levels of abstraction, their variability entities and the decomposition relationships between building blocks.
-2) The graph-based dependency relationship between variability entities (including their values by applying function composition).
+2) Dependency Variability Graphs: The graph-based dependency relationships between variability entities (including their values by applying function composition).
 
 A code generator is then able to generate a solver of such models that determines requirements-related and environmental-contextual variant bindings of building blocks. Requirements specified by the endusers of these building blocks can be constraints for specific properties of the model (a property is a special subtype of a variability entity) and/or preference specifications for modeled conflict of objectives between properties.  
 
