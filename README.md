@@ -5,7 +5,7 @@ The model-driven implementation allows users to describe via DSLs:
 1) Building blocks at different levels of abstraction, their variability entities and the decomposition relationship between building blocks.
 2) The graph-based dependency relationship between variability entities (including their values by applying function composition).
 
-A code generator is then able to generate a solver of such models that determines requirements-related and environmental-contextual variant bindings of building blocks. Requirements specified by the endusers of such building blocks can be constraints for specific properties of the model (a property is a special subtype of a variability entity) and/or preference specifications for modeled conflict of objectives between properties.  
+A code generator is then able to generate a solver of such models that determines requirements-related and environmental-contextual variant bindings of building blocks. Requirements specified by the endusers of these building blocks can be constraints for specific properties of the model (a property is a special subtype of a variability entity) and/or preference specifications for modeled conflict of objectives between properties.  
 
 # Installation
 To try it out, you need to do the following:
