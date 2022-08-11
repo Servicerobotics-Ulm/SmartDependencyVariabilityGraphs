@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.xtext.bb
+Bundle-ManifestVersion: 2
+Bundle-Name: org.xtext.bb
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.xtext.bb; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: bbn,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.xtext.bb.parser.antlr.internal,
+ org.xtext.bb.generator,
+ org.xtext.bb.formatting2,
+ org.xtext.bb,
+ org.xtext.bb.serializer,
+ org.xtext.bb.parser.antlr,
+ org.xtext.bb.scoping,
+ org.xtext.bb.services,
+ org.xtext.bb.validation
+Import-Package: org.apache.log4j
