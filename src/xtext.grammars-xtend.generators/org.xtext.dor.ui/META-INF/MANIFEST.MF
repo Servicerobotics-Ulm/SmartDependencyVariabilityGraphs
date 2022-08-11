@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.xtext.dor.ui
+Bundle-ManifestVersion: 2
+Bundle-Name: org.xtext.dor.ui
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.xtext.dor.ui; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.xtext.dor,
+ org.xtext.dor.ide,
+ Dor,
+ org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.xtext.ui.codetemplates.ui,
+ org.eclipse.ui.editors;bundle-version="3.5.0",
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.ui,
+ org.eclipse.compare,
+ org.eclipse.xtext.builder
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.xtext.dor.ui.internal,
+ org.xtext.dor.ui.contentassist,
+ org.xtext.dor.ui.quickfix
+Bundle-Activator: org.xtext.dor.ui.internal.DorActivator
