@@ -1,5 +1,5 @@
 # SmartDependencyVariabilityGraphs
-This feature allows to model, compose and resolve variability of software building blocks by using Dependency Variability Graphs.
+This feature is a proof of concept implementation of a general method for variability management in service robotics based on Dependency Variability Graphs which allows to model, compose and resolve variability of software building blocks
 
 # Installation
 To try it out, you need to do the following:
