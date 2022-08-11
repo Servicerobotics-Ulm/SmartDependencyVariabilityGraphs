@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="bbn" nsURI="http://www.example.org/bbn" nsPrefix="bbn">
+  <eClassifiers xsi:type="ecore:EClass" name="BuildingBlockDescription">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bb" lowerBound="1" upperBound="-1"
+        eType="#//BuildingBlock" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dt" upperBound="-1" eType="#//Decomposition"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dvg" eType="#//DVG"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="c" upperBound="-1" eType="#//Container"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dt" upperBound="-1" eType="#//Decomposition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ves" eType="#//VariabilityEntitySet"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="o" upperBound="-1" eType="#//Output"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ir" upperBound="-1" eType="#//InputRelationship"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="taskName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="blocktype" lowerBound="1"
+        eType="#//BlockType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allocationCandidates" upperBound="-1"
+        eType="#//BuildingBlockDescription"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sharedresources" eType="#//SharedResources"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="resourcegroupid" eType="#//ResourceGroupId"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Decomposition" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="c" lowerBound="1" upperBound="-1"
+        eType="#//Container" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariabilityEntitySet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pas" eType="#//ParameterSet"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="prs" eType="#//PropertySet"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cs" eType="#//ContextSet"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pes" eType="#//PortElementSet"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Container">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bbc" eType="#//BuildingBlock"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bbr" eType="#//BuildingBlock"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bbi" eType="#//BuildingBlockInst"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Port" abstract="true" eSuperTypes="#//VariabilityEntity"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Output" eSuperTypes="#//Port"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Input" eSuperTypes="#//Port"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InputRelationship" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Single" abstract="true" eSuperTypes="#//InputRelationship">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="in" lowerBound="1" eType="#//Input"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Multiple" abstract="true" eSuperTypes="#//InputRelationship">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="in" lowerBound="2" upperBound="-1"
+        eType="#//Input" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Mandatory" eSuperTypes="#//Single"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Optional" eSuperTypes="#//Single"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AND" eSuperTypes="#//Multiple"/>
+  <eClassifiers xsi:type="ecore:EClass" name="XOR" eSuperTypes="#//Multiple"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OR" eSuperTypes="#//Multiple"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Loop" eSuperTypes="#//Sequenceable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="n" lowerBound="1" eType="#//Number"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Sequential" eSuperTypes="#//Sequenceable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Parallel" eSuperTypes="#//Sequenceable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="p" lowerBound="1" eType="#//Policy"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Fork" abstract="true" eSuperTypes="#//Sequenceable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConditionalFork" eSuperTypes="#//Fork">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="co" lowerBound="1" eType="#//Condition"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EquivalenceFork" eSuperTypes="#//Fork"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Sequenceable" abstract="true" eSuperTypes="#//Decomposition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Unsequenceable" eSuperTypes="#//Decomposition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertySet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pi" upperBound="-1" eType="#//PropertyInst"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ParameterSet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pi" upperBound="-1" eType="#//ParameterInst"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ContextSet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ci" upperBound="-1" eType="#//ContextInst"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertyInst" eSuperTypes="#//VariabilityEntity"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ParameterInst" eSuperTypes="#//VariabilityEntity"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ContextInst" eSuperTypes="#//VariabilityEntity"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VariabilityEntity" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dor" eType="ecore:EClass ../../Dor/model/dor.ecore#//DataObjectDef"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="doc" eType="ecore:EClass ../../Dor/model/dor.ecore#//DataObjectDef"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BuildingBlockInst" eSuperTypes="#//BuildingBlock">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="c" lowerBound="1" eType="#//Container"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PortElementSet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pe" upperBound="-1" eType="#//PortElement"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PortElement" eSuperTypes="#//VariabilityEntity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e" lowerBound="1" eType="ecore:EClass ../../Dor/model/dor.ecore#//ElementDef"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="port" lowerBound="1" eType="#//Port"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Policy">
+    <eLiterals name="UNDEFINED"/>
+    <eLiterals name="WAITFORALL" value="1"/>
+    <eLiterals name="WAITFORFIRST" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Number" eSuperTypes="#//VariabilityEntity"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Condition" eSuperTypes="#//VariabilityEntity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="BlockType">
+    <eLiterals name="CONCRETE"/>
+    <eLiterals name="ABSTRACT" value="1"/>
+    <eLiterals name="ALLOCATABLE" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SharedResources">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="number" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResourceGroupId">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="number" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DVG">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" upperBound="-1"
+        eType="#//Pattern" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bb" eType="#//BuildingBlock"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bbcontainer" upperBound="-1"
+        eType="#//BBContainer" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Pattern" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EPROD" eSuperTypes="#//Pattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="op" lowerBound="1" eType="#//OutputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ip" lowerBound="2" upperBound="-1"
+        eType="#//InputPort" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DVGPort" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractInputPort" abstract="true" eSuperTypes="#//DVGPort"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractOutputPort" abstract="true"
+      eSuperTypes="#//DVGPort">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vt" lowerBound="1" eType="#//VT"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gii" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ve" lowerBound="1" eType="#//VariabilityEntity"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bbi" eType="#//BuildingBlockInst"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InputPort" eSuperTypes="#//AbstractInputPort #//InternalPortRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputport" eType="#//OutputPort"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OutputPort" eSuperTypes="#//AbstractOutputPort">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rt" lowerBound="1" eType="#//RT"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="VT">
+    <eLiterals name="CONSTANT"/>
+    <eLiterals name="ACTIVE" value="1"/>
+    <eLiterals name="PASSIVE" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="RT">
+    <eLiterals name="ABSOLUTE"/>
+    <eLiterals name="RELATIVE" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InternalInputPort" eSuperTypes="#//AbstractInputPort">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="internalportref" lowerBound="1"
+        eType="#//InternalPortRef"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InternalPortRef" abstract="true" eSuperTypes="#//DVGPort"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InternalOutputPort" eSuperTypes="#//InternalPortRef #//AbstractOutputPort">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rt" lowerBound="1" eType="#//RT"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExtInputPort" eSuperTypes="#//InputPort">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rt" lowerBound="1" eType="#//RT"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dor" lowerBound="1" eType="ecore:EClass ../../Dor/model/dor.ecore#//DataObjectDef"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="er" eType="ecore:EClass ../../Dor/model/dor.ecore#//ElementDef"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InputCPort" eSuperTypes="#//AbstractInputPort">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputcport" lowerBound="1"
+        eType="#//OutputCPort"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExtInputCPort" eSuperTypes="#//InputCPort">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dor" lowerBound="1" eType="ecore:EClass ../../Dor/model/dor.ecore#//DataObjectDef"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="er" eType="ecore:EClass ../../Dor/model/dor.ecore#//ElementDef"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InputPPort" abstract="true" eSuperTypes="#//AbstractInputPort"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OutputCPort" eSuperTypes="#//AbstractOutputPort"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OutputPPort" abstract="true" eSuperTypes="#//AbstractOutputPort"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OutputWSMPort" eSuperTypes="#//OutputPPort"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractInitPort" abstract="true" eSuperTypes="#//AbstractOutputPort">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kbisa" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kbname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kbvalue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tcbname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tclCmd" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isList" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nrParams" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="interface" eType="#//Interface"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kbCmd" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="toTclName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="toTclInst" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InputWSMPort" eSuperTypes="#//InputPPort">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputwsmport" lowerBound="1"
+        eType="#//OutputWSMPort"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExtInputWSMPort" eSuperTypes="#//InputWSMPort">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dor" lowerBound="1" eType="ecore:EClass ../../Dor/model/dor.ecore#//DataObjectDef"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="er" eType="ecore:EClass ../../Dor/model/dor.ecore#//ElementDef"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InitPort" eSuperTypes="#//AbstractInitPort #//OutputPort">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vi" lowerBound="1" eType="ecore:EClass ../../Vi/model/vi.ecore#//VSPInit"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InitCPort" eSuperTypes="#//AbstractInitPort #//OutputCPort">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vi" lowerBound="1" eType="ecore:EClass ../../Vi/model/vi.ecore#//VSPInit"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InitWSMPort" eSuperTypes="#//AbstractInitPort #//OutputWSMPort">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sws" lowerBound="1" eType="#//StaticWeights"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StaticWeights">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sw" lowerBound="2" upperBound="-1"
+        eType="#//StaticWeight" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StaticWeight">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputport" lowerBound="1"
+        eType="#//InputPort"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueCOp" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ComparisonCOp" abstract="true" eSuperTypes="#//ValueCOp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Equal" eSuperTypes="#//ComparisonCOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inverse" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="accuracy" eType="#//Accuracy"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GreaterThan" eSuperTypes="#//ComparisonCOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inclusive" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LessThan" eSuperTypes="#//ComparisonCOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inclusive" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Accuracy">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression" eSuperTypes="#//ValueCOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expr" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NormalizationCOp" abstract="true" eSuperTypes="#//ValueCOp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LinearNormalization" eSuperTypes="#//NormalizationCOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="direction" lowerBound="1"
+        eType="#//Direction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="min" eType="#//Min" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="max" eType="#//Max" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Direction">
+    <eLiterals name="INC"/>
+    <eLiterals name="DEC" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Min">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Max">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RatingCOp" eSuperTypes="#//ValueCOp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WSM" eSuperTypes="#//RatingCOp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CombinationAssignment" eSuperTypes="#//ValueCOp">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="combination" lowerBound="1"
+        upperBound="-1" eType="#//Combination" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Combination">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" lowerBound="2"
+        upperBound="-1" eType="#//Element" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1" eType="#//Value"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Element">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Value">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BuildingBlockExecution" eSuperTypes="#//ValueCOp">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bb" lowerBound="1" eType="#//BuildingBlock"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EQUF" eSuperTypes="#//Pattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="op" lowerBound="1" eType="#//OutputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ip" lowerBound="1" eType="#//InputPort"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="INIT" eSuperTypes="#//Pattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ainip" lowerBound="1" eType="#//AbstractInitPort"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SAPRO" eSuperTypes="#//Pattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="op" eType="#//OutputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ip" lowerBound="1" upperBound="-1"
+        eType="#//InputPort" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ocp" eType="#//OutputCPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ca" eType="#//CombinationAssignment"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="COMF" eSuperTypes="#//Pattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="op" lowerBound="1" eType="#//OutputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ip" lowerBound="1" eType="#//InputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="icp" lowerBound="1" eType="#//InputCPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="co" lowerBound="1" eType="#//ComparisonCOp"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RPRO" eSuperTypes="#//Pattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="op" eType="#//OutputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="opp" eType="#//OutputPPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ip" lowerBound="1" upperBound="-1"
+        eType="#//InputPort" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" lowerBound="1" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="APRO" eSuperTypes="#//Pattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="op" eType="#//OutputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ocp" eType="#//OutputCPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ip" lowerBound="1" upperBound="-1"
+        eType="#//InputPort" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="description" lowerBound="1"
+        upperBound="-1" eType="#//Description" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Description">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="precond" eType="#//Precondition"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="core" lowerBound="1" eType="#//Core"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Precondition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="init" lowerBound="1" upperBound="-1"
+        eType="#//INIT" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="internalcomf" lowerBound="1"
+        upperBound="-1" eType="#//InternalCOMF" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Core">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="iop" lowerBound="1" eType="#//InternalOutputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="iip" lowerBound="1" upperBound="-1"
+        eType="#//InternalInputPort" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ca" eType="#//CombinationAssignment"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InternalCOMF">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="iop" lowerBound="1" eType="#//InternalOutputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="iip" lowerBound="1" eType="#//InternalInputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="icp" lowerBound="1" eType="#//InputCPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="co" lowerBound="1" eType="#//ComparisonCOp"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TRAN" eSuperTypes="#//Pattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="op" lowerBound="1" eType="#//OutputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ip" lowerBound="1" eType="#//InputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="no" lowerBound="1" eType="#//NormalizationCOp"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PTCC" eSuperTypes="#//Pattern">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="max" lowerBound="2" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="op" lowerBound="1" eType="#//OutputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ip" lowerBound="2" upperBound="-1"
+        eType="#//InputPort" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ipp" lowerBound="1" eType="#//InputPPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="no" lowerBound="2" upperBound="-1"
+        eType="#//NormalizationCOp" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ro" lowerBound="1" eType="#//RatingCOp"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CONT" eSuperTypes="#//Pattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="op" lowerBound="1" eType="#//OutputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ip" lowerBound="2" upperBound="-1"
+        eType="#//InputPort" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ipp" lowerBound="1" eType="#//InputPPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ro" lowerBound="1" eType="#//RatingCOp"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AGGR">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="op" lowerBound="1" eType="#//OutputPort"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ip" lowerBound="2" upperBound="-1"
+        eType="#//InputPort" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MAGR" eSuperTypes="#//Pattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="aggr" lowerBound="1" upperBound="-1"
+        eType="#//AGGR" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="f" eType="#//Fork"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="o" eType="#//Optional"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="x" eType="#//XOR"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="or" eType="#//OR"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DMAGR" eSuperTypes="#//Pattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="daggr" lowerBound="1" upperBound="-1"
+        eType="#//DAGGR" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DAGGR">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="op" lowerBound="1" eType="#//OutputPort"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BBContainer">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" upperBound="-1"
+        eType="#//Pattern" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bbcontainer" upperBound="-1"
+        eType="#//BBContainer" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="buildingblock" eType="#//BuildingBlock"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Interface">
+    <eLiterals name="STANDARD"/>
+    <eLiterals name="FROMTCL" value="1"/>
+    <eLiterals name="TOTCL" value="2"/>
+  </eClassifiers>
+</ecore:EPackage>
