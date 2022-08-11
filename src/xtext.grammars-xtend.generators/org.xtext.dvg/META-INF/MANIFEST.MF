@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.xtext.dvg
+Bundle-ManifestVersion: 2
+Bundle-Name: org.xtext.dvg
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.xtext.dvg; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: bbn,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.xtext.dvg,
+ org.xtext.dvg.parser.antlr,
+ org.xtext.dvg.generator,
+ org.xtext.dvg.services,
+ org.xtext.dvg.formatting2,
+ org.xtext.dvg.validation,
+ org.xtext.dvg.serializer,
+ org.xtext.dvg.scoping,
+ org.xtext.dvg.parser.antlr.internal
+Import-Package: org.apache.log4j
