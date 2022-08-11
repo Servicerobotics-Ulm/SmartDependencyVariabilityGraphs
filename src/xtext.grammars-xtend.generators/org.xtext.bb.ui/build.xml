@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="org.xtext.bb.ui" default="build.jars" basedir=".">
+
+	<property name="p2.build.repo" value="file:${buildDirectory}/buildRepo"/>
+	<property name="basews" value="${ws}"/>
+	<property name="baseos" value="${os}"/>
+	<property name="basearch" value="${arch}"/>
+	<property name="basenl" value="${nl}"/>
+	<property name="bundleId" value="org.xtext.bb.ui"/>
+	<property name="bundleVersion" value="1.0.0.202208021431"/>
+	<property name="p2.publishonerror" value="false"/>
+
+	<!-- Compiler settings. -->
+	<property name="javacFailOnError" value="false"/>
+	<property name="javacDebugInfo" value="on"/>
+	<property name="javacVerbose" value="false"/>
+	<property name="logExtension" value=".log"/>
+	<property name="compilerArg" value=""/>
+	<property name="compilation.prereq.log" value="${buildDirectory}/prereqErrors.log"/>
+	<property name="javacSource" value="1.3"/>
+	<property name="javacTarget" value="1.2"/>
+	<condition property="dir_bootclasspath" value="${java.home}/../Classes">
+		<and>
+			<os family="mac"/>
+			<available file="${java.home}/../Classes" type="dir"/>
+		</and>
+	</condition>
+	<property name="dir_bootclasspath" value="${java.home}/lib"/>
+	<path id="path_bootclasspath">
+		<fileset dir="${dir_bootclasspath}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	<property name="bootclasspath" refid="path_bootclasspath"/>
+	<condition property="bundleBootClasspath" value="${JavaSE-11}"	>
+		<isset property="JavaSE-11"/>
+	</condition>
+	<condition property="bundleJavacSource" value="11"	>
+		<isset property="JavaSE-11"/>
+	</condition>
+	<property name="bundleJavacSource" value="${javacSource}"/>
+	<property name="bundleJavacTarget" value="${javacTarget}"/>
+	<property name="bundleBootClasspath" value="${bootclasspath}"/>
+
+	<target name="init" depends="properties">
+		<condition property="pluginTemp" value="${buildTempFolder}/plugins"		>
+			<isset property="buildTempFolder"/>
+		</condition>
+		<property name="pluginTemp" value="${basedir}"/>
+		<condition property="build.result.folder" value="${pluginTemp}/org.xtext.bb.ui_1.0.0.202208021431"		>
+			<isset property="buildTempFolder"/>
+		</condition>
+		<property name="build.result.folder" value="${basedir}"/>
+		<property name="temp.folder" value="${basedir}/temp.folder"/>
+		<property name="plugin.destination" value="${basedir}"/>
+		<condition property="p2.publish.parts" value="true"		>
+			<istrue value="${p2.gathering}"/>
+		</condition>
+		<property name="compilation.problem.marker" value="${build.result.folder}/compilation.problem"/>
+		<condition property="compilation.problem.marker.exists" value="true"		>
+			<and>
+			<available file="${compilation.problem.marker}"/>
+			<isfalse value="${p2.publishonerror}"/>
+			</and>
+		</condition>
+	</target>
+
+	<target name="properties" if="eclipse.running">
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+
+	</target>
+
+	<target name="build.update.jar" depends="init" description="Build the plug-in: org.xtext.bb.ui for an update site.">
+		<delete dir="${temp.folder}"/>
+		<mkdir dir="${temp.folder}"/>
+		<antcall target="build.jars"/>
+		<antcall target="gather.bin.parts">
+			<param name="destination.temp.folder" value="${temp.folder}/"/>
+		</antcall>
+		<jar destfile="${plugin.destination}/org.xtext.bb.ui_1.0.0.202208021431.jar" basedir="${temp.folder}/org.xtext.bb.ui_1.0.0.202208021431" filesetmanifest="merge"/>
+		<delete dir="${temp.folder}"/>
+	</target>
+
+	<target name="@dot.nestedJars">
+	</target>
+	<target name="@dot" depends="init,@dot.nestedJars" unless="@dot" description="Create jar: org.xtext.bb.ui @dot.">
+		<delete dir="${build.result.folder}/@dot"/>
+		<mkdir dir="${build.result.folder}/@dot"/>
+		<path id="@dot.classpath">
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.log4j_1.2.19.v20220208-1728.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.logging_1.2.19.v20220530-0416.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.osgi_3.18.0.v20220516-2155.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.osgi.compatibility.state_1.2.600.v20220207-1403.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.runtime_3.25.0.v20220506-1157.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.common_3.16.100.v20220315-2327.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.jobs_3.13.0.v20220512-1935.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.registry_3.11.100.v20211021-1418.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.preferences_3.10.0.v20220503-1634.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.osgi.service.prefs_1.1.2.202109301733.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.contenttype_3.8.100.v20210910-0640.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.app_1.6.100.v20211021-1418.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.osgi.services_3.10.200.v20210723-0643.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.osgi.util.function_1.2.0.202109301733.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.osgi.util.promise_1.2.0.202109301733.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/jakarta.servlet-api_4.0.0.jar"/>
+			<pathelement path="../org.xtext.bb/bin"/>
+			<pathelement path="${build.result.folder}/../org.xtext.bb_1.0.0.202208021431/bin"/>
+			<pathelement path="../bbn/bin"/>
+			<pathelement path="${build.result.folder}/../bbn_0.1.0.202208021431/bin"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.ecore_2.27.0.v20220426-0617.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.common_2.25.0.v20220325-0806.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.resources_3.17.0.v20220517-0751.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ant.core_3.6.400.v20220317-1003.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.variables_3.5.100.v20210721-1355.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.expressions_3.8.100.v20210910-0640.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.filesystem_1.9.400.v20220419-0658.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.filesystem.linux.x86_64_1.2.300.v20180828-0158.jar"/>
+			<pathelement path="../../Dokumente/diss_timo-new/src/Dor/bin"/>
+			<pathelement path="${build.result.folder}/../Dor_0.1.0.202208021431/bin"/>
+			<pathelement path="../../Dokumente/diss_timo-new/src/Vi/bin"/>
+			<pathelement path="${build.result.folder}/../Vi_0.1.0.202208021431/bin"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext_2.27.0.v20220530-0355.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.ecore.xmi_2.16.0.v20190528-0725.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.antlr.runtime_3.2.0.v20220404-1927.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/com.google.inject_5.0.1.v20210324-2015.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/com.google.guava_30.1.0.v20210127-2300.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/javax.inject_1.0.0.v20220405-0441.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.aopalliance_1.0.0.v20220404-1927.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.objectweb.asm_9.3.0.v20220409-0157.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.mwe.core_1.7.0.v20220519-1115.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.commons.logging_1.2.0.v20180409-1502.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-antlr.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-apache-bcel.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-apache-bsf.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-apache-log4j.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-apache-oro.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-apache-regexp.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-apache-resolver.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-apache-xalan2.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-commons-logging.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-commons-net.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-imageio.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-jai.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-javamail.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-jdepend.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-jmf.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-jsch.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-junit.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-junit4.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-junitlauncher.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-launcher.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-netrexx.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-swing.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-testutil.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant-xz.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.ant_1.10.12.v20211102-1452/lib/ant.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.tukaani.xz_1.9.0.v20210624-1259.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.junit_4.13.2.v20211018-1956.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.junit.platform.launcher_1.8.1.v20211018-1956.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.junit.platform.engine_1.8.1.v20211018-1956.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.opentest4j_1.2.0.v20211018-1956.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.junit.platform.commons_1.8.1.v20211018-1956.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apiguardian_1.1.2.v20211018-1956.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.xml.resolver_1.2.0.v201005080400.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.xalan_2.7.2.v20201124-1837.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.xerces_2.12.2.v20220131-0835.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/com.jcraft.jsch_0.1.55.v20190404-1902.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.commons.cli_1.4.0.v20200417-1444.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.mwe2.runtime_2.13.0.v20220519-1115.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.mwe.utils_1.7.0.v20220519-1115.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.codegen.ecore_2.30.0.v20220426-0617.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.jdt.core_3.30.0.v20220524-1333.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.jdt.compiler.apt_1.4.100.v20220318-0906.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.jdt.compiler.tool_1.3.150.v20220318-0906.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.text_3.12.100.v20220506-1404.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.commands_3.10.200.v20220512-0851.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.team.core_3.9.400.v20220511-1440.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.compare.core_3.7.0.v20220513-0551.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.jdt.launching_3.19.600.v20220409-1932.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.debug.core_3.19.100.v20220324-0630.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.jdt.debug_3.19.200.v20220430-1851/jdimodel.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.codegen_2.22.0.v20210420-0623.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtend_2.2.0.v201605260315.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/com.ibm.icu_67.1.0.v20200706-1749.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.util_2.27.0.v20220530-0355.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtend.lib_2.27.0.v20220530-0353.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.xbase.lib_2.27.0.v20220530-0353.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtend.lib.macro_2.27.0.v20220530-0353.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.xbase_2.27.0.v20220530-0402.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.common.types_2.27.0.v20220530-0402.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/io.github.classgraph_4.8.138.v20211212-1642.jar"/>
+			<pathelement path="../org.xtext.bb.ide/bin"/>
+			<pathelement path="${build.result.folder}/../org.xtext.bb.ide_1.0.0.202208021431/bin"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.ide_2.27.0.v20220530-0355.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.ecore.change_2.14.0.v20190528-0725.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.xbase.ide_2.27.0.v20220530-0402.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.ui_2.27.0.v20220530-0416.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ui_3.201.0.v20220124-1108.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.swt_3.120.0.v20220530-1036.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.swt.gtk.linux.x86_64_3.120.0.v20220530-1036.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.jface_3.26.0.v20220513-0449.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.bidi_1.4.100.v20211021-1418.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ui.workbench_3.125.100.v20220524-1304.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/javax.annotation_1.3.5.v20200909-1856.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.core.commands_1.0.100.v20211204-1536.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.core.contexts_1.10.0.v20220430-0424.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.core.di_1.8.200.v20220512-1957.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.core.di.annotations_1.7.100.v20210910-0640.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.core.services_2.3.200.v20220513-1235.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.workbench_1.13.100.v20211019-0756.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.commons.jxpath_1.3.0.v200911051830.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.model.workbench_2.2.100.v20220331-0744.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.emf.xpath_0.3.0.v20210722-1426.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.services_1.5.0.v20210115-1333.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.di_1.4.0.v20210621-1133.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.core.di.extensions.supplier_0.16.300.v20220503-2248.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.core.di.extensions_0.17.100.v20210910-0640.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.jdt.annotation_2.2.600.v20200408-1511.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.workbench.renderers.swt_0.15.500.v20220511-1638.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.workbench.swt_0.16.500.v20220506-1520.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.dialogs_1.3.200.v20211210-1500.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.databinding_1.11.0.v20220118-1028.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.databinding.observable_1.12.0.v20211231-1006.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.databinding.property_1.9.0.v20210619-1129.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.jface.databinding_1.13.0.v20210619-1146.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.css.core_0.13.200.v20211022-1402.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.w3c.css.sac_1.3.1.v200903091627.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.batik.css_1.14.0.v20210324-0332.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.batik.i18n_1.14.0.v20210324-0332.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.xmlgraphics_2.6.0.v20210409-0748.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.commons.io_2.8.0.v20210415-0900.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.w3c.dom.svg_1.1.0.v201011041433.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.w3c.dom.smil_1.0.1.v200903091627.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.w3c.dom.events_3.0.0.draft20060413_v201105210656.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.batik.util_1.14.0.v20210324-0332.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.apache.batik.constants_1.14.0.v20210324-0332.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.css.swt_0.14.500.v20220511-1639.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.bindings_0.13.100.v20210722-1426.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.workbench3_0.16.0.v20210619-0956.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.css.swt.theme_0.13.100.v20220310-1056.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.swt.gtk_1.1.100.v20210108-1832.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.widgets_1.3.0.v20210621-1136.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.urischeme_1.2.100.v20211001-1648.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/com.sun.jna_5.8.0.v20210503-0343.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/com.sun.jna.platform_5.8.0.v20210406-1004.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.help_3.9.100.v20210721-0601.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.workbench.addons.swt_1.4.400.v20211102-0453.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ui.editors_3.14.300.v20210913-0815.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ui.ide_3.19.0.v20220511-1638.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ui.views_3.11.100.v20210816-0811.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.jface.text_3.20.100.v20220516-0819.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ui.forms_3.11.300.v20211022-1451.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.p2.engine_2.7.400.v20220329-1456.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.bouncycastle.bcpg_1.70.0.v20220507-1208.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.bouncycastle.bcprov_1.70.0.v20220507-1208.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.p2.artifact.repository_1.4.500.v20220420-1427.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.p2.core_2.9.100.v20220310-1733.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.p2.jarprocessor_1.2.300.v20220420-1427.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.p2.metadata_2.6.200.v20220324-1313.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.p2.repository_2.6.100.v20220422-1806.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.security_1.3.900.v20220108-1321.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.security.linux_1.0.200.v20210616-0726"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.equinox.p2.metadata.repository_1.4.100.v20220329-1456.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.e4.ui.ide_3.16.100.v20220310-1350.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ui.navigator_3.10.200.v20211009-1706.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ui.workbench.texteditor_3.16.500.v20220331-0848.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.core.filebuffers_3.7.200.v20220202-1008.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.edit.ui_2.21.0.v20220226-1304.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.edit_2.17.0.v20220201-1551.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.common.ui_2.20.0.v20220226-1304.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.search_3.14.100.v20220120-1549.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ltk.core.refactoring_3.12.200.v20220502-1514.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ltk.ui.refactoring_3.12.100.v20220329-1353.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.compare_3.8.400.v20220420-1133.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.team.ui_3.9.300.v20220420-1133.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.jdt.ui_3.26.100.v20220516-1138.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.debug.ui_3.16.100.v20220526-0826.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ui.console_3.11.200.v20220324-0630.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ui.genericeditor_1.2.200.v20211217-1247.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ui.navigator.resources_3.8.400.v20220203-1803.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.ui.views.properties.tabbed_3.9.100.v20201223-1348.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.jdt.core.manipulation_1.16.100.v20220513-2002.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.ui.shared_2.27.0.v20220530-0416.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.builder_2.27.0.v20220530-0416.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.common.types.ui_2.27.0.v20220530-0416.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.smap_2.27.0.v20220530-0402.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.common.types.edit_2.27.0.v20220530-0416.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.ecore.editor_2.17.0.v20190528-0725.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.emf.ecore.edit_2.13.0.v20190822-1451.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.ui.codetemplates.ui_2.27.0.v20220530-0416.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.ui.codetemplates_2.27.0.v20220530-0416.jar"/>
+			<pathelement path="../../eclipse/22/eclipse-base/plugins/org.eclipse.xtext.ui.codetemplates.ide_2.27.0.v20220530-0416.jar"/>
+			<pathelement path="bin"/>
+			<pathelement path="${build.result.folder}/../org.xtext.bb.ui_1.0.0.202208021431/bin"/>
+		</path>
+		<!-- compile the source code -->
+		<javac destdir="${build.result.folder}/@dot" failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" includeAntRuntime="no" source="${bundleJavacSource}" target="${bundleJavacTarget}"		>
+			<compilerarg line="${compilerArg}" compiler="${build.compiler}"/>
+			<classpath refid="@dot.classpath" />
+			<src path="src/"			/>
+			<src path="src-gen/"			/>
+			<src path="xtend-gen/"			/>
+			<compilerarg value="@${basedir}/javaCompiler...args" compiler="org.eclipse.jdt.core.JDTCompilerAdapter"			/>
+			<compilerarg line="-log &apos;${build.result.folder}/@dot${logExtension}&apos;" compiler="org.eclipse.jdt.core.JDTCompilerAdapter"			/>
+		</javac>
+		<antcall target="checkCompilationResults"/>
+		<!-- Copy necessary resources -->
+		<copy todir="${build.result.folder}/@dot" failonerror="true" overwrite="false">
+			<fileset dir="src/">
+				<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+			<fileset dir="src-gen/">
+				<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+			<fileset dir="xtend-gen/">
+				<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="src.zip" depends="init" unless="src.zip">
+		<mkdir dir="${build.result.folder}"/>
+		<antcall target="zip.src.zip"/>
+	</target>
+	<target name="zip.src.zip">
+		<zip destfile="${build.result.folder}/src.zip" filesonly="false" whenempty="skip" update="false">
+			<fileset dir="src/">
+				<include name="**/*.java"/>
+			</fileset>
+			<fileset dir="src-gen/">
+				<include name="**/*.java"/>
+			</fileset>
+			<fileset dir="xtend-gen/">
+				<include name="**/*.java"/>
+			</fileset>
+		</zip>
+	</target>
+	<target name="copy.src.zip">
+		<copy todir="${source.destination.folder}/" failonerror="true" overwrite="true">
+			<fileset dir="src/">
+				<include name="**/*.java"/>
+			</fileset>
+			<fileset dir="src-gen/">
+				<include name="**/*.java"/>
+			</fileset>
+			<fileset dir="xtend-gen/">
+				<include name="**/*.java"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="build.jars" depends="init" description="Compile classes and build nested jars for the plug-in: org.xtext.bb.ui.">
+		<delete file="${compilation.problem.marker}" quiet="true"/>
+		<available property="@dot" file="${build.result.folder}/@dot"/>
+		<antcall target="@dot"/>
+	</target>
+
+	<target name="checkCompilationResults" if="compilation.error.occured">
+		<echo file="${compilation.problem.marker}" message="org.xtext.bb.ui_1.0.0.202208021431${line.separator}compilation.error.occured=${compilation.error.occured}"/>
+		<eclipse.logCompileError log="${compilation.prereq.log}" bundle="org.xtext.bb.ui_1.0.0.202208021431">
+			<include name="/home/timo/Dokumente/diss_timo-new/src/Dor/compilation.problem"/>
+			<include name="${pluginTemp}/Dor_0.1.0.202208021431/compilation.problem"/>
+			<include name="/home/timo/Dokumente/diss_timo-new/src/Vi/compilation.problem"/>
+			<include name="${pluginTemp}/Vi_0.1.0.202208021431/compilation.problem"/>
+			<include name="/home/timo/eclipse-workspace-post-diss-src/bbn/compilation.problem"/>
+			<include name="${pluginTemp}/bbn_0.1.0.202208021431/compilation.problem"/>
+			<include name="/home/timo/eclipse-workspace-post-diss-src/org.xtext.bb/compilation.problem"/>
+			<include name="${pluginTemp}/org.xtext.bb_1.0.0.202208021431/compilation.problem"/>
+			<include name="/home/timo/eclipse-workspace-post-diss-src/org.xtext.bb.ide/compilation.problem"/>
+			<include name="${pluginTemp}/org.xtext.bb.ide_1.0.0.202208021431/compilation.problem"/>
+		</eclipse.logCompileError>
+	</target>
+
+	<target name="build.sources" depends="init">
+		<available property="src.zip" file="${build.result.folder}/src.zip"/>
+		<antcall target="src.zip"/>
+	</target>
+
+	<target name="publish.bin.parts" depends="init" if="p2.publish.parts" unless="compilation.problem.marker.exists">
+		<mkdir dir="${build.result.folder}/org.xtext.bb.ui_1.0.0.202208021431"/>
+		<copy todir="${build.result.folder}" failonerror="true" overwrite="true">
+			<fileset dir="${basedir}">
+				<include name="META-INF/MANIFEST.MF"/>
+				<include name="plugin.xml"/>
+				<include name="fragment.xml"/>
+				<exclude name="**/*.xtend"/>
+			</fileset>
+		</copy>
+		<eclipse.versionReplacer path="${build.result.folder}" version="1.0.0.202208021431"/>
+		<antcall target="apitools.generation">
+			<param name="projectLocation" value="${basedir}"/>
+			<param name="binary.folders" value="${build.result.folder}/@dot:/home/timo/eclipse-workspace-post-diss-src/org.xtext.bb.ui/bin"/>
+			<param name="projectName" value="${bundleId}_${bundleVersion}"/>
+			<param name="target.folder" value="${build.result.folder}"/>
+		</antcall>
+		<eclipse.gatherBundle 
+		   metadataRepository="${p2.build.repo}"
+		   artifactRepository="${p2.build.repo}"
+		   buildResultFolder="${build.result.folder}"
+		   unpack="true"
+		   baseDirectory="${basedir}"
+		/>
+	</target>
+
+	<target name="gather.bin.parts" depends="init" if="destination.temp.folder">
+		<mkdir dir="${destination.temp.folder}/org.xtext.bb.ui_1.0.0.202208021431"/>
+		<copy todir="${destination.temp.folder}/org.xtext.bb.ui_1.0.0.202208021431" failonerror="true" overwrite="false">
+			<fileset dir="${build.result.folder}/@dot">
+				<include name="**"/>
+				<exclude name="**/*.xtend"/>
+			</fileset>
+		</copy>
+		<copy todir="${destination.temp.folder}/org.xtext.bb.ui_1.0.0.202208021431" failonerror="true" overwrite="true">
+			<fileset dir="${basedir}">
+				<include name="META-INF/"/>
+				<include name="plugin.xml"/>
+				<exclude name="**/*.xtend"/>
+			</fileset>
+		</copy>
+		<eclipse.versionReplacer path="${destination.temp.folder}/org.xtext.bb.ui_1.0.0.202208021431" version="1.0.0.202208021431"/>
+		<antcall target="apitools.generation">
+			<param name="projectLocation" value="${basedir}"/>
+			<param name="binary.folders" value="${build.result.folder}/@dot:/home/timo/eclipse-workspace-post-diss-src/org.xtext.bb.ui/bin"/>
+			<param name="projectName" value="${bundleId}_${bundleVersion}"/>
+			<param name="target.folder" value="${destination.temp.folder}/org.xtext.bb.ui_1.0.0.202208021431"/>
+		</antcall>
+	</target>
+
+	<target name="build.zips" depends="init">
+	</target>
+
+	<target name="gather.sources" depends="init" if="destination.temp.folder">
+		<mkdir dir="${destination.temp.folder}/org.xtext.bb.ui_1.0.0.202208021431"/>
+		<copy file="${build.result.folder}/src.zip" todir="${destination.temp.folder}/org.xtext.bb.ui_1.0.0.202208021431" failonerror="false" overwrite="false"/>
+		<antcall target="copy.src.includes">
+			<param name="source.destination.folder" value="${destination.temp.folder}/org.xtext.bb.ui_1.0.0.202208021431"/>
+		</antcall>
+	</target>
+
+	<target name="gather.individual.sources" depends="init">
+		<antcall target="copy.src.zip">
+			<param name="source.destination.folder" value="${destination.temp.folder}"/>
+		</antcall>
+		<antcall target="copy.src.includes">
+			<param name="source.destination.folder" value="${destination.temp.folder}"/>
+		</antcall>
+	</target>
+
+	<target name="copy.src.includes" depends="init">
+	</target>
+
+	<target name="gather.logs" depends="init" if="destination.temp.folder">
+		<mkdir dir="${destination.temp.folder}/org.xtext.bb.ui_1.0.0.202208021431"/>
+		<copy todir="${destination.temp.folder}/org.xtext.bb.ui_1.0.0.202208021431" failonerror="false" overwrite="false">
+			<fileset dir="${build.result.folder}">
+				<include name="@dot${logExtension}"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="clean" depends="init" description="Clean the plug-in: org.xtext.bb.ui of all the zips, jars and logs created.">
+		<delete dir="${build.result.folder}/@dot"/>
+		<delete file="${build.result.folder}/src.zip"/>
+		<delete file="${plugin.destination}/org.xtext.bb.ui_1.0.0.202208021431.jar"/>
+		<delete file="${plugin.destination}/org.xtext.bb.ui_1.0.0.202208021431.zip"/>
+		<delete dir="${temp.folder}"/>
+		<delete file="${compilation.problem.marker}" quiet="true"/>
+	</target>
+
+	<target name="refresh" depends="init" if="eclipse.running" description="Refresh this folder.">
+		<eclipse.convertPath fileSystemPath="/home/timo/eclipse-workspace-post-diss-src/org.xtext.bb.ui" property="resourcePath"/>
+		<eclipse.refreshLocal resource="${resourcePath}" depth="infinite"/>
+	</target>
+
+	<target name="zip.plugin" depends="init" description="Create a zip containing all the elements for the plug-in: org.xtext.bb.ui.">
+		<delete dir="${temp.folder}"/>
+		<mkdir dir="${temp.folder}"/>
+		<antcall target="build.jars"/>
+		<antcall target="build.sources"/>
+		<antcall target="gather.bin.parts">
+			<param name="destination.temp.folder" value="${temp.folder}/"/>
+		</antcall>
+		<antcall target="gather.sources">
+			<param name="destination.temp.folder" value="${temp.folder}/"/>
+		</antcall>
+		<delete>
+			<fileset dir="${temp.folder}">
+				<include name="**/*.bin${logExtension}"/>
+			</fileset>
+		</delete>
+		<zip destfile="${plugin.destination}/org.xtext.bb.ui_1.0.0.202208021431.zip" basedir="${temp.folder}" filesonly="true" whenempty="skip" update="false"/>
+		<delete dir="${temp.folder}"/>
+	</target>
+
+	<target name="apitools.generation" if="generateAPIDescription">
+		<apitooling.apigeneration  projectName="${projectName}" project="${projectLocation}" binary="${binary.folders}" target="${target.folder}" extramanifests="${extraManifests}" allownonapiproject="${allowNonApiProject}"		/>
+	</target>
+
+</project>
