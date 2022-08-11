@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="bb" version="12.0.0.2017041100">
+  <ownedViewpoints name="BBViewpoint">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="BB" domainClass="bbn::BuildingBlockDescription" enablePopupBars="true">
+      <metamodel href="http://www.example.org/bbn#/"/>
+      <metamodel href="http://www.example.org/dor#/"/>
+      <defaultLayer name="Default">
+        <nodeMappings name="Udo" semanticCandidatesExpression="feature:eContents" domainClass="dor::UnboundedDataObjectDef">
+          <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="Decomposition" sourceMapping="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']" targetMapping="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Loop'] //@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Parallel'] //@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Sequential'] //@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Unsequenceable'] //@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='ConditionalFork'] //@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='EquivalenceFork']" targetFinderExpression="feature:dt">
+          <style targetArrow="InputFillClosedArrow" sizeComputationExpression="3" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="ContainerRef" sourceMapping="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Container']/@subNodeMappings[name='BuildingBlockInst']" targetMapping="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Container']" targetFinderExpression="feature:c">
+          <style lineStyle="dot" sizeComputationExpression="3" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="PortElementRef" sourceMapping="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='VariabilityEntitySet']/@subContainerMappings[name='PortElementSet']/@subContainerMappings[name='PortElement']" targetMapping="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='Input'] //@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='Output']" targetFinderExpression="feature:port">
+          <style lineStyle="dot" sizeComputationExpression="3" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <containerMappings name="BuildingBlock" semanticCandidatesExpression="feature:eContents" domainClass="bbn::BuildingBlock" reusedContainerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='VariabilityEntitySet']">
+          <borderedNodeMappings name="Output" semanticCandidatesExpression="feature:o" domainClass="bbn::Output">
+            <style xsi:type="style:WorkspaceImageDescription" labelSize="12" showIcon="false" sizeComputationExpression="-1" workspacePath="/bb.design/icons/port-diss.png">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <forbiddenSides>WEST</forbiddenSides>
+              <forbiddenSides>SOUTH</forbiddenSides>
+              <forbiddenSides>NORTH</forbiddenSides>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="Input" semanticCandidatesExpression="feature:eContents" domainClass="bbn::Input">
+            <style xsi:type="style:WorkspaceImageDescription" labelSize="12" showIcon="false" sizeComputationExpression="-1" workspacePath="/bb.design/icons/port-diss.png">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <forbiddenSides>SOUTH</forbiddenSides>
+              <forbiddenSides>EAST</forbiddenSides>
+              <forbiddenSides>NORTH</forbiddenSides>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="Mandatory" semanticCandidatesExpression="feature:ir" domainClass="bbn::Mandatory" reusedBorderedNodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='Input']">
+            <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelExpression="M" labelPosition="node" resizeKind="NSEW" width="3" height="8" color="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="Optional" semanticCandidatesExpression="feature:ir" domainClass="bbn::Optional" reusedBorderedNodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='Input']">
+            <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelExpression="O" labelPosition="node" resizeKind="NSEW" width="3" height="4" color="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="AND" semanticCandidatesExpression="feature:ir" domainClass="bbn::AND" reusedBorderedNodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='Input']">
+            <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelExpression="&amp;" labelPosition="node" resizeKind="NSEW" width="3" height="8" color="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="OR" semanticCandidatesExpression="feature:ir" domainClass="bbn::OR" reusedBorderedNodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='Input']">
+            <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelExpression="|" labelPosition="node" resizeKind="NSEW" width="3" height="8" color="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="XOR" semanticCandidatesExpression="feature:ir" domainClass="bbn::XOR" reusedBorderedNodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='Input']">
+            <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelExpression="X" labelPosition="node" resizeKind="NSEW" width="3" height="8" color="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </borderedNodeMappings>
+          <subNodeMappings name="ResourceGroupdId" semanticCandidatesExpression="feature:resourcegroupid" domainClass="bbn::ResourceGroupId">
+            <style xsi:type="style:LozengeNodeDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:number" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_gray']"/>
+            </style>
+          </subNodeMappings>
+          <subNodeMappings name="SharedResources" semanticCandidatesExpression="feature:sharedresources" domainClass="bbn::SharedResources">
+            <style xsi:type="style:LozengeNodeDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:number" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="5" borderColor="//@userColorsPalettes[name='Colors']/@entries[name='13']" labelSize="12" iconPath="/bb.design/icons/bb-medium.png" backgroundColor="//@userColorsPalettes[name='Colors']/@entries[name='01']" foregroundColor="//@userColorsPalettes[name='Colors']/@entries[name='00']">
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.2"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="Sequential" semanticCandidatesExpression="feature:dt" domainClass="bbn::Sequential" reusedContainerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Container']">
+          <style xsi:type="style:FlatContainerStyleDescription" arcWidth="30" arcHeight="30" borderSizeComputationExpression="1" labelSize="12" iconPath="/bb.design/icons/sequential.png" roundedCorner="true" foregroundColor="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.1"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="Container" semanticCandidatesExpression="feature:eContents" domainClass="bbn::Container" reusedContainerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']">
+          <subNodeMappings name="BuildingBlockInst" semanticCandidatesExpression="feature:eContents" domainClass="bbn::BuildingBlockInst">
+            <style xsi:type="style:SquareDescription" labelSize="12" iconPath="/bb.design/icons/ref.png" labelPosition="node" resizeKind="NSEW" color="//@userColorsPalettes[name='Colors']/@entries[name='00']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </subNodeMappings>
+          <conditionnalStyles predicateExpression="[self.bbr.oclIsUndefined() = false/]">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="-1" labelSize="12" labelExpression="feature:bbr" iconPath="/bb.design/icons/ref.png">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </conditionnalStyles>
+          <conditionnalStyles predicateExpression="[self.bbr.oclIsUndefined() = true/]">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="-1" labelSize="12" showIcon="false" labelExpression="aql:''">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </conditionnalStyles>
+        </containerMappings>
+        <containerMappings name="Parallel" semanticCandidatesExpression="feature:dt" domainClass="bbn::Parallel" reusedContainerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Container']">
+          <style xsi:type="style:FlatContainerStyleDescription" arcWidth="30" arcHeight="30" borderSizeComputationExpression="1" labelSize="12" labelExpression="Parallel" iconPath="/bb.design/icons/parallel-wfa.png" roundedCorner="true" foregroundColor="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.1"/>
+          </style>
+          <conditionnalStyles predicateExpression="[self.p.toString().matches('WAITFORFIRST') = true/]">
+            <style xsi:type="style:FlatContainerStyleDescription" arcWidth="50" arcHeight="50" borderSizeComputationExpression="1" labelSize="12" labelExpression="Parallel" iconPath="/bb.design/icons/parallel-wff.png" roundedCorner="true" foregroundColor="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.1"/>
+            </style>
+          </conditionnalStyles>
+        </containerMappings>
+        <containerMappings name="Loop" semanticCandidatesExpression="feature:dt" domainClass="bbn::Loop" reusedContainerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Container']">
+          <subNodeMappings name="Number" semanticCandidatesExpression="feature:eAllContents" domainClass="bbn::Number">
+            <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="N" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" arcWidth="30" arcHeight="30" borderSizeComputationExpression="1" labelSize="12" labelExpression="Loop" iconPath="/bb.design/icons/loop.png" roundedCorner="true" foregroundColor="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.1"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="ConditionalFork" semanticCandidatesExpression="feature:dt" domainClass="bbn::ConditionalFork" reusedContainerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Container']">
+          <style xsi:type="style:FlatContainerStyleDescription" arcWidth="30" arcHeight="30" borderSizeComputationExpression="1" labelSize="12" labelExpression="ConditionalFork" iconPath="/bb.design/icons/cf.png" roundedCorner="true" foregroundColor="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.1"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="EquivalenceFork" semanticCandidatesExpression="feature:dt" domainClass="bbn::EquivalenceFork" reusedContainerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Container']">
+          <style xsi:type="style:FlatContainerStyleDescription" arcWidth="30" arcHeight="30" borderSizeComputationExpression="1" labelSize="12" labelExpression="EquivalenceFork" iconPath="/bb.design/icons/ef.png" roundedCorner="true" foregroundColor="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.1"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="Unsequenceable" semanticCandidatesExpression="feature:dt" domainClass="bbn::Unsequenceable" reusedContainerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Container']">
+          <style xsi:type="style:FlatContainerStyleDescription" arcWidth="30" arcHeight="30" borderSizeComputationExpression="1" labelSize="18" labelExpression="???" iconPath="/bb.design/icons/unseq.png" roundedCorner="true" foregroundColor="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.1"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="VariabilityEntitySet" semanticCandidatesExpression="feature:eContents" domainClass="bbn::VariabilityEntitySet">
+          <subContainerMappings name="PropertySet" semanticCandidatesExpression="feature:eContents" domainClass="bbn::PropertySet" childrenPresentation="VerticalStack">
+            <subContainerMappings name="PropertyInst" semanticCandidatesExpression="feature:eContents" domainClass="bbn::PropertyInst" reusedNodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@nodeMappings[name='Udo']">
+              <conditionnalStyles predicateExpression="[self.dor.oclIsUndefined() = false/]">
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:self.name+if self.dor &lt;>  null then '\n('+self.dor.name+')'else '' endif " iconPath="/bb.design/icons/ref.png" foregroundColor="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                </style>
+              </conditionnalStyles>
+              <conditionnalStyles predicateExpression="[self.dor.oclIsUndefined() = true/]">
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:''" foregroundColor="//@userColorsPalettes[name='Colors']/@entries[name='13']">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                </style>
+              </conditionnalStyles>
+            </subContainerMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="PropertySet" iconPath="/bb.design/icons/property-medium.png">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </subContainerMappings>
+          <subContainerMappings name="ParameterSet" semanticCandidatesExpression="feature:eContents" domainClass="bbn::ParameterSet" childrenPresentation="VerticalStack">
+            <subContainerMappings name="ParameterInst" semanticCandidatesExpression="feature:eContents" domainClass="bbn::ParameterInst">
+              <conditionnalStyles predicateExpression="[self.dor.oclIsUndefined() = false/]">
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:self.name+if self.dor &lt;>  null then '\n('+self.dor.name+')'else '' endif " iconPath="/bb.design/icons/ref.png">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                  <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+                </style>
+              </conditionnalStyles>
+              <conditionnalStyles predicateExpression="[self.dor.oclIsUndefined() = true/]">
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:''">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                  <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                </style>
+              </conditionnalStyles>
+            </subContainerMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="ParameterSet" iconPath="/bb.design/icons/param-medium.png" widthComputationExpression="10">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </subContainerMappings>
+          <subContainerMappings name="ContextSet" semanticCandidatesExpression="feature:eContents" domainClass="bbn::ContextSet" childrenPresentation="VerticalStack">
+            <subContainerMappings name="ContextInst" semanticCandidatesExpression="feature:eContents" domainClass="bbn::ContextInst" reusedNodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@nodeMappings[name='Udo']">
+              <conditionnalStyles predicateExpression="[self.dor.oclIsUndefined() = false/]">
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:self.name+if self.dor &lt;>  null then '\n('+self.dor.name+')'else '' endif " iconPath="/bb.design/icons/ref.png">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                  <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+                </style>
+              </conditionnalStyles>
+              <conditionnalStyles predicateExpression="[self.dor.oclIsUndefined() = true/]">
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:''">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                  <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                </style>
+              </conditionnalStyles>
+            </subContainerMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="ContextSet" iconPath="/bb.design/icons/context-medium.png">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </subContainerMappings>
+          <subContainerMappings name="PortElementSet" semanticCandidatesExpression="feature:eContents" domainClass="bbn::PortElementSet" childrenPresentation="VerticalStack">
+            <subContainerMappings name="PortElement" semanticCandidatesExpression="feature:eContents" domainClass="bbn::PortElement">
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" widthComputationExpression="20" heightComputationExpression="4">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+              </style>
+            </subContainerMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="PortElementSet" iconPath="/bb.design/icons/port.png">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </subContainerMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" labelSize="12" showIcon="false" labelExpression="aql:''" backgroundColor="//@userColorsPalettes[name='Colors']/@entries[name='02']" foregroundColor="//@userColorsPalettes[name='Colors']/@entries[name='02']">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.2"/>
+          </style>
+        </containerMappings>
+        <toolSections>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Ouptut" nodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='Output']" iconPath="/bb.design/icons/port-diss-small.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::Output" referenceName="o"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Input" nodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='Input']" iconPath="/bb.design/icons/port-diss-small.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::Input" referenceName="in"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Decomposition" edgeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@edgeMappings[name='Decomposition']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="dt" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="ContainerRef" edgeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@edgeMappings[name='ContainerRef']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="c" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ToolGroup" name="BuildingBlock">
+            <tools xsi:type="tool:ContainerCreationDescription" name="BuildingBlock" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']" iconPath="/bb.design/icons/bb-small.png">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::BuildingBlock" referenceName="bbc"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+            <tools xsi:type="tool:ContainerCreationDescription" name="RootBuildingBlock" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']" iconPath="/bb.design/icons/bb-small.png">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::BuildingBlock" referenceName="bb"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+            <tools xsi:type="tool:NodeCreationDescription" name="BuildingBlockInst" nodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Container']/@subNodeMappings[name='BuildingBlockInst']" iconPath="/bb.design/icons/bb-small.png">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::BuildingBlockInst" referenceName="bbi"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ToolGroup" name="InputRelationship">
+            <tools xsi:type="tool:NodeCreationDescription" name="Mandatory" nodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='Mandatory']">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::Mandatory" referenceName="ir"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+            <tools xsi:type="tool:NodeCreationDescription" name="Optional" nodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='Optional']">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::Optional" referenceName="ir"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+            <tools xsi:type="tool:NodeCreationDescription" name="AND" nodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='AND']">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::AND" referenceName="ir"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+            <tools xsi:type="tool:NodeCreationDescription" name="OR" nodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='OR']">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::OR" referenceName="ir"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+            <tools xsi:type="tool:NodeCreationDescription" name="XOR" nodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@borderedNodeMappings[name='XOR']">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::XOR" referenceName="ir"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="Decomposition">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Sequential" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Sequential']" iconPath="/bb.design/icons/sequential-small.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::Sequential" referenceName="dt"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Parallel" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Parallel']" iconPath="/bb.design/icons/parallel-small.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::Parallel" referenceName="dt"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Loop" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Loop']" iconPath="/bb.design/icons/loop-small.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::Loop" referenceName="dt"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="ConditionalFork" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='ConditionalFork']" iconPath="/bb.design/icons/cf-small.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::ConditionalFork" referenceName="dt"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="EquivalenceFork" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='EquivalenceFork']" iconPath="/bb.design/icons/ef-small.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::EquivalenceFork" referenceName="dt"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Unsequenceable" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Unsequenceable']" iconPath="/bb.design/icons/unseq-small.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::Unsequenceable" referenceName="dt"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Container" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Container']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::Container" referenceName="c"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Number" nodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Loop']/@subNodeMappings[name='Number']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::Number" referenceName="n"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="VariabilityEntitySet" icon="/bb.design/configuration.svg.png">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="VariabilityEntitySet" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='VariabilityEntitySet']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::VariabilityEntitySet" referenceName="ves"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Udo" nodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@nodeMappings[name='Udo']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dor::UnboundedDataObjectDef" referenceName="doc"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ToolGroup" name="Property">
+            <tools xsi:type="tool:ContainerCreationDescription" name="PropertySet" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='VariabilityEntitySet']/@subContainerMappings[name='PropertySet']" iconPath="/bb.design/icons/property-small.png">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::PropertySet" referenceName="prs"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+            <tools xsi:type="tool:ContainerCreationDescription" name="PropertyInst" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='VariabilityEntitySet']/@subContainerMappings[name='PropertySet']/@subContainerMappings[name='PropertyInst']" iconPath="/bb.design/icons/property-small.png">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::PropertyInst" referenceName="pi"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ToolGroup" name="Parameter">
+            <tools xsi:type="tool:ContainerCreationDescription" name="ParameterSet" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='VariabilityEntitySet']/@subContainerMappings[name='ParameterSet']" iconPath="/bb.design/icons/param-small.png">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::ParameterSet" referenceName="pas"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+            <tools xsi:type="tool:ContainerCreationDescription" name="ParameterInst" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='VariabilityEntitySet']/@subContainerMappings[name='ParameterSet']/@subContainerMappings[name='ParameterInst']" iconPath="/bb.design/icons/param-small.png">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::ParameterInst" referenceName="pi"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ToolGroup" name="Context">
+            <tools xsi:type="tool:ContainerCreationDescription" name="ContextSet" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='VariabilityEntitySet']/@subContainerMappings[name='ContextSet']" iconPath="/bb.design/icons/context-small.png">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::ContextSet" referenceName="cs"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+            <tools xsi:type="tool:ContainerCreationDescription" name="ContextInst" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='VariabilityEntitySet']/@subContainerMappings[name='ContextSet']/@subContainerMappings[name='ContextInst']" iconPath="/bb.design/icons/context-small.png">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::ContextInst" referenceName="ci"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ToolGroup" name="PortElement">
+            <tools xsi:type="tool:ContainerCreationDescription" name="PortElementSet" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='VariabilityEntitySet']/@subContainerMappings[name='PortElementSet']" iconPath="/bb.design/icons/port-small.png">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::PortElementSet" referenceName="pes"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+            <tools xsi:type="tool:ContainerCreationDescription" name="PortElement" containerMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='VariabilityEntitySet']/@subContainerMappings[name='PortElementSet']/@subContainerMappings[name='PortElement']" iconPath="/bb.design/icons/port-small.png">
+              <variable name="container"/>
+              <viewVariable name="containerView"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::PortElement" referenceName="pe"/>
+                </firstModelOperations>
+              </initialOperation>
+            </tools>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="Allocation">
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="SharedResources" nodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@subNodeMappings[name='SharedResources']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::SharedResources" referenceName="sharedresources"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="ResourceGroupId" nodeMappings="//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@subNodeMappings[name='ResourceGroupdId']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="bbn::ResourceGroupId" referenceName="resourcegroupid"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </defaultLayer>
+    </ownedRepresentations>
+    <ownedJavaExtensions qualifiedClassName="bb.design.Services"/>
+  </ownedViewpoints>
+  <userColorsPalettes name="Colors">
+    <entries xsi:type="description:UserFixedColor" red="2" green="136" blue="209" name="00"/>
+    <entries xsi:type="description:UserFixedColor" red="3" green="169" blue="244" name="01"/>
+    <entries xsi:type="description:UserFixedColor" red="179" green="229" blue="252" name="02"/>
+    <entries xsi:type="description:UserFixedColor" red="68" green="138" blue="255" name="10"/>
+    <entries xsi:type="description:UserFixedColor" red="33" green="33" blue="33" name="11"/>
+    <entries xsi:type="description:UserFixedColor" red="117" green="117" blue="117" name="12"/>
+    <entries xsi:type="description:UserFixedColor" red="189" green="189" blue="189" name="13"/>
+  </userColorsPalettes>
+</description:Group>
