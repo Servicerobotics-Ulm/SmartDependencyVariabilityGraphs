@@ -5,7 +5,7 @@ The model-driven implementation in Eclipse allows users to describe via DSLs:
 1) Building blocks at different levels of abstraction, their variability entities and the decomposition relationships between building blocks.
 2) Dependency Variability Graphs: The graph-based dependency relationships between variability entities (including their values by applying function composition).
 
-![SmartDVG](https://user-images.githubusercontent.com/95618174/184310493-5eee7d3d-2adc-4d50-8133-f214e9da46d3.png)
+![SmartDVG-2](https://user-images.githubusercontent.com/95618174/184312424-ee8ba8b8-9b38-488d-8f8c-1a05a3920f60.png)
 
 A code generator is then able to generate a solver of such models that determines requirements-related and environmental-contextual variant bindings of building blocks. Requirements specified by the endusers of these building blocks can be constraints for specific properties of the model (a property is a special subtype of a variability entity) and/or preference specifications for modeled conflict of objectives between properties.  
 
