@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="dor" nsURI="http://www.example.org/dor" nsPrefix="dor">
+  <eClassifiers xsi:type="ecore:EClass" name="ReferenceDef" eSuperTypes="#//TypeDef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dod" lowerBound="1" eType="#//DataObjectDef"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ElementDef">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="td" lowerBound="1" eType="#//TypeDef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="siunit" eType="#//SIUnit"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataObjectDef" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ed" lowerBound="1" upperBound="-1"
+        eType="#//ElementDef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="er" eType="#//ElementRelationship"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataObjectRepo">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="udod" upperBound="-1" eType="#//UnboundedDataObjectDef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bdod" upperBound="-1" eType="#//BoundedDataObjectDef"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TypeDef" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cardinality" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BoolDef" eSuperTypes="#//TypeDef"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IntegerDef" eSuperTypes="#//TypeDef"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RealDef" eSuperTypes="#//TypeDef"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StringDef" eSuperTypes="#//TypeDef"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BoundedDataObjectDef" eSuperTypes="#//DataObjectDef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vi" lowerBound="1" eType="ecore:EClass ../../Vi/model/vi.ecore#//VSPInit"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnboundedDataObjectDef" eSuperTypes="#//DataObjectDef"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SIUnit">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="prefix" eType="#//Prefix"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Prefix">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral=""/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ElementRelationship">
+    <eLiterals name="AND"/>
+    <eLiterals name="XOR" value="1"/>
+  </eClassifiers>
+</ecore:EPackage>
