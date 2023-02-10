@@ -1,0 +1,88 @@
+package org.xtext.tcl.generator;
+
+import org.eclipse.xtend2.lib.StringConcatenation;
+
+@SuppressWarnings("all")
+public class Helpers {
+  public static CharSequence generateWriteToFileFunction() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("(defun writeToFile (name valueList)");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("(setf filename \"dataForSolver.txt\")");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("(with-open-file (str filename :direction :output :if-exists :append :if-does-not-exist :create)");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("(format str \"~s: \" name)");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append(")");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("(setf l (length valueList))");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("(setf c 0)");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("(loop for value in valueList do");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("(cond ");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("(");
+    _builder.newLine();
+    _builder.append("\t     \t\t");
+    _builder.append("(< c (- l 1))");
+    _builder.newLine();
+    _builder.append("\t     \t\t\t");
+    _builder.append("(with-open-file (str filename :direction :output :if-exists :append :if-does-not-exist :create)");
+    _builder.newLine();
+    _builder.append("\t\t \t\t\t\t");
+    _builder.append("(format str \"~s, \" value)");
+    _builder.newLine();
+    _builder.append("\t\t \t\t\t");
+    _builder.append(")");
+    _builder.newLine();
+    _builder.append("\t\t \t");
+    _builder.append(")");
+    _builder.newLine();
+    _builder.append("\t \t\t");
+    _builder.append("(T");
+    _builder.newLine();
+    _builder.append("\t\t\t\t ");
+    _builder.append("(with-open-file (str filename :direction :output :if-exists :append :if-does-not-exist :create)");
+    _builder.newLine();
+    _builder.append("\t\t\t\t \t");
+    _builder.append("(format str \"~s\" value)");
+    _builder.newLine();
+    _builder.append("\t\t\t\t ");
+    _builder.append(")");
+    _builder.newLine();
+    _builder.append("\t \t\t");
+    _builder.append(")");
+    _builder.newLine();
+    _builder.append("\t \t");
+    _builder.append(")");
+    _builder.newLine();
+    _builder.append("\t \t");
+    _builder.append("(incf c)");
+    _builder.newLine();
+    _builder.append("\t ");
+    _builder.append(")");
+    _builder.newLine();
+    _builder.append("\t ");
+    _builder.append("(with-open-file (str filename :direction :output :if-exists :append :if-does-not-exist :create)");
+    _builder.newLine();
+    _builder.append("\t ");
+    _builder.append("(format str \"~%\"))");
+    _builder.newLine();
+    _builder.append(" ");
+    _builder.append(")");
+    _builder.newLine();
+    return _builder;
+  }
+}

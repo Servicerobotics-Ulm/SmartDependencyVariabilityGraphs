@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.xtext.tcl
+Bundle-ManifestVersion: 2
+Bundle-Name: org.xtext.tcl
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.xtext.tcl; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: bbn,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.xtext.tcl.scoping,
+ org.xtext.tcl.parser.antlr.internal,
+ org.xtext.tcl.validation,
+ org.xtext.tcl.serializer,
+ org.xtext.tcl.generator,
+ org.xtext.tcl.parser.antlr,
+ org.xtext.tcl,
+ org.xtext.tcl.services,
+ org.xtext.tcl.formatting2
+Import-Package: org.apache.log4j
