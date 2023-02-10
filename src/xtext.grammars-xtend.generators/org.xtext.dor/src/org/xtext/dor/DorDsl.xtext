@@ -9,8 +9,8 @@ DataObjectRepo returns DataObjectRepo:
 	{DataObjectRepo}
 	'DataObjectRepo'
 	'{'
-		('udod' '{' udod+=UnboundedDataObjectDef ( "," udod+=UnboundedDataObjectDef)* '}' )?
-		('bdod' '{' bdod+=BoundedDataObjectDef ( "," bdod+=BoundedDataObjectDef)* '}' )?
+		(udod+=UnboundedDataObjectDef (udod+=UnboundedDataObjectDef)*)?
+		(bdod+=BoundedDataObjectDef (bdod+=BoundedDataObjectDef)*)?
 	'}';
 
 
@@ -35,24 +35,27 @@ Type returns vi::Type:
 	Bool | Integer | Real | String0;
 
 
-
-
+enum ElementRelationship returns ElementRelationship:
+	AND = 'AND' | XOR = 'XOR'
+;
 
 UnboundedDataObjectDef returns UnboundedDataObjectDef:
 	'UnboundedDataObjectDef'
 	name=EString
+	('['er=ElementRelationship']')?
 	'{'
 		('description' description=EString)?
-		'ed' '{' ed+=ElementDef ( "," ed+=ElementDef)* '}' 
+		ed+=ElementDef ( "," ed+=ElementDef)*
 	'}';
 
 BoundedDataObjectDef returns BoundedDataObjectDef:
 	'BoundedDataObjectDef'
 	name=EString
+	('['er=ElementRelationship']')?
 	'{'
 		('description' description=EString)?
-		'ed' '{' ed+=ElementDef ( "," ed+=ElementDef)* '}' 
-		'vi' vi=VSPInit
+		ed+=ElementDef ( "," ed+=ElementDef)*
+		vi=VSPInit
 	'}';
 
 EString returns ecore::EString:
@@ -61,161 +64,140 @@ EString returns ecore::EString:
 ElementDef returns ElementDef:
 	'ElementDef'
 	name=EString
-	'{'
-		'td' td=TypeDef
-		('siunit' siunit=SIUnit)?
-	'}';
+	'is' td=TypeDef
+	(siunit=SIUnit)?
+	;
 
 SIUnit returns SIUnit:
 	{SIUnit}
 	'SIUnit'
 	name=EString
-	'{'
-		('prefix' prefix=Prefix)?
-	'}';
+	('prefix' prefix=Prefix)?
+	;
 
 ReferenceDef returns ReferenceDef:
-	'ReferenceDef'
-	'{'
-		('cardinality' cardinality=EString)?
-		'dod' dod=[DataObjectDef|EString]
-	'}';
+	'=>'
+	dod=[DataObjectDef|EString]
+	('['cardinality=EString']')?
+	;
 
 BoolDef returns BoolDef:
 	{BoolDef}
-	'BoolDef'
-	'{'
-		('cardinality' cardinality=EString)?
-	'}';
+	'Bool'
+	('['cardinality=EString']')?
+	;
 
 IntegerDef returns IntegerDef:
 	{IntegerDef}
-	'IntegerDef'
-	'{'
-		('cardinality' cardinality=EString)?
-	'}';
+	'Integer'
+	('['cardinality=EString']')?
+	;
 
 RealDef returns RealDef:
 	{RealDef}
-	'RealDef'
-	'{'
-		('cardinality' cardinality=EString)?
-	'}';
+	'Real'
+	('['cardinality=EString']')?
+	;
 
 StringDef returns StringDef:
 	{StringDef}
-	'StringDef'
-	'{'
-		('cardinality' cardinality=EString)?
-	'}';
+	'String'
+	('['cardinality=EString']')?
+	;
 
 Prefix returns Prefix:
 	{Prefix}
-	'Prefix'
 	name=EString;
 
 ComplexVSPInit returns vi::ComplexVSPInit:
 	'ComplexVSPInit'
 	'{'
-		'vi' '{' vi+=VI ( "," vi+=VI)* '}' 
+		vi+=VI ( "," vi+=VI)*
 	'}';
 
 BoolVSPInit returns vi::BoolVSPInit:
 	'BoolVSPInit'
-	'{'
-		'vsp' '{' vsp+=EBoolean ( "," vsp+=EBoolean)* '}' 
-	'}';
+	'[' vsp+=EBoolean ( "," vsp+=EBoolean)* ']' 
+	;
 
 IntegerVSPInit returns vi::IntegerVSPInit:
 	{vi::IntegerVSPInit}
 	'IntegerVSPInit'
-	'{'
-		('vsp' '{' vsp+=EInt ( "," vsp+=EInt)* '}' )?
-		('irg' irg=IntegerRandomGenerator)?
-	'}';
+	('[' vsp+=EInt ( "," vsp+=EInt)* ']')?
+	(irg=IntegerRandomGenerator)?
+	;
 
 RealVSPInit returns vi::RealVSPInit:
 	{vi::RealVSPInit}
 	'RealVSPInit'
-	'{'
-		('vsp' '{' vsp+=EDouble ( "," vsp+=EDouble)* '}' )?
-		('rrg' rrg=RealRandomGenerator)?
-	'}';
+	('[' vsp+=EDouble ( "," vsp+=EDouble)* ']' )?
+	(rrg=RealRandomGenerator)?
+	;
 
 StringVSPInit returns vi::StringVSPInit:
 	'StringVSPInit'
-	'{'
-		'vsp' '{' vsp+=EString ( "," vsp+=EString)* '}' 
-	'}';
+	'[' vsp+=EString ( "," vsp+=EString)* ']' 
+	;
 
 VI returns vi::VI:
-	'VI'
-	'{'
-		'e' '{' e+=Element ( "," e+=Element)* '}' 
-	'}';
+	'['
+		e+=Element ( "," e+=Element)*
+	']';
 
 Element returns vi::Element:
 	'Element'
 	name=EString
-	'{'
-		't' t=Type
-	'}';
+	t=Type
+	;
 
 Bool returns vi::Bool:
-	'Bool'
-	'{'
-		'bv' '{' bv+=BoolValue ( "," bv+=BoolValue)* '}' 
-	'}';
+	'BoolInit'
+	'['
+		bv+=BoolValue ( "," bv+=BoolValue)*
+	']';
 
 Integer returns vi::Integer:
-	'Integer'
-	'{'
-		'iv' '{' iv+=IntegerValue ( "," iv+=IntegerValue)* '}' 
-	'}';
+	'IntegerInit'
+	'['
+		iv+=IntegerValue ( "," iv+=IntegerValue)*
+	']';
 
 Real returns vi::Real:
-	'Real'
-	'{'
-		'rv' '{' rv+=RealValue ( "," rv+=RealValue)* '}' 
-	'}';
+	'RealInit'
+	'['
+		rv+=RealValue ( "," rv+=RealValue)*
+	']';
 
 String0 returns vi::String:
-	'String'
-	'{'
-		'sv' '{' sv+=StringValue ( "," sv+=StringValue)* '}' 
-	'}';
+	'StringInit'
+	'['
+		sv+=StringValue ( "," sv+=StringValue)*
+	']';
 
 BoolValue returns vi::BoolValue:
-	value?='value'
-	'BoolValue'
+	value=EBoolean
 	;
 
 EBoolean returns ecore::EBoolean:
 	'true' | 'false';
 
 IntegerValue returns vi::IntegerValue:
-	'IntegerValue'
-	'{'
-		'value' value=EInt
-	'}';
+	value=EInt
+	;
 
 EInt returns ecore::EInt:
 	'-'? INT;
 
 RealValue returns vi::RealValue:
-	'RealValue'
-	'{'
-		'value' value=EDouble
-	'}';
+	value=EDouble
+	;
 
 EDouble returns ecore::EDouble:
 	'-'? INT? '.' INT (('E'|'e') '-'? INT)?;
 
 StringValue returns vi::StringValue:
-	'StringValue'
-	'{'
-		'value' value=EString
-	'}';
+	value=EString
+	;
 
 IntegerRandomGenerator returns vi::IntegerRandomGenerator:
 	'IntegerRandomGenerator'
