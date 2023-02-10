@@ -1,26 +1,65 @@
 package org.xtext.bb.generator;
 
-import bbn.APRO;
-import bbn.AbstractOutputPort;
-import bbn.BuildingBlock;
-import bbn.DAGGR;
-import bbn.DMAGR;
-import bbn.DVG;
-import bbn.INIT;
-import bbn.Pattern;
-import bbn.SAPRO;
-import bbn.VariabilityEntity;
+import BbDvgTcl.APRO;
+import BbDvgTcl.AbstractOutputPort;
+import BbDvgTcl.BuildingBlock;
+import BbDvgTcl.BuildingBlockDescription;
+import BbDvgTcl.DAGGR;
+import BbDvgTcl.DMAGR;
+import BbDvgTcl.DVG;
+import BbDvgTcl.INIT;
+import BbDvgTcl.Pattern;
+import BbDvgTcl.SAPRO;
+import BbDvgTcl.VariabilityEntity;
 import com.google.common.base.Objects;
 import dor.DataObjectDef;
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 
 @SuppressWarnings("all")
 public class SolutionInterfaceMatching {
+  private Map<Integer, List<Pattern>> solutionDVGPattern;
+
+  public Map<Integer, List<Pattern>> getSolutionDVGPattern() {
+    return this.solutionDVGPattern;
+  }
+
+  public void start(final DVG dvg, final Map<Integer, BuildingBlockDescription> solutionBB, final List<List<Integer>> allocations) {
+    HashMap<Integer, List<Pattern>> _hashMap = new HashMap<Integer, List<Pattern>>();
+    this.solutionDVGPattern = _hashMap;
+    DMAGR dmagr = this.getDMAGR(dvg);
+    List<VariabilityEntity> solutionInterface = this.determineSolutionInterface2(dmagr);
+    if ((dmagr != null)) {
+      List<String> determined = new ArrayList<String>();
+      for (int i = 0; (i < allocations.size()); i++) {
+        for (int j = 0; (j < allocations.get(i).size()); j++) {
+          {
+            String bbdesc = solutionBB.get(allocations.get(i).get(j)).getName();
+            boolean _contains = determined.contains(bbdesc);
+            boolean _not = (!_contains);
+            if (_not) {
+              determined.add(bbdesc);
+              DVG _dvg = solutionBB.get(allocations.get(i).get(j)).getDvg();
+              boolean _tripleNotEquals = (_dvg != null);
+              if (_tripleNotEquals) {
+                List<Pattern> resPattern = this.findMatchingOutputPorts2(solutionBB.get(allocations.get(i).get(j)).getDvg(), solutionInterface);
+                this.solutionDVGPattern.put(allocations.get(i).get(j), resPattern);
+              } else {
+                InputOutput.<String>println("ERROR: No DVG reference of a capable resource!");
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   public DMAGR getDMAGR(final DVG dvg) {
     EList<Pattern> _pattern = dvg.getPattern();
     for (final Pattern i : _pattern) {

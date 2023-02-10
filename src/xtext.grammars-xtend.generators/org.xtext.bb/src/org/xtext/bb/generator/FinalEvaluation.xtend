@@ -1,604 +1,493 @@
-//================================================================
-//
-//  Copyright (c) 2022 Technische Hochschule Ulm, Servicerobotics Ulm, Germany
-//
-//        Servicerobotik Ulm 
-//        Christian Schlegel
-//        Ulm University of Applied Sciences
-//        Prittwitzstr. 10
-//        89075 Ulm
-//        Germany
-//
-//	  http://www.servicerobotik-ulm.de/
-//
-//  This file is part of the SmartDependencyVariabilityGraph feature.
-//
-//  Author:
-//		Timo Blender
-//
-//  Licence:
-//
-//  BSD 3-Clause License
-//  
-//  Copyright (c) 2022, Technische Hochschule Ulm, Servicerobotics Ulm
-//  All rights reserved.
-//  
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//  
-//  * Redistributions of source code must retain the above copyright notice, this
-//    list of conditions and the following disclaimer.
-//  
-//  * Redistributions in binary form must reproduce the above copyright notice,
-//    this list of conditions and the following disclaimer in the documentation
-//    and/or other materials provided with the distribution.
-//  
-//  * Neither the name of the copyright holder nor the names of its
-//    contributors may be used to endorse or promote products derived from
-//    this software without specific prior written permission.
-//  
-//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-//  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-//  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-//  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-//  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-//  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-//  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-//  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-//  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//  https://opensource.org/licenses/BSD-3-Clause
-//
-//================================================================
-
 package org.xtext.bb.generator 
 import java.util.Map
+import BbDvgTcl.FinalOperation
 
 class FinalEvaluation {
 	
-	def String getNonSoSCode(String name, Map<String, Integer> active, Map<String, Integer> passive, StringBuilder to_tcl) {
-		var StringBuilder code = new StringBuilder()
-
-				code.append("\n\t\t")
-				code.append("Map<String, Integer> active = new HashMap<String, Integer>();")
-				code.append("\n\t\t")
-				code.append("Map<String, Integer> passive = new HashMap<String, Integer>();")			
-				
-				for (i : active.entrySet) {
-					code.append("active.put(\""+i.key+"\","+i.value+");")
-					code.append("\n\t\t")
+	// used by:
+	// - SingleRobot/TCL
+	static def generateSolveCode(String outputName, boolean foimax, String CALL_SEQUENCE_CODE, Map<String, Integer> ACTIVE, Map<String, Integer> PASSIVE_LOOKUP, Map<String, String> ACTIVE_BBNAME, Map<String, Integer> ACTIVE_IINDEX, Map<String, String> ACTIVE_VE) {
+		'''
+		void solve() {
+			List<Node> params;
+			List<List<Node>> params_2d;
+			
+			«CALL_SEQUENCE_CODE»
+			
+			Map<String, Integer> active = new HashMap<String, Integer>();
+			Map<String, Integer> passive = new HashMap<String, Integer>();
+		
+			«FOR i : ACTIVE.entrySet»
+				active.put("«i.key»",«i.value»);
+			«ENDFOR»
+			«FOR i : PASSIVE_LOOKUP.entrySet»
+				passive.put("«i.key»",«i.value»);
+			«ENDFOR»
+			
+			Map<String, String> ACTIVE_BBNAME = new HashMap<String, String>();
+			«FOR i : ACTIVE_BBNAME.entrySet»
+				ACTIVE_BBNAME.put("«i.key»","«i.value»");
+			«ENDFOR»	
+			Map<String, Integer> ACTIVE_IINDEX = new HashMap<String, Integer>();
+			«FOR i : ACTIVE_IINDEX.entrySet»
+				ACTIVE_IINDEX.put("«i.key»",«i.value»);
+			«ENDFOR»	
+			Map<String, String> ACTIVE_VE = new HashMap<String, String>();
+			«FOR i : ACTIVE_VE.entrySet»
+				ACTIVE_VE.put("«i.key»","«i.value»");
+			«ENDFOR»									
+		
+			Node result = NODE_COLLECTION.get("«outputName»");
+			int cnt = 0;
+			List<SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object>> rtmp = result.vsp();
+			SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> finalSlot = null;
+			«IF foimax»
+				double finalValue = Double.MIN_VALUE;
+			«ELSE»
+				double finalValue = Double.MAX_VALUE;
+			«ENDIF»
+			int finalIndex = 0;
+			for (SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> i : rtmp) {
+				List<SimpleEntry<String,Integer>> AleafNamesAndIndices = new ArrayList<>();
+				Map<String, Boolean> AflagLeaf = new HashMap<String, Boolean>();
+				List<SimpleEntry<String,Integer>> PleafNamesAndIndices = new ArrayList<>();
+				Map<String, Boolean> PflagLeaf = new HashMap<String, Boolean>();
+			
+				List<List<SimpleEntry<String,Integer>>> header = i.getKey();
+				for (List<SimpleEntry<String,Integer>> headerRow : header) {
+					for (SimpleEntry<String,Integer> headerEntry : headerRow) {
+						System.out.print(headerEntry.getKey()+": "+headerEntry.getValue());
+						System.out.print("\t");
+						if (active.containsKey(headerEntry.getKey()) && !AflagLeaf.containsKey(headerEntry.getKey())) {
+							AleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+							AflagLeaf.put(headerEntry.getKey(),true);
+						}
+						if (passive.containsKey(headerEntry.getKey()) && !PflagLeaf.containsKey(headerEntry.getKey())) {
+							PleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+							PflagLeaf.put(headerEntry.getKey(),true);
+						}
+					}
+					System.out.println();
 				}
-	
-				for (i : passive.entrySet) {
-					code.append("passive.put(\""+i.key+"\","+i.value+");")
-					code.append("\n\t\t")
-				}			
-				
-				code.append("\n\t\t")
-				code.append("Map<String, List<Object>> TO_TCL = new HashMap<String, List<Object>>();")
-				code.append("\n\t\t")
-				code.append("List<Object> l;")
-				code.append("\n\t\t")
-				code.append(to_tcl)			
-				
-				code.append("\n\t\t")
-				code.append("Node result = NODE_COLLECTION.get(\""+name+"\");")
-				code.append("\n\t\t")
-				code.append("int cnt = 0;")
-				code.append("\n\t\t")
-				code.append("List<SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object>> rtmp = result.vsp();")			
-				code.append("\n\t\t")
-				code.append("SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> maxSlot = null;")
-				code.append("\n\t\t")
-				code.append("double maxValue = 0.0;")
-				code.append("\n\t\t")
-				code.append("int maxIndex = 0;")
-				code.append("\n\t\t")			
-				code.append("for (SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> i : rtmp) {")
-								
-					code.append("\n\t\t")
-					code.append("List<SimpleEntry<String,Integer>> AleafNamesAndIndices = new ArrayList<>();")
-					code.append("\n\t\t")
-					code.append("Map<String, Boolean> AflagLeaf = new HashMap<String, Boolean>();")		
-					
-					code.append("\n\t\t")
-					code.append("List<SimpleEntry<String,Integer>> PleafNamesAndIndices = new ArrayList<>();")
-					code.append("\n\t\t")
-					code.append("Map<String, Boolean> PflagLeaf = new HashMap<String, Boolean>();")					
-					
-					code.append("\n\t\t\t")
-					code.append("List<List<SimpleEntry<String,Integer>>> header = i.getKey();")
-					code.append("\n\t\t\t")
-					code.append("for (List<SimpleEntry<String,Integer>> headerRow : header) {")
-						code.append("\n\t\t\t\t")
-						code.append("for (SimpleEntry<String,Integer> headerEntry : headerRow) {")
-							code.append("\n\t\t\t\t\t")
-							code.append("System.out.print(headerEntry.getKey()+\": \"+headerEntry.getValue());")
-							code.append("\n\t\t\t\t\t")
-							code.append("System.out.print(\"\t\");")
-				
-				
-							code.append("if (active.containsKey(headerEntry.getKey()) && !AflagLeaf.containsKey(headerEntry.getKey())) {")
-								code.append("\n\t\t\t\t\t")
-								code.append("AleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));")
-								code.append("\n\t\t\t\t\t")
-								code.append("AflagLeaf.put(headerEntry.getKey(),true);")
-							code.append("\n\t\t\t\t")
-							code.append("}")
-							
-							code.append("if (passive.containsKey(headerEntry.getKey()) && !PflagLeaf.containsKey(headerEntry.getKey())) {")
-								code.append("\n\t\t\t\t\t")
-								code.append("PleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));")
-								code.append("\n\t\t\t\t\t")
-								code.append("PflagLeaf.put(headerEntry.getKey(),true);")
-							code.append("\n\t\t\t\t")
-							code.append("}")										
-							
-						code.append("\n\t\t\t\t")
-						code.append("}")
-						code.append("\n\t\t\t\t")
-						code.append("System.out.println();")
-					code.append("\n\t\t\t")
-					code.append("}")
-	
-					code.append("System.out.println(\"################## ACTIVE VARIANT: \");")
-					code.append("\n\t\t")
-					code.append("for (int j = 0; j < AleafNamesAndIndices.size(); j++) {")
-						code.append("\n\t\t\t")
-						code.append("System.out.println(AleafNamesAndIndices.get(j).getKey() + \": \" + AleafNamesAndIndices.get(j).getValue());")
-					code.append("\n\t\t")
-					code.append("}")	
-	
-					code.append("System.out.println(\"################## FOR PASSIVE STATES: \");")
-					code.append("\n\t\t")
-					code.append("for (int j = 0; j < PleafNamesAndIndices.size(); j++) {")
-						code.append("\n\t\t\t")
-						code.append("System.out.println(PleafNamesAndIndices.get(j).getKey() + \": \" + PleafNamesAndIndices.get(j).getValue());")
-					code.append("\n\t\t")
-					code.append("}")		
-	
-					
-				code.append("\n\t\t")
-				code.append("System.out.println(\"=================> [\"+cnt+\", \"+i.getValue()+\"]\");")
-				code.append("\n\t\t")
-				code.append("System.out.println(\"------------------------------------\");")
-			
-				
-				code.append("\n\t\t")
-				code.append("if (((Number)i.getValue()).doubleValue() > maxValue) {")
-					code.append("\n\t\t\t")
-					code.append("maxValue = ((Number)i.getValue()).doubleValue();")
-					code.append("\n\t\t\t")
-					code.append("maxSlot = i;")
-					code.append("\n\t\t\t")
-					code.append("maxIndex = cnt;")				
-				code.append("\n\t\t")
-				code.append("}")
-				code.append("\n\t\t")
-				code.append("cnt++;")
-				code.append("\n\t\t")
-				code.append("}")
-				
-				code.append("\n\t\t")
-				code.append("System.out.println(\"\");")
-				code.append("\n\t\t")
-				code.append("System.out.println(\"\");")
-				//code.append("\n\t\t")
-				//code.append("System.out.println(\"MaxSlot with MaxValue \"+maxSlot.getValue()+\":\");")
-				code.append("\n\t\t")
-				code.append("System.out.println(\"====================== Final Result ====================== \");")
-				code.append("\n\t\t")
-				code.append("for (List<SimpleEntry<String,Integer>> headerRow : maxSlot.getKey()) {")
-					code.append("\n\t\t\t")
-					code.append("for (SimpleEntry<String,Integer> headerEntry : headerRow) {")
-						code.append("\n\t\t\t\t")
-						code.append("System.out.print(headerEntry.getKey()+\": \"+headerEntry.getValue());")
-						code.append("\n\t\t\t\t")
-						code.append("System.out.print(\"\t\");")
-					code.append("\n\t\t\t")
-					code.append("}")
-					code.append("\n\t\t\t")
-					code.append("System.out.println();")
-				code.append("\n\t\t")
-				code.append("}")
-				
-				code.append("\n\t\t")
-				
-				code.append("List<SimpleEntry<String,Integer>> AleafNamesAndIndices = new ArrayList<>();")
-				code.append("\n\t\t")
-				code.append("Map<String, Boolean> AflagLeaf = new HashMap<String, Boolean>();")
-				code.append("\n\t\t")
-				code.append("List<SimpleEntry<String,Integer>> PleafNamesAndIndices = new ArrayList<>();")
-				code.append("\n\t\t")
-				code.append("Map<String, Boolean> PflagLeaf = new HashMap<String, Boolean>();")
-				code.append("\n\t\t")			
-				code.append("for (List<SimpleEntry<String,Integer>> headerRow : maxSlot.getKey()) {")
-					code.append("\n\t\t\t")
-					code.append("for (SimpleEntry<String,Integer> headerEntry : headerRow) {")
-						code.append("\n\t\t\t\t")
-							
-							code.append("if (active.containsKey(headerEntry.getKey()) && !AflagLeaf.containsKey(headerEntry.getKey())) {")
-								code.append("\n\t\t\t\t\t")
-								code.append("AleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));")
-								code.append("\n\t\t\t\t\t")
-								code.append("AflagLeaf.put(headerEntry.getKey(),true);")
-							code.append("\n\t\t\t\t")
-							code.append("}")
-	
-							code.append("if (passive.containsKey(headerEntry.getKey()) && !PflagLeaf.containsKey(headerEntry.getKey())) {")
-								code.append("\n\t\t\t\t\t")
-								code.append("PleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));")
-								code.append("\n\t\t\t\t\t")
-								code.append("PflagLeaf.put(headerEntry.getKey(),true);")
-							code.append("\n\t\t\t\t")
-							code.append("}")						
-												
-					code.append("\n\t\t\t")
-					code.append("}")
-				code.append("\n\t\t")
-				code.append("}")			
-				
-				code.append("System.out.println(\"################## MAX ACTIVE VARIANT: \");")
-				code.append("\n\t\t")
-				code.append("for (int i = 0; i < AleafNamesAndIndices.size(); i++) {")
-				
-					code.append("if (TO_TCL.containsKey(AleafNamesAndIndices.get(i).getKey())) {\n")
-					
-					code.append("List<SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object>> lse = this.NODE_COLLECTION.get(AleafNamesAndIndices.get(i).getKey()).vsp();\n")
-					code.append("SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> se = lse.get(AleafNamesAndIndices.get(i).getValue());\n")
-					
-					code.append("String outString = \"(tcl-kb-update :key '(is-a name instance) :value '((is-a dvgConfig)(name \"+TO_TCL.get(AleafNamesAndIndices.get(i).getKey()).get(0)+\")(instance \"+TO_TCL.get(AleafNamesAndIndices.get(i).getKey()).get(1)+\")(value \"+se.getValue()+\")))\";\n")
-	
-				    code.append("try {\n")
-				        code.append("FileWriter myWriter = new FileWriter(\"smartSoftConfig.txt\", true);\n")
-				        code.append("myWriter.write(outString+\"\\n\");\n")
-				        code.append("myWriter.close();\n")
-				        //code.append("System.out.println(\"Successfully wrote to the file.\");\n");
-				      	code.append("} catch (IOException e) {\n")
-				        code.append("System.out.println(\"An error occurred.\");\n")
-				        code.append("e.printStackTrace();\n")
-				      code.append("}\n")
-				code.append("}\n")
-				
-					code.append("\n\t\t\t")
-					code.append("System.out.println(AleafNamesAndIndices.get(i).getKey() + \": \" + AleafNamesAndIndices.get(i).getValue());")
-				code.append("\n\t\t")
-				code.append("}")
-	
-				code.append("System.out.println(\"################## FOR IDEAL PASSIVE STATES: \");")
-				code.append("\n\t\t")
-				code.append("for (int j = 0; j < PleafNamesAndIndices.size(); j++) {")
-					code.append("\n\t\t\t")
-					code.append("System.out.println(PleafNamesAndIndices.get(j).getKey() + \": \" + PleafNamesAndIndices.get(j).getValue());")
-				code.append("\n\t\t")
-				code.append("}")					
-				
-				code.append("\n\t\t")
-				code.append("System.out.println(\"=================> [\"+maxIndex+\", \"+maxSlot.getValue()+\"]\");")	
-	
-				code.append("\n\t\t")
-	
-				code.append("if (maxValue > prevValue) {")
-				code.append("\n\t\t")
-				code.append("solution = allocation;")
-				code.append("\n\t\t")
-				code.append("prevValue = maxValue;")
-				code.append("\n\t\t")
-				code.append("solutionSlot = maxSlot;")
-				code.append("\n\t\t")
-				code.append("solutionIndex = maxIndex;")
-				code.append("\n\t\t")
-				code.append("}")
-	
-				code.append("}") // End of allocation loop	
-	
-				code.append("\n\t\t")
-	
-				code.append("System.out.println(\"Best allocation is: \" + solution);");
-				code.append("\n\t\t")	
-	
-				code.append("Map<String, Integer> active = new HashMap<String, Integer>();")
-				code.append("\n\t\t")
-				code.append("Map<String, Integer> passive = new HashMap<String, Integer>();")
-				code.append("\n\t\t")
-	
-				code.append("\n\t\t")
-				code.append("System.out.println(\"\");")
-				code.append("\n\t\t")
-				code.append("System.out.println(\"\");")
-				//code.append("\n\t\t")
-				//code.append("System.out.println(\"MaxSlot with MaxValue \"+maxSlot.getValue()+\":\");")
-				code.append("\n\t\t")
-				code.append("System.out.println(\"====================== Final Result ====================== \");")
-				code.append("\n\t\t")
-				code.append("for (List<SimpleEntry<String,Integer>> headerRow : solutionSlot.getKey()) {")
-					code.append("\n\t\t\t")
-					code.append("for (SimpleEntry<String,Integer> headerEntry : headerRow) {")
-						code.append("\n\t\t\t\t")
-						code.append("System.out.print(headerEntry.getKey()+\": \"+headerEntry.getValue());")
-						code.append("\n\t\t\t\t")
-						code.append("System.out.print(\"\t\");")
-					code.append("\n\t\t\t")
-					code.append("}")
-					code.append("\n\t\t\t")
-					code.append("System.out.println();")
-				code.append("\n\t\t")
-				code.append("}")
-				
-				code.append("\n\t\t")
-				
-				code.append("List<SimpleEntry<String,Integer>> AleafNamesAndIndices = new ArrayList<>();")
-				code.append("\n\t\t")
-				code.append("Map<String, Boolean> AflagLeaf = new HashMap<String, Boolean>();")
-				code.append("\n\t\t")
-				code.append("List<SimpleEntry<String,Integer>> PleafNamesAndIndices = new ArrayList<>();")
-				code.append("\n\t\t")
-				code.append("Map<String, Boolean> PflagLeaf = new HashMap<String, Boolean>();")
-				code.append("\n\t\t")			
-				code.append("for (List<SimpleEntry<String,Integer>> headerRow : solutionSlot.getKey()) {")
-					code.append("\n\t\t\t")
-					code.append("for (SimpleEntry<String,Integer> headerEntry : headerRow) {")
-						code.append("\n\t\t\t\t")
-							
-							code.append("if (active.containsKey(headerEntry.getKey()) && !AflagLeaf.containsKey(headerEntry.getKey())) {")
-								code.append("\n\t\t\t\t\t")
-								code.append("AleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));")
-								code.append("\n\t\t\t\t\t")
-								code.append("AflagLeaf.put(headerEntry.getKey(),true);")
-							code.append("\n\t\t\t\t")
-							code.append("}")
-	
-							code.append("if (passive.containsKey(headerEntry.getKey()) && !PflagLeaf.containsKey(headerEntry.getKey())) {")
-								code.append("\n\t\t\t\t\t")
-								code.append("PleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));")
-								code.append("\n\t\t\t\t\t")
-								code.append("PflagLeaf.put(headerEntry.getKey(),true);")
-							code.append("\n\t\t\t\t")
-							code.append("}")						
-												
-					code.append("\n\t\t\t")
-					code.append("}")
-				code.append("\n\t\t")
-				code.append("}")			
-				
-				code.append("System.out.println(\"################## MAX ACTIVE VARIANT: \");")
-				code.append("\n\t\t")
-				code.append("for (int i = 0; i < AleafNamesAndIndices.size(); i++) {")
-				
-					code.append("\n\t\t\t")
-					code.append("System.out.println(AleafNamesAndIndices.get(i).getKey() + \": \" + AleafNamesAndIndices.get(i).getValue());")
-				code.append("\n\t\t")
-				code.append("}")
-	
-				code.append("System.out.println(\"################## FOR IDEAL PASSIVE STATES: \");")
-				code.append("\n\t\t")
-				code.append("for (int j = 0; j < PleafNamesAndIndices.size(); j++) {")
-					code.append("\n\t\t\t")
-					code.append("System.out.println(PleafNamesAndIndices.get(j).getKey() + \": \" + PleafNamesAndIndices.get(j).getValue());")
-				code.append("\n\t\t")
-				code.append("}")					
-				
-				code.append("\n\t\t")
-				code.append("System.out.println(\"=================> [\"+solutionIndex+\", \"+solutionSlot.getValue()+\"]\");")	
-	
-				code.append("\n\t\t")		
 		
-		return code.toString()
-	}
-	
-	def String getSoSCode() {
-		var StringBuilder code = new StringBuilder()
-		code.append("\n\t")
-		code.append("\n\t")
-		code.append("return this.NODE_COLLECTION.get(name);")
-		code.append("\n\t")
-		return code.toString()
-	}
-	
-	def static String getEQUFCode(String name, Map<String, Integer> active, Map<String, Integer> passive) {
-		var StringBuilder code = new StringBuilder()
+				System.out.println("################## ACTIVE VARIANT: ");
+				for (int j = 0; j < AleafNamesAndIndices.size(); j++) {
+					System.out.println(AleafNamesAndIndices.get(j).getKey() + ": " + AleafNamesAndIndices.get(j).getValue());
+				}
 		
-		code.append("\n\t\t")
-		code.append("Map<String, Integer> active = new HashMap<String, Integer>();")
-		code.append("\n\t\t")
-		code.append("Map<String, Integer> passive = new HashMap<String, Integer>();")			
+				System.out.println("################## FOR PASSIVE STATES: ");
+				for (int j = 0; j < PleafNamesAndIndices.size(); j++) {
+					System.out.println(PleafNamesAndIndices.get(j).getKey() + ": " + PleafNamesAndIndices.get(j).getValue());
+				}
 		
-		for (i : active.entrySet) {
-			code.append("active.put(\""+i.key+"\","+i.value+");")
-			code.append("\n\t\t")
-		}
-
-		for (i : passive.entrySet) {
-			code.append("passive.put(\""+i.key+"\","+i.value+");")
-			code.append("\n\t\t")
-		}			
+				System.out.println("=================> ["+cnt+", "+i.getValue()+"]");
+				System.out.println("------------------------------------");
 		
-		code.append("\n\t\t")
-		code.append("Map<String, List<Object>> TO_TCL = new HashMap<String, List<Object>>();")
-		code.append("\n\t\t")
-		code.append("List<Object> l;")
-		code.append("\n\t\t")		
+				«IF foimax»
+					if (((Number)i.getValue()).doubleValue() > finalValue) {
+				«ELSE»
+					if (((Number)i.getValue()).doubleValue() < finalValue) {
+				«ENDIF»
+					finalValue = ((Number)i.getValue()).doubleValue();
+					finalSlot = i;
+					finalIndex = cnt;
+				}
+				cnt++;
+			}
 		
-		code.append("\n\t\t")
-		code.append("Node result = NODE_COLLECTION.get(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("int cnt = 0;")
-		code.append("\n\t\t")
-		code.append("List<SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object>> rtmp = result.vsp();")			
-		code.append("\n\t\t")
-		code.append("SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> maxSlot = null;")
-		code.append("\n\t\t")
-		code.append("double maxValue = 0.0;")
-		code.append("\n\t\t")
-		code.append("int maxIndex = 0;")
-		code.append("\n\t\t")			
-		code.append("for (SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> i : rtmp) {")
+			System.out.println("");
+			System.out.println("");
+			System.out.println("====================== Final Result ======================");
+			for (List<SimpleEntry<String,Integer>> headerRow : finalSlot.getKey()) {
+				for (SimpleEntry<String,Integer> headerEntry : headerRow) {
+					System.out.print(headerEntry.getKey()+": "+headerEntry.getValue());
+					System.out.print("\t");
+				}
+				System.out.println();
+			}
+		
+		
+			List<SimpleEntry<String,Integer>> AleafNamesAndIndices = new ArrayList<>();
+			Map<String, Boolean> AflagLeaf = new HashMap<String, Boolean>();
+			List<SimpleEntry<String,Integer>> PleafNamesAndIndices = new ArrayList<>();
+			Map<String, Boolean> PflagLeaf = new HashMap<String, Boolean>();
+			for (List<SimpleEntry<String,Integer>> headerRow : finalSlot.getKey()) {
+				for (SimpleEntry<String,Integer> headerEntry : headerRow) {
 						
-			code.append("\n\t\t")
-			code.append("List<SimpleEntry<String,Integer>> AleafNamesAndIndices = new ArrayList<>();")
-			code.append("\n\t\t")
-			code.append("Map<String, Boolean> AflagLeaf = new HashMap<String, Boolean>();")		
+						if (active.containsKey(headerEntry.getKey()) && !AflagLeaf.containsKey(headerEntry.getKey())) {
+							AleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+							AflagLeaf.put(headerEntry.getKey(),true);
+						}
+						if (passive.containsKey(headerEntry.getKey()) && !PflagLeaf.containsKey(headerEntry.getKey())) {
+							PleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+							PflagLeaf.put(headerEntry.getKey(),true);
+						}
+				}
+			}
 			
-			code.append("\n\t\t")
-			code.append("List<SimpleEntry<String,Integer>> PleafNamesAndIndices = new ArrayList<>();")
-			code.append("\n\t\t")
-			code.append("Map<String, Boolean> PflagLeaf = new HashMap<String, Boolean>();")					
+			String dvgConfiguration = "{\n\t\"dvg-configuration\":\n\t\t[\n";
+			System.out.println("################## BEST ACTIVE VARIANT: ");
+			for (int i = 0; i < AleafNamesAndIndices.size(); i++) {
+		
+				List<SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object>> lse = this.NODE_COLLECTION.get(AleafNamesAndIndices.get(i).getKey()).vsp();
+				SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> se = lse.get(AleafNamesAndIndices.get(i).getValue());
+				
+				dvgConfiguration += "\t\t\t";
+				dvgConfiguration += createJSONMessageEntry(ACTIVE_BBNAME.get(AleafNamesAndIndices.get(i).getKey()), ACTIVE_IINDEX.get(AleafNamesAndIndices.get(i).getKey()), ACTIVE_VE.get(AleafNamesAndIndices.get(i).getKey()), se.getValue());
+				if (i < AleafNamesAndIndices.size()-1) {
+					dvgConfiguration += ",";
+				}
+				dvgConfiguration += "\n";
 			
-			code.append("\n\t\t\t")
-			code.append("List<List<SimpleEntry<String,Integer>>> header = i.getKey();")
-			code.append("\n\t\t\t")
-			code.append("for (List<SimpleEntry<String,Integer>> headerRow : header) {")
-				code.append("\n\t\t\t\t")
-				code.append("for (SimpleEntry<String,Integer> headerEntry : headerRow) {")
-					code.append("\n\t\t\t\t\t")
-					code.append("System.out.print(headerEntry.getKey()+\": \"+headerEntry.getValue());")
-					code.append("\n\t\t\t\t\t")
-					code.append("System.out.print(\"\t\");")
-		
-		
-					code.append("if (active.containsKey(headerEntry.getKey()) && !AflagLeaf.containsKey(headerEntry.getKey())) {")
-						code.append("\n\t\t\t\t\t")
-						code.append("AleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));")
-						code.append("\n\t\t\t\t\t")
-						code.append("AflagLeaf.put(headerEntry.getKey(),true);")
-					code.append("\n\t\t\t\t")
-					code.append("}")
-					
-					code.append("if (passive.containsKey(headerEntry.getKey()) && !PflagLeaf.containsKey(headerEntry.getKey())) {")
-						code.append("\n\t\t\t\t\t")
-						code.append("PleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));")
-						code.append("\n\t\t\t\t\t")
-						code.append("PflagLeaf.put(headerEntry.getKey(),true);")
-					code.append("\n\t\t\t\t")
-					code.append("}")										
-					
-				code.append("\n\t\t\t\t")
-				code.append("}")
-				code.append("\n\t\t\t\t")
-				code.append("System.out.println();")
-			code.append("\n\t\t\t")
-			code.append("}")
-
-			code.append("System.out.println(\"################## ACTIVE VARIANT: \");")
-			code.append("\n\t\t")
-			code.append("for (int j = 0; j < AleafNamesAndIndices.size(); j++) {")
-				code.append("\n\t\t\t")
-				code.append("System.out.println(AleafNamesAndIndices.get(j).getKey() + \": \" + AleafNamesAndIndices.get(j).getValue());")
-			code.append("\n\t\t")
-			code.append("}")	
-
-			code.append("System.out.println(\"################## FOR PASSIVE STATES: \");")
-			code.append("\n\t\t")
-			code.append("for (int j = 0; j < PleafNamesAndIndices.size(); j++) {")
-				code.append("\n\t\t\t")
-				code.append("System.out.println(PleafNamesAndIndices.get(j).getKey() + \": \" + PleafNamesAndIndices.get(j).getValue());")
-			code.append("\n\t\t")
-			code.append("}")		
-
+				System.out.println(AleafNamesAndIndices.get(i).getKey() + ": " + AleafNamesAndIndices.get(i).getValue());
+			}
+			System.out.println("################## FOR IDEAL PASSIVE STATES: ");
+			for (int j = 0; j < PleafNamesAndIndices.size(); j++) {
+				System.out.println(PleafNamesAndIndices.get(j).getKey() + ": " + PleafNamesAndIndices.get(j).getValue());
+			}
 			
-		code.append("\n\t\t")
-		code.append("System.out.println(\"=================> [\"+cnt+\", \"+i.getValue()+\"]\");")
-		code.append("\n\t\t")
-		code.append("System.out.println(\"------------------------------------\");")
-	
-		
-		code.append("\n\t\t")
-		code.append("if (((Number)i.getValue()).doubleValue() > maxValue) {")
-			code.append("\n\t\t\t")
-			code.append("maxValue = ((Number)i.getValue()).doubleValue();")
-			code.append("\n\t\t\t")
-			code.append("maxSlot = i;")
-			code.append("\n\t\t\t")
-			code.append("maxIndex = cnt;")				
-		code.append("\n\t\t")
-		code.append("}")
-		code.append("\n\t\t")
-		code.append("cnt++;")
-		code.append("\n\t\t")
-		code.append("}")
-		
-		code.append("\n\t\t")
-		code.append("System.out.println(\"\");")
-		code.append("\n\t\t")
-		code.append("System.out.println(\"\");")
-		//code.append("\n\t\t")
-		//code.append("System.out.println(\"MaxSlot with MaxValue \"+maxSlot.getValue()+\":\");")
-		code.append("\n\t\t")
-		code.append("System.out.println(\"====================== Final Result ====================== \");")
-		code.append("\n\t\t")
-		code.append("for (List<SimpleEntry<String,Integer>> headerRow : maxSlot.getKey()) {")
-			code.append("\n\t\t\t")
-			code.append("for (SimpleEntry<String,Integer> headerEntry : headerRow) {")
-				code.append("\n\t\t\t\t")
-				code.append("System.out.print(headerEntry.getKey()+\": \"+headerEntry.getValue());")
-				code.append("\n\t\t\t\t")
-				code.append("System.out.print(\"\t\");")
-			code.append("\n\t\t\t")
-			code.append("}")
-			code.append("\n\t\t\t")
-			code.append("System.out.println();")
-		code.append("\n\t\t")
-		code.append("}")
-		
-		code.append("\n\t\t")
-		
-		code.append("List<SimpleEntry<String,Integer>> AleafNamesAndIndices = new ArrayList<>();")
-		code.append("\n\t\t")
-		code.append("Map<String, Boolean> AflagLeaf = new HashMap<String, Boolean>();")
-		code.append("\n\t\t")
-		code.append("List<SimpleEntry<String,Integer>> PleafNamesAndIndices = new ArrayList<>();")
-		code.append("\n\t\t")
-		code.append("Map<String, Boolean> PflagLeaf = new HashMap<String, Boolean>();")
-		code.append("\n\t\t")			
-		code.append("for (List<SimpleEntry<String,Integer>> headerRow : maxSlot.getKey()) {")
-			code.append("\n\t\t\t")
-			code.append("for (SimpleEntry<String,Integer> headerEntry : headerRow) {")
-				code.append("\n\t\t\t\t")
-					
-					code.append("if (active.containsKey(headerEntry.getKey()) && !AflagLeaf.containsKey(headerEntry.getKey())) {")
-						code.append("\n\t\t\t\t\t")
-						code.append("AleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));")
-						code.append("\n\t\t\t\t\t")
-						code.append("AflagLeaf.put(headerEntry.getKey(),true);")
-					code.append("\n\t\t\t\t")
-					code.append("}")
-
-					code.append("if (passive.containsKey(headerEntry.getKey()) && !PflagLeaf.containsKey(headerEntry.getKey())) {")
-						code.append("\n\t\t\t\t\t")
-						code.append("PleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));")
-						code.append("\n\t\t\t\t\t")
-						code.append("PflagLeaf.put(headerEntry.getKey(),true);")
-					code.append("\n\t\t\t\t")
-					code.append("}")						
-										
-			code.append("\n\t\t\t")
-			code.append("}")
-		code.append("\n\t\t")
-		code.append("}")			
-		
-		code.append("System.out.println(\"################## MAX ACTIVE VARIANT: \");")
-		code.append("\n\t\t")
-		code.append("for (int i = 0; i < AleafNamesAndIndices.size(); i++) {")
-			code.append("\n\t\t\t")
-			code.append("System.out.println(AleafNamesAndIndices.get(i).getKey() + \": \" + AleafNamesAndIndices.get(i).getValue());")
-		code.append("\n\t\t")
-		code.append("}")
-
-		code.append("System.out.println(\"################## FOR IDEAL PASSIVE STATES: \");")
-		code.append("\n\t\t")
-		code.append("for (int j = 0; j < PleafNamesAndIndices.size(); j++) {")
-			code.append("\n\t\t\t")
-			code.append("System.out.println(PleafNamesAndIndices.get(j).getKey() + \": \" + PleafNamesAndIndices.get(j).getValue());")
-		code.append("\n\t\t")
-		code.append("}")					
-		
-		code.append("\n\t\t")
-		code.append("System.out.println(\"=================> [\"+maxIndex+\", \"+maxSlot.getValue()+\"]\");")	
-
-		code.append("\n\t\t")
-		
-		return code.toString()
+			System.out.println("=================> ["+finalIndex+", "+finalSlot.getValue()+"]");
+			
+			dvgConfiguration += "\t\t]\n}";
+		    
+		    try {
+		        FileWriter myWriter = new FileWriter("dvgConfiguration.json", true);
+		        myWriter.write(dvgConfiguration+"\n");
+		        myWriter.close();
+		    } 
+			catch (IOException e) {
+		        System.out.println("An error occurred.");
+		        e.printStackTrace();
+		    }
+		}
+		'''
 	}
+					
+	// used by:
+	// - MultiRobot
+	static def generateSolveCode(String outputName, boolean foimax, String CALL_SEQUENCE_CODE, Map<String, Integer> ACTIVE, Map<String, Integer> PASSIVE, int size) {
+		'''
+		void solve() {
+			List<Node> params;
+			List<List<Node>> params_2d;
+			int solution = -1;
+			«IF foimax»
+				double prevValue = Double.MIN_VALUE;
+			«ELSE»
+				double prevValue = Double.MAX_VALUE;
+			«ENDIF»
+			int solutionIndex = -1;
+			SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> solutionSlot = null;
+			for (int allocation = 0; allocation < «size.toString»; allocation++) {
+				System.out.println("**********************************************************************************");
+				System.out.println("**********************************************************************************");
+				System.out.println("**********************************************************************************");
+				
+				«CALL_SEQUENCE_CODE»
+						
+				Map<String, Integer> active = new HashMap<String, Integer>();
+				Map<String, Integer> passive = new HashMap<String, Integer>();
+				
+				«FOR i : ACTIVE.entrySet»
+					active.put("«i.key»",«i.value»);
+				«ENDFOR»
+				
+				«FOR i : PASSIVE.entrySet»
+					passive.put("«i.key»",«i.value»);
+				«ENDFOR»		
+		
+				Node result = NODE_COLLECTION.get("«outputName»");
+				int cnt = 0;
+				List<SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object>> rtmp = result.vsp();
+				SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> finalSlot = null;
+				«IF foimax»
+					double finalValue = Double.MIN_VALUE;
+				«ELSE»
+					double finalValue = Double.MAX_VALUE;
+				«ENDIF»
+				int finalIndex = 0;
+				for (SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> i : rtmp) {
+								
+					List<SimpleEntry<String,Integer>> AleafNamesAndIndices = new ArrayList<>();
+					Map<String, Boolean> AflagLeaf = new HashMap<String, Boolean>();
+					
+					List<SimpleEntry<String,Integer>> PleafNamesAndIndices = new ArrayList<>();
+					Map<String, Boolean> PflagLeaf = new HashMap<String, Boolean>();
+					
+					List<List<SimpleEntry<String,Integer>>> header = i.getKey();
+					for (List<SimpleEntry<String,Integer>> headerRow : header) {
+						for (SimpleEntry<String,Integer> headerEntry : headerRow) {
+							System.out.print(headerEntry.getKey()+": "+headerEntry.getValue());
+							System.out.print("\t");
+				
+				
+							if (active.containsKey(headerEntry.getKey()) && !AflagLeaf.containsKey(headerEntry.getKey())) {
+								AleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+								AflagLeaf.put(headerEntry.getKey(),true);
+							}
+							
+							if (passive.containsKey(headerEntry.getKey()) && !PflagLeaf.containsKey(headerEntry.getKey())) {
+								PleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+								PflagLeaf.put(headerEntry.getKey(),true);
+							}									
+							
+						}
+						System.out.println();
+					}
+		
+					System.out.println("################## ACTIVE VARIANT: ");
+					for (int j = 0; j < AleafNamesAndIndices.size(); j++) {
+						System.out.println(AleafNamesAndIndices.get(j).getKey() + ": " + AleafNamesAndIndices.get(j).getValue());
+					}
+		
+					System.out.println("################## FOR PASSIVE STATES: ");
+					for (int j = 0; j < PleafNamesAndIndices.size(); j++) {
+						System.out.println(PleafNamesAndIndices.get(j).getKey() + ": " + PleafNamesAndIndices.get(j).getValue());
+					}
+		
+					
+				System.out.println("=================> ["+cnt+", "+i.getValue()+"]");
+				System.out.println("------------------------------------");
+				
+				«IF foimax»
+					if (((Number)i.getValue()).doubleValue() > finalValue) {
+				«ELSE»
+					if (((Number)i.getValue()).doubleValue() < finalValue) {
+				«ENDIF»
+					finalValue = ((Number)i.getValue()).doubleValue();
+					finalSlot = i;
+					finalIndex = cnt;
+				}
+				cnt++;
+				}
+				
+				System.out.println("");
+				System.out.println("");
+				System.out.println("====================== Final Result ====================== ");
+				for (List<SimpleEntry<String,Integer>> headerRow : finalSlot.getKey()) {
+					for (SimpleEntry<String,Integer> headerEntry : headerRow) {
+						System.out.print(headerEntry.getKey()+": "+headerEntry.getValue());
+						System.out.print("\t");
+					}
+					System.out.println();
+				}
+				
+				
+				List<SimpleEntry<String,Integer>> AleafNamesAndIndices = new ArrayList<>();
+				Map<String, Boolean> AflagLeaf = new HashMap<String, Boolean>();
+				List<SimpleEntry<String,Integer>> PleafNamesAndIndices = new ArrayList<>();
+				Map<String, Boolean> PflagLeaf = new HashMap<String, Boolean>();
+				for (List<SimpleEntry<String,Integer>> headerRow : finalSlot.getKey()) {
+					for (SimpleEntry<String,Integer> headerEntry : headerRow) {
+							
+							if (active.containsKey(headerEntry.getKey()) && !AflagLeaf.containsKey(headerEntry.getKey())) {
+								AleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+								AflagLeaf.put(headerEntry.getKey(),true);
+							}
+		
+							if (passive.containsKey(headerEntry.getKey()) && !PflagLeaf.containsKey(headerEntry.getKey())) {
+								PleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+								PflagLeaf.put(headerEntry.getKey(),true);
+							}
+					}
+				}
+				
+				System.out.println("################## BEST ACTIVE VARIANT: ");
+				for (int i = 0; i < AleafNamesAndIndices.size(); i++) {
+					System.out.println(AleafNamesAndIndices.get(i).getKey() + ": " + AleafNamesAndIndices.get(i).getValue());
+				}
+		
+				System.out.println("################## FOR IDEAL PASSIVE STATES: ");
+				for (int j = 0; j < PleafNamesAndIndices.size(); j++) {
+					System.out.println(PleafNamesAndIndices.get(j).getKey() + ": " + PleafNamesAndIndices.get(j).getValue());
+				}
+				
+				System.out.println("=================> ["+finalIndex+", "+finalSlot.getValue()+"]");
+		
+				«IF foimax»
+					if (finalValue > prevValue) {
+				«ELSE»
+					if (finalValue < prevValue) {
+				«ENDIF»
+					solution = allocation;
+					prevValue = finalValue;
+					solutionSlot = finalSlot;
+					solutionIndex = finalIndex;
+				}
+		
+			} // End of allocation loop
+		
+		
+			System.out.println("Best allocation is: " + solution);
+
+			Map<String, Integer> active = new HashMap<String, Integer>();
+			Map<String, Integer> passive = new HashMap<String, Integer>();
+
+			System.out.println("");
+			System.out.println("");
+			System.out.println("====================== Final Result ====================== ");
+			for (List<SimpleEntry<String,Integer>> headerRow : solutionSlot.getKey()) {
+				for (SimpleEntry<String,Integer> headerEntry : headerRow) {
+					System.out.print(headerEntry.getKey()+": "+headerEntry.getValue());
+					System.out.print("\t");
+				}
+				System.out.println();
+			}
+			
+			List<SimpleEntry<String,Integer>> AleafNamesAndIndices = new ArrayList<>();
+			Map<String, Boolean> AflagLeaf = new HashMap<String, Boolean>();
+			List<SimpleEntry<String,Integer>> PleafNamesAndIndices = new ArrayList<>();
+			Map<String, Boolean> PflagLeaf = new HashMap<String, Boolean>();
+			for (List<SimpleEntry<String,Integer>> headerRow : solutionSlot.getKey()) {
+				for (SimpleEntry<String,Integer> headerEntry : headerRow) {
+						
+						if (active.containsKey(headerEntry.getKey()) && !AflagLeaf.containsKey(headerEntry.getKey())) {
+							AleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+							AflagLeaf.put(headerEntry.getKey(),true);
+						}
+
+						if (passive.containsKey(headerEntry.getKey()) && !PflagLeaf.containsKey(headerEntry.getKey())) {
+							PleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+							PflagLeaf.put(headerEntry.getKey(),true);
+						}
+				}
+			}
+			
+			System.out.println("################## BEST ACTIVE VARIANT: ");
+			for (int i = 0; i < AleafNamesAndIndices.size(); i++) {
+			
+				System.out.println(AleafNamesAndIndices.get(i).getKey() + ": " + AleafNamesAndIndices.get(i).getValue());
+			}
+
+			System.out.println("################## FOR IDEAL PASSIVE STATES: ");
+			for (int j = 0; j < PleafNamesAndIndices.size(); j++) {
+				System.out.println(PleafNamesAndIndices.get(j).getKey() + ": " + PleafNamesAndIndices.get(j).getValue());
+			}
+			
+			System.out.println("=================> ["+solutionIndex+", "+solutionSlot.getValue()+"]");
+		}
+		'''
+	}				
 	
+	// used by:
+	// - MultiRobot-EQUF/NoTCL	
+	static def generateSolveCode(String outputName, boolean foimax, String CALL_SEQUENCE_CODE, Map<String, Integer> ACTIVE, Map<String, Integer> PASSIVE_LOOKUP) {
+		'''
+		void solve() {
+			List<Node> params;
+			List<List<Node>> params_2d;
+			
+			«CALL_SEQUENCE_CODE»
+			
+			Map<String, Integer> active = new HashMap<String, Integer>();
+			Map<String, Integer> passive = new HashMap<String, Integer>();
+		
+			«FOR i : ACTIVE.entrySet»
+				active.put("«i.key»",«i.value»);
+			«ENDFOR»
+			«FOR i : PASSIVE_LOOKUP.entrySet»
+				passive.put("«i.key»",«i.value»);
+			«ENDFOR»								
+		
+			Node result = NODE_COLLECTION.get("«outputName»");
+			int cnt = 0;
+			List<SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object>> rtmp = result.vsp();
+			SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> finalSlot = null;
+			«IF foimax»
+				double finalValue = Double.MIN_VALUE;
+			«ELSE»
+				double finalValue = Double.MAX_VALUE;
+			«ENDIF»
+			int finalIndex = 0;
+			for (SimpleEntry<List<List<SimpleEntry<String,Integer>>>,Object> i : rtmp) {
+				List<SimpleEntry<String,Integer>> AleafNamesAndIndices = new ArrayList<>();
+				Map<String, Boolean> AflagLeaf = new HashMap<String, Boolean>();
+				List<SimpleEntry<String,Integer>> PleafNamesAndIndices = new ArrayList<>();
+				Map<String, Boolean> PflagLeaf = new HashMap<String, Boolean>();
+			
+				List<List<SimpleEntry<String,Integer>>> header = i.getKey();
+				for (List<SimpleEntry<String,Integer>> headerRow : header) {
+					for (SimpleEntry<String,Integer> headerEntry : headerRow) {
+						System.out.print(headerEntry.getKey()+": "+headerEntry.getValue());
+						System.out.print("\t");
+						if (active.containsKey(headerEntry.getKey()) && !AflagLeaf.containsKey(headerEntry.getKey())) {
+							AleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+							AflagLeaf.put(headerEntry.getKey(),true);
+						}
+						if (passive.containsKey(headerEntry.getKey()) && !PflagLeaf.containsKey(headerEntry.getKey())) {
+							PleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+							PflagLeaf.put(headerEntry.getKey(),true);
+						}
+					}
+					System.out.println();
+				}
+		
+				System.out.println("################## ACTIVE VARIANT: ");
+				for (int j = 0; j < AleafNamesAndIndices.size(); j++) {
+					System.out.println(AleafNamesAndIndices.get(j).getKey() + ": " + AleafNamesAndIndices.get(j).getValue());
+				}
+		
+				System.out.println("################## FOR PASSIVE STATES: ");
+				for (int j = 0; j < PleafNamesAndIndices.size(); j++) {
+					System.out.println(PleafNamesAndIndices.get(j).getKey() + ": " + PleafNamesAndIndices.get(j).getValue());
+				}
+		
+				System.out.println("=================> ["+cnt+", "+i.getValue()+"]");
+				System.out.println("------------------------------------");
+		
+				«IF foimax»
+					if (((Number)i.getValue()).doubleValue() > finalValue) {
+				«ELSE»
+					if (((Number)i.getValue()).doubleValue() < finalValue) {
+				«ENDIF»
+					finalValue = ((Number)i.getValue()).doubleValue();
+					finalSlot = i;
+					finalIndex = cnt;
+				}
+				cnt++;
+			}
+		
+			System.out.println("");
+			System.out.println("");
+			System.out.println("====================== Final Result ======================");
+			for (List<SimpleEntry<String,Integer>> headerRow : finalSlot.getKey()) {
+				for (SimpleEntry<String,Integer> headerEntry : headerRow) {
+					System.out.print(headerEntry.getKey()+": "+headerEntry.getValue());
+					System.out.print("\t");
+				}
+				System.out.println();
+			}
+		
+		
+			List<SimpleEntry<String,Integer>> AleafNamesAndIndices = new ArrayList<>();
+			Map<String, Boolean> AflagLeaf = new HashMap<String, Boolean>();
+			List<SimpleEntry<String,Integer>> PleafNamesAndIndices = new ArrayList<>();
+			Map<String, Boolean> PflagLeaf = new HashMap<String, Boolean>();
+			for (List<SimpleEntry<String,Integer>> headerRow : finalSlot.getKey()) {
+				for (SimpleEntry<String,Integer> headerEntry : headerRow) {
+						
+						if (active.containsKey(headerEntry.getKey()) && !AflagLeaf.containsKey(headerEntry.getKey())) {
+							AleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+							AflagLeaf.put(headerEntry.getKey(),true);
+						}
+						if (passive.containsKey(headerEntry.getKey()) && !PflagLeaf.containsKey(headerEntry.getKey())) {
+							PleafNamesAndIndices.add(new SimpleEntry<String,Integer>(headerEntry.getKey(), headerEntry.getValue()));
+							PflagLeaf.put(headerEntry.getKey(),true);
+						}
+				}
+			}
+			
+			System.out.println("################## BEST ACTIVE VARIANT: ");
+			for (int i = 0; i < AleafNamesAndIndices.size(); i++) {
+				System.out.println(AleafNamesAndIndices.get(i).getKey() + ": " + AleafNamesAndIndices.get(i).getValue());
+			}
+			System.out.println("################## FOR IDEAL PASSIVE STATES: ");
+			for (int j = 0; j < PleafNamesAndIndices.size(); j++) {
+				System.out.println(PleafNamesAndIndices.get(j).getKey() + ": " + PleafNamesAndIndices.get(j).getValue());
+			}
+			
+			System.out.println("=================> ["+finalIndex+", "+finalSlot.getValue()+"]");
+		}
+		'''
+	}
 }

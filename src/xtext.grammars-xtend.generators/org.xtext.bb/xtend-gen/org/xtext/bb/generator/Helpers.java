@@ -1,32 +1,41 @@
 package org.xtext.bb.generator;
 
-import bbn.AGGR;
-import bbn.AbstractInitPort;
-import bbn.AbstractInputPort;
-import bbn.AbstractOutputPort;
-import bbn.BBContainer;
-import bbn.BuildingBlock;
-import bbn.DAGGR;
-import bbn.DMAGR;
-import bbn.DVG;
-import bbn.INIT;
-import bbn.InitCPort;
-import bbn.InitPort;
-import bbn.InputCPort;
-import bbn.InputPort;
-import bbn.InputWSMPort;
-import bbn.InternalInputPort;
-import bbn.InternalOutputPort;
-import bbn.InternalPortRef;
-import bbn.MAGR;
-import bbn.PortElement;
-import bbn.RT;
-import bbn.SAPRO;
-import bbn.VT;
-import bbn.VariabilityEntity;
+import BbDvgTcl.AGGR;
+import BbDvgTcl.AbstractInitPort;
+import BbDvgTcl.AbstractInputPort;
+import BbDvgTcl.AbstractOutputPort;
+import BbDvgTcl.Accuracy;
+import BbDvgTcl.BBContainer;
+import BbDvgTcl.BuildingBlock;
+import BbDvgTcl.ComparisonCOp;
+import BbDvgTcl.Container;
+import BbDvgTcl.DAGGR;
+import BbDvgTcl.DMAGR;
+import BbDvgTcl.DVG;
+import BbDvgTcl.Equal;
+import BbDvgTcl.FinalOperation;
+import BbDvgTcl.GreaterThan;
+import BbDvgTcl.INIT;
+import BbDvgTcl.InitCPort;
+import BbDvgTcl.InitPort;
+import BbDvgTcl.InputCPort;
+import BbDvgTcl.InputPort;
+import BbDvgTcl.InputWSMPort;
+import BbDvgTcl.InternalInputPort;
+import BbDvgTcl.InternalOutputPort;
+import BbDvgTcl.InternalPortRef;
+import BbDvgTcl.LessThan;
+import BbDvgTcl.MAGR;
+import BbDvgTcl.PortElement;
+import BbDvgTcl.RT;
+import BbDvgTcl.ResourceGroupId;
+import BbDvgTcl.SAPRO;
+import BbDvgTcl.VT;
+import BbDvgTcl.VariabilityEntity;
 import com.google.common.base.Objects;
 import dor.BoolDef;
 import dor.DataObjectDef;
+import dor.ElementRelationship;
 import dor.IntegerDef;
 import dor.RealDef;
 import dor.StringDef;
@@ -48,7 +57,7 @@ import vi.StringVSPInit;
 
 @SuppressWarnings("all")
 public class Helpers {
-  public int getVSPInitSize(final AbstractInitPort in) {
+  public static int getVSPInitSize(final AbstractInitPort in) {
     if ((in instanceof InitPort)) {
       EObject tmp = ((InitPort)in).getVi();
       if ((tmp instanceof BoolVSPInit)) {
@@ -121,7 +130,7 @@ public class Helpers {
     return 0;
   }
 
-  public List<String> getSymbolsForMinOperators(final String expr) {
+  public static List<String> getSymbolsForMinOperators(final String expr) {
     Pattern p = Pattern.compile("(\\$MIN\\([a-zA-Z0-9_]*\\)\\$)");
     Matcher m = p.matcher(expr);
     List<String> matches = new ArrayList<String>();
@@ -137,7 +146,7 @@ public class Helpers {
     return matches;
   }
 
-  public List<String> getSymbolsForMaxOperators(final String expr) {
+  public static List<String> getSymbolsForMaxOperators(final String expr) {
     Pattern p = Pattern.compile("(\\$MAX\\([a-zA-Z0-9_]*\\)\\$)");
     Matcher m = p.matcher(expr);
     List<String> matches = new ArrayList<String>();
@@ -153,7 +162,7 @@ public class Helpers {
     return matches;
   }
 
-  public List<String> getSymbolsForComplexDo(final String expr) {
+  public static List<String> getSymbolsForComplexDo(final String expr) {
     Pattern p = Pattern.compile("(\\$[a-zA-Z0-9_\\[]*\\]\\$)");
     Matcher m = p.matcher(expr);
     List<String> matches = new ArrayList<String>();
@@ -175,7 +184,7 @@ public class Helpers {
     return matches;
   }
 
-  public int getTh(final String name, final List<AbstractInputPort> inputSet) {
+  public static int getTh(final String name, final List<AbstractInputPort> inputSet) {
     int cnt = 0;
     for (final AbstractInputPort i : inputSet) {
       {
@@ -190,7 +199,7 @@ public class Helpers {
     return (-1);
   }
 
-  public AbstractInputPort getNode(final String name, final List<AbstractInputPort> inputSet) {
+  public static AbstractInputPort getNode(final String name, final List<AbstractInputPort> inputSet) {
     for (final AbstractInputPort i : inputSet) {
       String _name = i.getName();
       boolean _equals = Objects.equal(name, _name);
@@ -201,10 +210,15 @@ public class Helpers {
     return null;
   }
 
-  public boolean isComplexDo(final VariabilityEntity ve) {
+  public static boolean isComplexDo(final VariabilityEntity ve) {
     DataObjectDef _dor = ve.getDor();
     boolean _tripleNotEquals = (_dor != null);
     if (_tripleNotEquals) {
+      ElementRelationship _er = ve.getDor().getEr();
+      boolean _tripleEquals = (_er == ElementRelationship.XOR);
+      if (_tripleEquals) {
+        return false;
+      }
       if (((ve.getDor().getEd().size() > 1) || Objects.equal(ve.getDor().getEd().get(0).getTd().getCardinality(), "*"))) {
         return true;
       }
@@ -212,6 +226,11 @@ public class Helpers {
       DataObjectDef _doc = ve.getDoc();
       boolean _tripleNotEquals_1 = (_doc != null);
       if (_tripleNotEquals_1) {
+        ElementRelationship _er_1 = ve.getDoc().getEr();
+        boolean _tripleEquals_1 = (_er_1 == ElementRelationship.XOR);
+        if (_tripleEquals_1) {
+          return false;
+        }
         if (((ve.getDoc().getEd().size() > 1) || Objects.equal(ve.getDoc().getEd().get(0).getTd().getCardinality(), "*"))) {
           return true;
         }
@@ -220,7 +239,7 @@ public class Helpers {
     return false;
   }
 
-  public TypeDef getTypeFromVe(final VariabilityEntity ve) {
+  public static TypeDef getTypeFromVe(final VariabilityEntity ve) {
     if ((ve instanceof PortElement)) {
       return ((PortElement)ve).getE().getTd();
     } else {
@@ -292,7 +311,7 @@ public class Helpers {
     }
   }
 
-  public String generateExpressionCode(final String name, final String expr, final List<AbstractInputPort> inputSet) {
+  public static String generateExpressionCode(final String name, final String expr, final List<AbstractInputPort> inputSet) {
     String modifiedExpr = expr;
     Pattern p = Pattern.compile("(\\$[a-zA-Z0-9_\\[\\]]*\\$)");
     Matcher m = p.matcher(expr);
@@ -305,10 +324,10 @@ public class Helpers {
       {
         int _length = i.length();
         int _minus = (_length - 1);
-        int index = this.getTh(i.substring(1, _minus), inputSet);
+        int index = Helpers.getTh(i.substring(1, _minus), inputSet);
         int _length_1 = i.length();
         int _minus_1 = (_length_1 - 1);
-        AbstractInputPort node = this.getNode(i.substring(1, _minus_1), inputSet);
+        AbstractInputPort node = Helpers.getNode(i.substring(1, _minus_1), inputSet);
         int _length_2 = i.length();
         int _minus_2 = (_length_2 - 1);
         String _substring = i.substring(0, _minus_2);
@@ -319,28 +338,28 @@ public class Helpers {
           modifiedExpr = modifiedExpr.replaceAll(escaped, "OUT");
         } else {
           if ((node instanceof InputPort)) {
-            boolean _isComplexDo = this.isComplexDo(((InputPort)node).getOutputport().getVe());
+            boolean _isComplexDo = Helpers.isComplexDo(((InputPort)node).getOutputport().getVe());
             boolean _not = (!_isComplexDo);
             if (_not) {
-              if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.RELATIVE) || (Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (this.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof RealDef)))) {
+              if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.RELATIVE) || (Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (Helpers.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof RealDef)))) {
                 String _string = Integer.valueOf(index).toString();
                 String _plus_2 = ("((Number) valueList.get(" + _string);
                 String _plus_3 = (_plus_2 + ")).doubleValue()");
                 modifiedExpr = modifiedExpr.replaceAll(escaped, _plus_3);
               } else {
-                if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && ((this.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof IntegerDef) || (this.getTypeFromVe(((InputPort)node).getOutputport().getVe()) == null)))) {
+                if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && ((Helpers.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof IntegerDef) || (Helpers.getTypeFromVe(((InputPort)node).getOutputport().getVe()) == null)))) {
                   String _string_1 = Integer.valueOf(index).toString();
                   String _plus_4 = ("((Number) valueList.get(" + _string_1);
                   String _plus_5 = (_plus_4 + ")).intValue()");
                   modifiedExpr = modifiedExpr.replaceAll(escaped, _plus_5);
                 } else {
-                  if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (this.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof BoolDef))) {
+                  if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (Helpers.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof BoolDef))) {
                     String _string_2 = Integer.valueOf(index).toString();
                     String _plus_6 = ("((Boolean) valueList.get(" + _string_2);
                     String _plus_7 = (_plus_6 + ")).booleanValue()");
                     modifiedExpr = modifiedExpr.replaceAll(escaped, _plus_7);
                   } else {
-                    if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (this.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof StringDef))) {
+                    if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (Helpers.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof StringDef))) {
                       String _string_3 = Integer.valueOf(index).toString();
                       String _plus_8 = ("valueList.get(" + _string_3);
                       String _plus_9 = (_plus_8 + ").toString()");
@@ -439,7 +458,7 @@ public class Helpers {
     return code.toString();
   }
 
-  public String generateExpressionCodePs(final String name, final String expr, final List<AbstractInputPort> inputSet) {
+  public static String generateExpressionCodePs(final String name, final String expr, final List<AbstractInputPort> inputSet) {
     String modifiedExpr = expr;
     Pattern p = Pattern.compile("(\\$[a-zA-Z0-9_]*\\$)");
     Matcher m = p.matcher(expr);
@@ -452,10 +471,10 @@ public class Helpers {
       {
         int _length = i.length();
         int _minus = (_length - 1);
-        int index = this.getTh(i.substring(1, _minus), inputSet);
+        int index = Helpers.getTh(i.substring(1, _minus), inputSet);
         int _length_1 = i.length();
         int _minus_1 = (_length_1 - 1);
-        AbstractInputPort node = this.getNode(i.substring(1, _minus_1), inputSet);
+        AbstractInputPort node = Helpers.getNode(i.substring(1, _minus_1), inputSet);
         int _length_2 = i.length();
         int _minus_2 = (_length_2 - 1);
         String _substring = i.substring(0, _minus_2);
@@ -466,25 +485,25 @@ public class Helpers {
           modifiedExpr = modifiedExpr.replaceAll(escaped, "OUT");
         } else {
           if ((node instanceof InputPort)) {
-            if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.RELATIVE) || (Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (this.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof RealDef)))) {
+            if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.RELATIVE) || (Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (Helpers.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof RealDef)))) {
               String _string = Integer.valueOf(index).toString();
               String _plus_2 = ("((Number) valueList.get(" + _string);
               String _plus_3 = (_plus_2 + ")).doubleValue()");
               modifiedExpr = modifiedExpr.replaceAll(escaped, _plus_3);
             } else {
-              if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (this.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof IntegerDef))) {
+              if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (Helpers.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof IntegerDef))) {
                 String _string_1 = Integer.valueOf(index).toString();
                 String _plus_4 = ("((Number) valueList.get(" + _string_1);
                 String _plus_5 = (_plus_4 + ")).intValue()");
                 modifiedExpr = modifiedExpr.replaceAll(escaped, _plus_5);
               } else {
-                if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (this.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof BoolDef))) {
+                if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (Helpers.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof BoolDef))) {
                   String _string_2 = Integer.valueOf(index).toString();
                   String _plus_6 = ("((Boolean) valueList.get(" + _string_2);
                   String _plus_7 = (_plus_6 + ")).booleanValue()");
                   modifiedExpr = modifiedExpr.replaceAll(escaped, _plus_7);
                 } else {
-                  if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (this.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof StringDef))) {
+                  if ((Objects.equal(((InputPort)node).getOutputport().getRt(), RT.ABSOLUTE) && (Helpers.getTypeFromVe(((InputPort)node).getOutputport().getVe()) instanceof StringDef))) {
                     String _string_3 = Integer.valueOf(index).toString();
                     String _plus_8 = ("valueList.get(" + _string_3);
                     String _plus_9 = (_plus_8 + ").toString()");
@@ -530,7 +549,7 @@ public class Helpers {
     return code.toString();
   }
 
-  public boolean isSAM(final List<String> sl) {
+  public static boolean isSAM(final List<String> sl) {
     List<String> sln = new ArrayList<String>();
     for (final String i : sl) {
       boolean _contains = sln.contains(i);
@@ -544,21 +563,21 @@ public class Helpers {
     return false;
   }
 
-  public bbn.Pattern getPattern(final AbstractOutputPort aon) {
+  public static BbDvgTcl.Pattern getPattern(final AbstractOutputPort aon) {
     EObject obj = aon.eContainer();
-    if ((obj instanceof bbn.Pattern)) {
-      return ((bbn.Pattern)obj);
+    if ((obj instanceof BbDvgTcl.Pattern)) {
+      return ((BbDvgTcl.Pattern)obj);
     } else {
       if ((obj instanceof AGGR)) {
         obj = ((AGGR)obj).eContainer();
         if ((obj instanceof MAGR)) {
-          return ((bbn.Pattern)obj);
+          return ((BbDvgTcl.Pattern)obj);
         }
       } else {
         if ((obj instanceof DAGGR)) {
           obj = ((DAGGR)obj).eContainer();
           if ((obj instanceof DMAGR)) {
-            return ((bbn.Pattern)obj);
+            return ((BbDvgTcl.Pattern)obj);
           }
         }
       }
@@ -575,7 +594,7 @@ public class Helpers {
     }
   }
 
-  public DVG getDVG(final bbn.Pattern p) {
+  public DVG getDVG(final BbDvgTcl.Pattern p) {
     EObject obj = p.eContainer();
     if ((obj instanceof DVG)) {
       return ((DVG)obj);
@@ -583,7 +602,7 @@ public class Helpers {
     return null;
   }
 
-  public AGGR getAGGR(final AbstractOutputPort aon) {
+  public static AGGR getAGGR(final AbstractOutputPort aon) {
     EObject obj = aon.eContainer();
     if ((obj instanceof AGGR)) {
       return ((AGGR)obj);
@@ -599,22 +618,32 @@ public class Helpers {
     return null;
   }
 
-  public VariabilityEntity getVeFromPattern(final bbn.Pattern pattern) {
+  public static VariabilityEntity getVeFromPattern(final BbDvgTcl.Pattern pattern) {
     if ((pattern instanceof INIT)) {
       return ((INIT)pattern).getAinip().getVe();
     }
     return null;
   }
 
-  public int getResGroupOfPattern(final bbn.Pattern p) {
+  public static int getResGroupOfPattern(final BbDvgTcl.Pattern p) {
     EObject bbc = p.eContainer();
     if ((bbc instanceof BBContainer)) {
-      BuildingBlock _buildingblock = ((BBContainer)bbc).getBuildingblock();
-      boolean _tripleNotEquals = (_buildingblock != null);
+      Container _container = ((BBContainer)bbc).getContainer();
+      boolean _tripleNotEquals = (_container != null);
       if (_tripleNotEquals) {
-        return ((BBContainer)bbc).getBuildingblock().getResourcegroupid().getNumber();
+        ResourceGroupId _resourcegroupid = ((BBContainer)bbc).getContainer().getResourcegroupid();
+        boolean _tripleNotEquals_1 = (_resourcegroupid != null);
+        if (_tripleNotEquals_1) {
+          ResourceGroupId _resourcegroupid_1 = ((BBContainer)bbc).getContainer().getResourcegroupid();
+          String _plus = ("return resourcegroupid: " + _resourcegroupid_1);
+          InputOutput.<String>println(_plus);
+          return ((BBContainer)bbc).getContainer().getResourcegroupid().getNumber();
+        } else {
+          InputOutput.<String>println("ERROR: No resourcegroupid!");
+          return (-1);
+        }
       } else {
-        InputOutput.<String>println("no bb ref!");
+        InputOutput.<String>println("ERROR No Container ref!");
         return (-1);
       }
     } else {
@@ -622,74 +651,7 @@ public class Helpers {
     }
   }
 
-  public String generateGenericAllocationAggr() {
-    StringBuilder code = new StringBuilder();
-    String vsp = null;
-    String obj = null;
-    vsp = "vsp";
-    obj = "Object";
-    code.append("Node");
-    code.append(" ");
-    code.append("AllocationAggr");
-    code.append("(");
-    code.append("List<Node>");
-    code.append(" ");
-    code.append("I, String name");
-    code.append(") {");
-    code.append("\n\t");
-    code.append((((("List<SimpleEntry<List<List<SimpleEntry<String,Integer>>>," + obj) + ">> ovsp = new ArrayList<SimpleEntry<List<List<SimpleEntry<String,Integer>>>,") + obj) + ">>();"));
-    code.append("\n\t");
-    code.append((obj + " newValue;"));
-    code.append("\n\t");
-    code.append("List<List<Integer>> ir = new ArrayList<List<Integer>>();");
-    code.append("\n\t");
-    code.append("NodeObjectList nodeObjectList;");
-    code.append("\n\t");
-    code.append("for (int i = 0; i < I.size(); i++) {");
-    code.append("\n\t\t");
-    code.append("SimpleEntry<String, Integer> fid = new SimpleEntry<String, Integer>(name, i);");
-    code.append((("for (int j = 0; j < I.get(i)." + vsp) + "().size(); j++) {"));
-    code.append("\n\t\t\t");
-    code.append("List<List<SimpleEntry<String,Integer>>> header = new ArrayList<List<SimpleEntry<String,Integer>>>();");
-    code.append("\n\t\t\t");
-    code.append("List<SimpleEntry<String,Integer>> headerRow = new ArrayList<SimpleEntry<String,Integer>>();");
-    code.append("\n\t\t\t");
-    code.append("headerRow.add(fid);");
-    code.append("\n\t\t\t");
-    code.append("headerRow.add(new SimpleEntry<String, Integer>(I.get(i).name(), j));");
-    code.append("\n\t\t\t");
-    code.append("if (I.get(i).header(j) != null) {");
-    code.append("\n\t\t\t\t");
-    code.append("List<List<SimpleEntry<String,Integer>>> htmp = I.get(i).header(j);");
-    code.append("\n\t\t\t\t");
-    code.append("for (List<SimpleEntry<String,Integer>> row : htmp) {");
-    code.append("\n\t\t\t\t\t");
-    code.append("for (SimpleEntry<String,Integer> entry : row) {");
-    code.append("\n\t\t\t\t\t\t");
-    code.append("headerRow.add(entry);");
-    code.append("\n\t\t\t\t\t");
-    code.append("}");
-    code.append("\n\t\t\t\t");
-    code.append("}");
-    code.append("\n\t\t\t");
-    code.append("}");
-    code.append("\n\t\t\t");
-    code.append("header.add(headerRow);");
-    code.append("\n\t\t\t");
-    code.append((("newValue = I.get(i)." + vsp) + "(j);"));
-    code.append((("ovsp.add(new SimpleEntry<List<List<SimpleEntry<String,Integer>>>, " + obj) + ">(header, newValue));"));
-    code.append("\n\t\t");
-    code.append("}");
-    code.append("\n\t");
-    code.append("}");
-    code.append("\n\t");
-    code.append("return new NodeObject(name, ovsp);");
-    code.append("\n\t");
-    code.append("}");
-    return code.toString();
-  }
-
-  public ExternalInformation getExternalInformation(final bbn.Pattern p) {
+  public ExternalInformation getExternalInformation(final BbDvgTcl.Pattern p) {
     List<String> dvgs = new ArrayList<String>();
     List<String> outputs = new ArrayList<String>();
     String oName = null;
@@ -698,7 +660,7 @@ public class Helpers {
       EList<InputPort> _ip = ((SAPRO)p).getIp();
       for (final InputPort i : _ip) {
         {
-          EObject tmp = this.getPattern(i.getOutputport());
+          EObject tmp = Helpers.getPattern(i.getOutputport());
           outputs.add(i.getOutputport().getName());
           tmp = tmp.eContainer();
           if ((tmp instanceof DVG)) {
@@ -713,5 +675,102 @@ public class Helpers {
     ei.dvgs = dvgs;
     ei.outputs = outputs;
     return ei;
+  }
+
+  public static List<String> getWrapperAndConversionName(final TypeDef td) {
+    List<String> names = new ArrayList<String>(2);
+    if ((td instanceof BoolDef)) {
+      names.add("Boolean");
+      names.add("booleanValue");
+    } else {
+      if ((td instanceof IntegerDef)) {
+        names.add("Integer");
+        names.add("intValue");
+      } else {
+        if ((td instanceof RealDef)) {
+          names.add("Double");
+          names.add("doubleValue");
+        } else {
+          if ((td instanceof StringDef)) {
+            names.add("String");
+            names.add("toString");
+          } else {
+            System.err.println("getConversionName(TypeDef): Wrong type!");
+          }
+        }
+      }
+    }
+    return names;
+  }
+
+  public static String getComparisonString(final ComparisonCOp cop) {
+    String c = null;
+    if ((cop instanceof LessThan)) {
+      boolean _isInclusive = ((LessThan)cop).isInclusive();
+      if (_isInclusive) {
+        c = "<=";
+      } else {
+        c = "<";
+      }
+    } else {
+      if ((cop instanceof GreaterThan)) {
+        boolean _isInclusive_1 = ((GreaterThan)cop).isInclusive();
+        if (_isInclusive_1) {
+          c = ">=";
+        } else {
+          c = ">";
+        }
+      } else {
+        if ((cop instanceof Equal)) {
+          Accuracy _accuracy = ((Equal)cop).getAccuracy();
+          boolean _tripleEquals = (_accuracy == null);
+          if (_tripleEquals) {
+            boolean _isInverse = ((Equal)cop).isInverse();
+            if (_isInverse) {
+              c = "!=";
+            } else {
+              c = "==";
+            }
+          } else {
+            boolean _isInverse_1 = ((Equal)cop).isInverse();
+            if (_isInverse_1) {
+              Accuracy _accuracy_1 = ((Equal)cop).getAccuracy();
+              String _plus = ("> " + _accuracy_1);
+              c = _plus;
+            } else {
+              Accuracy _accuracy_2 = ((Equal)cop).getAccuracy();
+              String _plus_1 = ("< " + _accuracy_2);
+              c = _plus_1;
+            }
+          }
+        } else {
+          System.err.println("getComparisonString(ComparisonCOp): Wrong type!");
+        }
+      }
+    }
+    return c;
+  }
+
+  public static String GetBBFromVE(final VariabilityEntity ve) {
+    EObject tmp = ve.eContainer().eContainer().eContainer();
+    if ((tmp instanceof BuildingBlock)) {
+      return ((BuildingBlock)tmp).getName();
+    } else {
+      System.err.println("GetBBFromVE(VariabilityEntity): This should not happen!");
+      return null;
+    }
+  }
+
+  public static boolean GetFinalOperationIsMax(final FinalOperation fo) {
+    if ((fo != null)) {
+      boolean _equals = Objects.equal(fo, FinalOperation.MAX);
+      if (_equals) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
   }
 }

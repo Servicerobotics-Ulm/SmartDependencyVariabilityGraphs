@@ -3,15 +3,14 @@
  */
 package org.xtext.bb.formatting2;
 
-import bbn.BuildingBlock;
-import bbn.BuildingBlockDescription;
-import bbn.Container;
-import bbn.Decomposition;
-import bbn.InputRelationship;
-import bbn.Output;
-import bbn.ResourceGroupId;
-import bbn.SharedResources;
-import bbn.VariabilityEntitySet;
+import BbDvgTcl.BuildingBlock;
+import BbDvgTcl.BuildingBlockDescription;
+import BbDvgTcl.Container;
+import BbDvgTcl.Decomposition;
+import BbDvgTcl.InputRelationship;
+import BbDvgTcl.Output;
+import BbDvgTcl.SharedResources;
+import BbDvgTcl.VariabilityEntitySet;
 import com.google.inject.Inject;
 import java.util.Arrays;
 import org.eclipse.emf.common.util.EList;
@@ -54,7 +53,6 @@ public class BbDslFormatter extends AbstractFormatter2 {
       document.<InputRelationship>format(inputRelationship);
     }
     document.<SharedResources>format(buildingBlock.getSharedresources());
-    document.<ResourceGroupId>format(buildingBlock.getResourcegroupid());
   }
 
   public void format(final Object buildingBlock, final IFormattableDocument document) {

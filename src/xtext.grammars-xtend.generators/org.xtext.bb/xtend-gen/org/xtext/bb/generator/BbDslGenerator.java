@@ -3,22 +3,21 @@
  */
 package org.xtext.bb.generator;
 
-import bbn.BlockType;
-import bbn.BuildingBlock;
-import bbn.BuildingBlockDescription;
-import bbn.DVG;
-import bbn.Decomposition;
-import bbn.EquivalenceFork;
-import bbn.Parallel;
-import bbn.Pattern;
+import BbDvgTcl.BlockType;
+import BbDvgTcl.BuildingBlock;
+import BbDvgTcl.BuildingBlockDescription;
+import BbDvgTcl.DVG;
+import BbDvgTcl.EquivalenceFork;
+import BbDvgTcl.Parallel;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
@@ -32,196 +31,354 @@ import org.eclipse.xtext.xbase.lib.IteratorExtensions;
  */
 @SuppressWarnings("all")
 public class BbDslGenerator extends AbstractGenerator {
-  private Map<Integer, Set<String>> bReq;
-
-  private Map<Integer, Set<String>> bProv;
-
-  private Map<Integer, List<Integer>> capableResource;
-
-  private Set<Integer> allocations;
-
-  private Map<Integer, Set<Integer>> allocationsMap;
-
-  private List<Set<Integer>> allocationsListSet;
-
-  private List<List<Integer>> allocationsListList;
-
-  private List<List<Integer>> allocationsListListNoDuplicates;
-
   private BuildingBlock problemBB;
 
   private DVG problemDVG;
 
   private Map<Integer, BuildingBlockDescription> solutionBB;
 
-  private Map<Integer, List<Pattern>> solutionDVGPattern;
+  private SolverGenerationForSingleRobotWithFixedAllocation sgfsrwfa;
 
-  private SolutionInterfaceMatching sim;
-
-  private BdvgDslGenerator bdvg;
-
-  private DvgDslGenerator dvg;
+  private boolean isValid;
 
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
-    HashMap<Integer, Set<String>> _hashMap = new HashMap<Integer, Set<String>>();
-    this.bReq = _hashMap;
-    HashMap<Integer, Set<String>> _hashMap_1 = new HashMap<Integer, Set<String>>();
-    this.bProv = _hashMap_1;
-    HashMap<Integer, List<Integer>> _hashMap_2 = new HashMap<Integer, List<Integer>>();
-    this.capableResource = _hashMap_2;
-    HashMap<Integer, Set<Integer>> _hashMap_3 = new HashMap<Integer, Set<Integer>>();
-    this.allocationsMap = _hashMap_3;
-    String code = null;
+    String code = "";
+    String _code = code;
+    CharSequence _importCode = Import.getImportCode();
+    String _plus = (_importCode + "\n");
+    code = (_code + _plus);
+    String _code_1 = code;
+    CharSequence _generateNodeClassCode = Node.generateNodeClassCode();
+    String _plus_1 = (_generateNodeClassCode + "\n");
+    code = (_code_1 + _plus_1);
+    String _code_2 = code;
+    CharSequence _generateNodeObjectClassCode = Node.generateNodeObjectClassCode();
+    String _plus_2 = (_generateNodeObjectClassCode + "\n");
+    code = (_code_2 + _plus_2);
+    String _code_3 = code;
+    String _generateNodeObjectListClassCode = Node.generateNodeObjectListClassCode();
+    String _plus_3 = (_generateNodeObjectListClassCode + "\n");
+    code = (_code_3 + _plus_3);
+    String _code_4 = code;
+    CharSequence _generateNodePsClassCode = Node.generateNodePsClassCode();
+    String _plus_4 = (_generateNodePsClassCode + "\n");
+    code = (_code_4 + _plus_4);
+    this.isValid = false;
     Iterable<BuildingBlockDescription> _filter = Iterables.<BuildingBlockDescription>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), BuildingBlockDescription.class);
     for (final BuildingBlockDescription i : _filter) {
-      code = this.root(i);
+      String _code_5 = code;
+      String _start = this.start(i);
+      code = (_code_5 + _start);
     }
-    String _name = this.problemDVG.getName();
-    String _plus = ("DVGSolver_" + _name);
-    String _plus_1 = (_plus + ".java");
-    fsa.generateFile(_plus_1, code);
+    if (this.isValid) {
+      String _name = this.problemDVG.getName();
+      String _plus_5 = ("DVGSolver_" + _name);
+      String _plus_6 = (_plus_5 + ".java");
+      fsa.generateFile(_plus_6, code);
+    } else {
+      System.err.println("ERROR: Invalid Model!");
+    }
   }
 
-  public String root(final BuildingBlockDescription bbd) {
-    String _xblockexpression = null;
-    {
-      boolean isValid = false;
-      boolean hasDVGRef = false;
-      BuildingBlock rootBlock = bbd.getBb().get(0);
-      BlockType _blocktype = rootBlock.getBlocktype();
-      boolean _equals = Objects.equal(_blocktype, BlockType.ALLOCATABLE);
-      if (_equals) {
-        int _size = rootBlock.getAllocationCandidates().size();
-        boolean _greaterThan = (_size > 0);
-        if (_greaterThan) {
-          isValid = true;
-        }
-      }
-      String _xifexpression = null;
-      if (isValid) {
-        InputOutput.<String>println("This is a valid model for determining allocations!");
+  public String start(final BuildingBlockDescription bbd) {
+    BuildingBlock rootBlock = bbd.getBb().get(0);
+    BlockType _blocktype = rootBlock.getBlocktype();
+    boolean _equals = Objects.equal(_blocktype, BlockType.ALLOCATABLE);
+    if (_equals) {
+      InputOutput.<String>println("This is a model for multi robot task allocations!");
+      int _size = rootBlock.getAllocationCandidates().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        this.isValid = true;
         this.problemBB = rootBlock;
         DVG _dvg = bbd.getDvg();
         boolean _tripleNotEquals = (_dvg != null);
         if (_tripleNotEquals) {
           this.problemDVG = bbd.getDvg();
-          hasDVGRef = true;
         }
-        boolean isEQUFModelOfModels = false;
-        boolean isParallelModelOfModels = false;
-        Decomposition _get = rootBlock.getDt().get(0);
-        if ((_get instanceof EquivalenceFork)) {
-          BuildingBlock _bbr = rootBlock.getDt().get(0).getC().get(0).getBbr();
-          boolean _tripleNotEquals_1 = (_bbr != null);
-          if (_tripleNotEquals_1) {
-            BlockType _blocktype_1 = rootBlock.getDt().get(0).getC().get(0).getBbr().getBlocktype();
-            boolean _equals_1 = Objects.equal(_blocktype_1, BlockType.ALLOCATABLE);
-            if (_equals_1) {
-              isEQUFModelOfModels = true;
-            }
+        HashMap<Integer, BuildingBlockDescription> _hashMap = new HashMap<Integer, BuildingBlockDescription>();
+        this.solutionBB = _hashMap;
+        for (int i = 0; (i < this.problemBB.getAllocationCandidates().size()); i++) {
+          this.solutionBB.put(Integer.valueOf(i), this.problemBB.getAllocationCandidates().get(i));
+        }
+        boolean _isEQUFMom = this.isEQUFMom(rootBlock);
+        if (_isEQUFMom) {
+          InputOutput.<String>println("This is a EQUF model of model composition!");
+          EObject tmp = rootBlock.getDt().get(0);
+          if ((tmp instanceof EquivalenceFork)) {
+            return this.handleMultiRobotTaskAllocationEQUFMom(((EquivalenceFork)tmp));
           }
-        }
-        Decomposition _get_1 = rootBlock.getDt().get(0);
-        if ((_get_1 instanceof Parallel)) {
-          BuildingBlock _bbr_1 = rootBlock.getDt().get(0).getC().get(0).getBbr();
-          boolean _tripleNotEquals_2 = (_bbr_1 != null);
-          if (_tripleNotEquals_2) {
-            BlockType _blocktype_2 = rootBlock.getDt().get(0).getC().get(0).getBbr().getBlocktype();
-            boolean _equals_2 = Objects.equal(_blocktype_2, BlockType.ALLOCATABLE);
-            if (_equals_2) {
-              isParallelModelOfModels = true;
-            }
-          }
-        }
-        if (isEQUFModelOfModels) {
-          InputOutput.<String>println("isEQUFModelOfModels!!!");
-          EqufModelOfModels emom = new EqufModelOfModels();
-          StringBuilder code = new StringBuilder();
-          code.append(emom.start(rootBlock.getDt().get(0), this.problemDVG, false));
-          code.append("");
-          String _name = this.problemDVG.getName();
-          String _plus = ("public class DVGSolver_" + _name);
-          String _plus_1 = (_plus + "{");
-          code.append(_plus_1);
-          code.append("\n\t");
-          code.append("public static void main (String[] args) {");
-          code.append("\n\t");
-          String _name_1 = this.problemDVG.getName();
-          String _plus_2 = (_name_1 + " dvg = new ");
-          String _name_2 = this.problemDVG.getName();
-          String _plus_3 = (_plus_2 + _name_2);
-          String _plus_4 = (_plus_3 + "();");
-          code.append(_plus_4);
-          code.append("dvg.init();");
-          code.append("\n\t\t");
-          code.append("dvg.solve();");
-          code.append("\n\t\t");
-          code.append("\n\t");
-          code.append("}");
-          code.append("\n");
-          code.append("}");
-          code.append("\n\n");
-          return code.toString();
         } else {
-          if (isParallelModelOfModels) {
-            InputOutput.<String>println("isParallelModelOfModels!!!");
-            ParallelModelOfModels pmom = new ParallelModelOfModels();
-            StringBuilder code_1 = new StringBuilder();
-            code_1.append(pmom.start(rootBlock.getDt().get(0), this.problemDVG));
-            code_1.append("\n\t");
-            code_1.append("");
-            String _name_3 = this.problemDVG.getName();
-            String _plus_5 = ("public class DVGSolver_" + _name_3);
-            String _plus_6 = (_plus_5 + "{");
-            code_1.append(_plus_6);
-            code_1.append("\n\t");
-            code_1.append("public static void main (String[] args) {");
-            code_1.append("\n\t");
-            String _name_4 = this.problemDVG.getName();
-            String _plus_7 = (_name_4 + " dvg = new ");
-            String _name_5 = this.problemDVG.getName();
-            String _plus_8 = (_plus_7 + _name_5);
-            String _plus_9 = (_plus_8 + "();");
-            code_1.append(_plus_9);
-            code_1.append("dvg.init();");
-            code_1.append("\n\t\t");
-            code_1.append("dvg.solve();");
-            code_1.append("\n\t\t");
-            code_1.append("\n\t");
-            code_1.append("}");
-            code_1.append("\n");
-            code_1.append("}");
-            code_1.append("\n\n");
-            return code_1.toString();
+          boolean _isParallelMom = this.isParallelMom(rootBlock);
+          if (_isParallelMom) {
+            InputOutput.<String>println("This is a Parallel model of model composition!");
+            EObject tmp_1 = rootBlock.getDt().get(0);
+            if ((tmp_1 instanceof Parallel)) {
+              return this.handleMultiRobotTaskAllocationParallelMom(((Parallel)tmp_1));
+            }
           } else {
-            MatchingAndGeneration mag = new MatchingAndGeneration();
-            return mag.start(this.problemBB, this.problemDVG, hasDVGRef, true, false);
+            return this.handleMultiRobotTaskAllocation();
           }
         }
       } else {
-        String _xblockexpression_1 = null;
-        {
-          InputOutput.<String>println("This is NOT a valid model for determining multi-robot task allocations!");
-          InputOutput.<String>println("Therefore the DVG solver for a concrete building block is generated!");
-          DvgDslGenerator _dvgDslGenerator = new DvgDslGenerator();
-          this.dvg = _dvgDslGenerator;
-          String _xifexpression_1 = null;
-          DVG _dvg_1 = bbd.getDvg();
-          boolean _tripleNotEquals_3 = (_dvg_1 != null);
-          if (_tripleNotEquals_3) {
-            this.problemDVG = bbd.getDvg();
-            String code_2 = this.dvg.root(this.problemDVG);
-            return code_2;
-          } else {
-            _xifexpression_1 = InputOutput.<String>println("ERROR: BuildingBlockDescription has no reference to a DVG!");
-          }
-          _xblockexpression_1 = _xifexpression_1;
-        }
-        _xifexpression = _xblockexpression_1;
+        System.err.println("ERROR: There are no allocation candidates specified!");
+        return "";
       }
-      _xblockexpression = _xifexpression;
+    } else {
+      InputOutput.<String>println("This is a model for a single robot with fixed allocation!");
+      SolverGenerationForSingleRobotWithFixedAllocation _solverGenerationForSingleRobotWithFixedAllocation = new SolverGenerationForSingleRobotWithFixedAllocation();
+      this.sgfsrwfa = _solverGenerationForSingleRobotWithFixedAllocation;
+      DVG _dvg_1 = bbd.getDvg();
+      boolean _tripleNotEquals_1 = (_dvg_1 != null);
+      if (_tripleNotEquals_1) {
+        this.isValid = true;
+        this.problemDVG = bbd.getDvg();
+        return this.sgfsrwfa.getDVGSolverCode(this.problemDVG);
+      } else {
+        System.err.println("ERROR: BuildingBlockDescription has no reference to a DVG!");
+        return "";
+      }
     }
-    return _xblockexpression;
+    return null;
+  }
+
+  public String handleMultiRobotTaskAllocation() {
+    BuildingBlockMatching bbm = new BuildingBlockMatching();
+    bbm.start(this.problemBB, this.problemDVG);
+    this.printAllocations(bbm.getAllocations());
+    SolutionInterfaceMatching sim = new SolutionInterfaceMatching();
+    sim.start(this.problemDVG, this.solutionBB, bbm.getAllocations());
+    SolverGenerationForMultiRobotTaskAllocation sgfmrta = new SolverGenerationForMultiRobotTaskAllocation();
+    return sgfmrta.start(this.problemDVG, bbm.getAllocations(), sim.getSolutionDVGPattern(), false);
+  }
+
+  public String handleMultiRobotTaskAllocationEQUFMom(final EquivalenceFork ef) {
+    String code = "";
+    List<VariabilityInformation> variabilityInformationList = null;
+    ArrayList<VariabilityInformation> _arrayList = new ArrayList<VariabilityInformation>();
+    variabilityInformationList = _arrayList;
+    for (int i = 0; (i < ef.getC().size()); i++) {
+      BuildingBlock _bbr = ef.getC().get(i).getBbr();
+      boolean _tripleNotEquals = (_bbr != null);
+      if (_tripleNotEquals) {
+        EObject bbd = ef.getC().get(i).getBbr().eContainer();
+        if ((bbd instanceof BuildingBlockDescription)) {
+          BuildingBlockMatching bbm = new BuildingBlockMatching();
+          bbm.start(ef.getC().get(i).getBbr(), ((BuildingBlockDescription)bbd).getDvg());
+          this.printAllocations(bbm.getAllocations());
+          SolutionInterfaceMatching sim = new SolutionInterfaceMatching();
+          sim.start(((BuildingBlockDescription)bbd).getDvg(), this.solutionBB, bbm.getAllocations());
+          SolverGenerationForMultiRobotTaskAllocation sgfmrta = new SolverGenerationForMultiRobotTaskAllocation();
+          String _code = code;
+          String _start = sgfmrta.start(((BuildingBlockDescription)bbd).getDvg(), bbm.getAllocations(), sim.getSolutionDVGPattern(), true);
+          code = (_code + _start);
+          VariabilityInformation magd = new VariabilityInformation();
+          magd.numberAllocations = bbm.getAllocationsNumber();
+          magd.active = sgfmrta.getActive();
+          magd.passive = sgfmrta.getPassive();
+          variabilityInformationList.add(magd);
+        } else {
+          System.err.println("ERROR in handleMultiRobotTaskAllocationEQUFMom: bbd NOT instanceof BuildingBlockDescription!");
+        }
+      } else {
+        System.err.println("ERROR in handleMultiRobotTaskAllocationEQUFMom: bbr is null!");
+      }
+    }
+    EqufModelOfModels emom = new EqufModelOfModels();
+    emom.start(this.problemDVG, variabilityInformationList);
+    String _code = code;
+    String _code_1 = emom.getCode();
+    code = (_code + _code_1);
+    String _code_2 = code;
+    CharSequence _mainCode = this.getMainCode();
+    code = (_code_2 + _mainCode);
+    return code;
+  }
+
+  public String handleMultiRobotTaskAllocationEQUFMom(final EquivalenceFork ef, final List<VariabilityInformation> vil, final DVG dvg) {
+    String code = "";
+    for (int i = 0; (i < ef.getC().size()); i++) {
+      BuildingBlock _bbr = ef.getC().get(i).getBbr();
+      boolean _tripleNotEquals = (_bbr != null);
+      if (_tripleNotEquals) {
+        EObject bbd = ef.getC().get(i).getBbr().eContainer();
+        if ((bbd instanceof BuildingBlockDescription)) {
+          BuildingBlockMatching bbm = new BuildingBlockMatching();
+          bbm.start(ef.getC().get(i).getBbr(), ((BuildingBlockDescription)bbd).getDvg());
+          this.printAllocations(bbm.getAllocations());
+          SolutionInterfaceMatching sim = new SolutionInterfaceMatching();
+          sim.start(((BuildingBlockDescription)bbd).getDvg(), this.solutionBB, bbm.getAllocations());
+          SolverGenerationForMultiRobotTaskAllocation sgfmrta = new SolverGenerationForMultiRobotTaskAllocation();
+          String _code = code;
+          String _start = sgfmrta.start(((BuildingBlockDescription)bbd).getDvg(), bbm.getAllocations(), sim.getSolutionDVGPattern(), true);
+          code = (_code + _start);
+          VariabilityInformation magd = new VariabilityInformation();
+          magd.numberAllocations = bbm.getAllocationsNumber();
+          magd.active = sgfmrta.getActive();
+          magd.passive = sgfmrta.getPassive();
+          vil.add(magd);
+        } else {
+          System.err.println("ERROR in handleMultiRobotTaskAllocationEQUFMom: bbd NOT instanceof BuildingBlockDescription!");
+        }
+      } else {
+        System.err.println("ERROR in handleMultiRobotTaskAllocationEQUFMom: bbr is null!");
+      }
+    }
+    EqufModelOfModels emom = new EqufModelOfModels();
+    emom.start(dvg, vil);
+    for (final VariabilityInformation i : vil) {
+      {
+        i.active.putAll(emom.getActive());
+        i.passive.putAll(emom.getPassive());
+      }
+    }
+    String _code = code;
+    String _code_1 = emom.getCode();
+    code = (_code + _code_1);
+    return code;
+  }
+
+  public String handleMultiRobotTaskAllocationParallelMom(final Parallel pf) {
+    String code = "";
+    List<Boolean> isEQUF = new ArrayList<Boolean>();
+    List<List<VariabilityInformation>> variabilityInformationListList = null;
+    ArrayList<List<VariabilityInformation>> _arrayList = new ArrayList<List<VariabilityInformation>>();
+    variabilityInformationListList = _arrayList;
+    List<VariabilityInformation> variabilityInformationList = null;
+    for (int i = 0; (i < pf.getC().size()); i++) {
+      BuildingBlock _bbr = pf.getC().get(i).getBbr();
+      boolean _tripleNotEquals = (_bbr != null);
+      if (_tripleNotEquals) {
+        if (((pf.getC().get(i).getBbr().getDt().get(0) instanceof EquivalenceFork) && Objects.equal(pf.getC().get(i).getBbr().getBlocktype(), BlockType.ALLOCATABLE))) {
+          InputOutput.<String>println("This is a EQUF model of model composition!");
+          isEQUF.add(Boolean.valueOf(true));
+          ArrayList<VariabilityInformation> _arrayList_1 = new ArrayList<VariabilityInformation>();
+          variabilityInformationList = _arrayList_1;
+          EObject tmp = pf.getC().get(i).getBbr().getDt().get(0);
+          EObject tmp2 = tmp.eContainer();
+          if ((tmp instanceof EquivalenceFork)) {
+            if ((tmp2 instanceof BuildingBlockDescription)) {
+              String _code = code;
+              String _handleMultiRobotTaskAllocationEQUFMom = this.handleMultiRobotTaskAllocationEQUFMom(((EquivalenceFork)tmp), variabilityInformationList, ((BuildingBlockDescription)tmp2).getDvg());
+              code = (_code + _handleMultiRobotTaskAllocationEQUFMom);
+              variabilityInformationListList.add(variabilityInformationList);
+            }
+          }
+        } else {
+          ArrayList<VariabilityInformation> _arrayList_2 = new ArrayList<VariabilityInformation>();
+          variabilityInformationList = _arrayList_2;
+          isEQUF.add(Boolean.valueOf(false));
+          BuildingBlock _bbr_1 = pf.getC().get(i).getBbr();
+          boolean _tripleNotEquals_1 = (_bbr_1 != null);
+          if (_tripleNotEquals_1) {
+            EObject bbd = pf.getC().get(i).getBbr().eContainer();
+            if ((bbd instanceof BuildingBlockDescription)) {
+              BuildingBlockMatching bbm = new BuildingBlockMatching();
+              bbm.start(pf.getC().get(i).getBbr(), ((BuildingBlockDescription)bbd).getDvg());
+              this.printAllocations(bbm.getAllocations());
+              SolutionInterfaceMatching sim = new SolutionInterfaceMatching();
+              sim.start(((BuildingBlockDescription)bbd).getDvg(), this.solutionBB, bbm.getAllocations());
+              SolverGenerationForMultiRobotTaskAllocation sgfmrta = new SolverGenerationForMultiRobotTaskAllocation();
+              String _code_1 = code;
+              String _start = sgfmrta.start(((BuildingBlockDescription)bbd).getDvg(), bbm.getAllocations(), sim.getSolutionDVGPattern(), true);
+              code = (_code_1 + _start);
+              VariabilityInformation magd = new VariabilityInformation();
+              magd.numberAllocations = bbm.getAllocationsNumber();
+              magd.active = sgfmrta.getActive();
+              magd.passive = sgfmrta.getPassive();
+              variabilityInformationList.add(magd);
+              variabilityInformationListList.add(variabilityInformationList);
+            } else {
+              System.err.println("ERROR in handleMultiRobotTaskAllocationEQUFMom: bbd NOT instanceof BuildingBlockDescription!");
+            }
+          }
+        }
+      } else {
+        System.err.println("ERROR in handleMultiRobotTaskAllocationParallelMom: bbr is null!");
+      }
+    }
+    ParallelModelOfModels pmom = new ParallelModelOfModels();
+    pmom.start(this.problemDVG, variabilityInformationListList);
+    String _code = code;
+    String _code_1 = pmom.getCode();
+    code = (_code + _code_1);
+    String _code_2 = code;
+    CharSequence _mainCode = this.getMainCode();
+    code = (_code_2 + _mainCode);
+    return code;
+  }
+
+  public void printAllocations(final List<List<Integer>> allocations) {
+    InputOutput.println();
+    InputOutput.<String>println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    String _name = this.problemBB.getName();
+    String _plus = ("Possible Allocations for <<ALLOCATABLE>> " + _name);
+    InputOutput.<String>println(_plus);
+    InputOutput.<String>println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    for (int i = 0; (i < allocations.size()); i++) {
+      {
+        InputOutput.<String>println("\t---------------------------------------------------------------------");
+        InputOutput.<String>println((("\tAllocation " + Integer.valueOf(i)) + ":"));
+        for (int j = 0; (j < allocations.get(i).size()); j++) {
+          {
+            String _name_1 = this.solutionBB.get(allocations.get(i).get(j)).getName();
+            String _plus_1 = ((("\t" + Integer.valueOf(j)) + "-th resource group by resource: ") + _name_1);
+            InputOutput.<String>print(_plus_1);
+            InputOutput.<String>print("\t");
+          }
+        }
+        InputOutput.println();
+        InputOutput.<String>println("\t---------------------------------------------------------------------");
+      }
+    }
+  }
+
+  public boolean isEQUFMom(final BuildingBlock block) {
+    if ((((block.getDt().get(0) instanceof EquivalenceFork) && (block.getDt().get(0).getC().get(0).getBbr() != null)) && Objects.equal(block.getDt().get(0).getC().get(0).getBbr().getBlocktype(), BlockType.ALLOCATABLE))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public boolean isParallelMom(final BuildingBlock block) {
+    if ((((block.getDt().get(0) instanceof Parallel) && (block.getDt().get(0).getC().get(0).getBbr() != null)) && Objects.equal(block.getDt().get(0).getC().get(0).getBbr().getBlocktype(), BlockType.ALLOCATABLE))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public CharSequence getMainCode() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("public class DVGSolver_");
+    String _name = this.problemDVG.getName();
+    _builder.append(_name);
+    _builder.append(" {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("public static void main (String[] args) {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    String _name_1 = this.problemDVG.getName();
+    _builder.append(_name_1, "\t\t");
+    _builder.append(" dvg = new ");
+    String _name_2 = this.problemDVG.getName();
+    _builder.append(_name_2, "\t\t");
+    _builder.append("();");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("dvg.init();");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("dvg.solve();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("}\t\t");
+    _builder.newLine();
+    return _builder;
   }
 }

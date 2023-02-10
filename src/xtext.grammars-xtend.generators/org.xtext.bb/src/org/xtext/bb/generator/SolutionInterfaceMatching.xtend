@@ -1,74 +1,55 @@
-//================================================================
-//
-//  Copyright (c) 2022 Technische Hochschule Ulm, Servicerobotics Ulm, Germany
-//
-//        Servicerobotik Ulm 
-//        Christian Schlegel
-//        Ulm University of Applied Sciences
-//        Prittwitzstr. 10
-//        89075 Ulm
-//        Germany
-//
-//	  http://www.servicerobotik-ulm.de/
-//
-//  This file is part of the SmartDependencyVariabilityGraph feature.
-//
-//  Author:
-//		Timo Blender
-//
-//  Licence:
-//
-//  BSD 3-Clause License
-//  
-//  Copyright (c) 2022, Technische Hochschule Ulm, Servicerobotics Ulm
-//  All rights reserved.
-//  
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//  
-//  * Redistributions of source code must retain the above copyright notice, this
-//    list of conditions and the following disclaimer.
-//  
-//  * Redistributions in binary form must reproduce the above copyright notice,
-//    this list of conditions and the following disclaimer in the documentation
-//    and/or other materials provided with the distribution.
-//  
-//  * Neither the name of the copyright holder nor the names of its
-//    contributors may be used to endorse or promote products derived from
-//    this software without specific prior written permission.
-//  
-//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-//  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-//  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-//  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-//  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-//  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-//  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-//  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-//  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//  https://opensource.org/licenses/BSD-3-Clause
-//
-//================================================================
-
 package org.xtext.bb.generator
 
-import bbn.DVG
-import bbn.DMAGR
+import BbDvgTcl.DVG
+import BbDvgTcl.DMAGR
 import dor.DataObjectDef
 import java.util.List
 import java.util.AbstractMap.SimpleEntry
 import java.util.ArrayList
-import bbn.VariabilityEntity
+import BbDvgTcl.VariabilityEntity
 import org.eclipse.emf.ecore.EObject
-import bbn.BuildingBlock
-import bbn.INIT
-import bbn.SAPRO
-import bbn.APRO
-import bbn.AbstractOutputPort
+import BbDvgTcl.BuildingBlock
+import BbDvgTcl.INIT
+import BbDvgTcl.SAPRO
+import BbDvgTcl.APRO
+import BbDvgTcl.AbstractOutputPort
+import java.util.Map
+import java.util.HashMap
+import BbDvgTcl.BuildingBlockDescription
 
 class SolutionInterfaceMatching {
+	
+	var Map<Integer, List<BbDvgTcl.Pattern>> solutionDVGPattern
+	
+	def Map<Integer, List<BbDvgTcl.Pattern>> getSolutionDVGPattern() {
+		return this.solutionDVGPattern
+	}
+	
+	def start(DVG dvg, Map<Integer, BuildingBlockDescription> solutionBB, List<List<Integer>> allocations) {
+		this.solutionDVGPattern = new HashMap<Integer, List<BbDvgTcl.Pattern>>()
+		var DMAGR dmagr = getDMAGR(dvg)
+		var List<VariabilityEntity> solutionInterface = determineSolutionInterface2(dmagr)
+		if (dmagr !== null) {
+			
+			var List<String> determined = new ArrayList<String>()
+			
+			for (var int i = 0; i < allocations.size; i++) {
+				for (var int j = 0; j < allocations.get(i).size; j++) {
+					var String bbdesc = solutionBB.get(allocations.get(i).get(j)).name
+					if (!determined.contains(bbdesc)) {
+						determined.add(bbdesc)
+						if (solutionBB.get(allocations.get(i).get(j)).dvg !== null) {
+							var List<BbDvgTcl.Pattern> resPattern = findMatchingOutputPorts2(solutionBB.get(allocations.get(i).get(j)).dvg, solutionInterface)
+							this.solutionDVGPattern.put(allocations.get(i).get(j), resPattern)
+						}
+						else {
+							println("ERROR: No DVG reference of a capable resource!")
+						}
+					}
+				}
+			}		
+		}
+	}
 
 	def DMAGR getDMAGR(DVG dvg) {
 		for (i : dvg.pattern) {
@@ -76,7 +57,7 @@ class SolutionInterfaceMatching {
 				return i
 			}
 		}
-	}
+	}	
 	
 	def List<SimpleEntry<DataObjectDef, String>> determineSolutionInterface1(DMAGR dmagr) {
 
@@ -110,9 +91,9 @@ class SolutionInterfaceMatching {
 		}		
 	}
 	
-	def List<bbn.Pattern> findMatchingOutputPorts1(DVG solutionDVG, List<SimpleEntry<DataObjectDef, String>> solutionInterface) {
+	def List<BbDvgTcl.Pattern> findMatchingOutputPorts1(DVG solutionDVG, List<SimpleEntry<DataObjectDef, String>> solutionInterface) {
 		// For every entry of the solutionInterface we need to have a match in the solutionDVG
-		var List<bbn.Pattern> resPattern = new ArrayList<bbn.Pattern>()
+		var List<BbDvgTcl.Pattern> resPattern = new ArrayList<BbDvgTcl.Pattern>()
 		for (i : solutionInterface) {
 			var DataObjectDef reqDod = i.key
 			var String reqBBName = i.value
@@ -168,9 +149,9 @@ class SolutionInterfaceMatching {
 		return resPattern
 	}
 	
-	def List<bbn.Pattern> findMatchingOutputPorts2(DVG solutionDVG, List<VariabilityEntity> solutionInterface) {
+	def List<BbDvgTcl.Pattern> findMatchingOutputPorts2(DVG solutionDVG, List<VariabilityEntity> solutionInterface) {
 		// For every entry of the solutionInterface we need to have a match in the solutionDVG
-		var List<bbn.Pattern> resPattern = new ArrayList<bbn.Pattern>()
+		var List<BbDvgTcl.Pattern> resPattern = new ArrayList<BbDvgTcl.Pattern>()
 		for (i : solutionInterface) {
 			var VariabilityEntity reqVe = i
 			var VariabilityEntity provVe
@@ -225,9 +206,9 @@ class SolutionInterfaceMatching {
 		return resPattern
 	}	
 	
-	def bbn.Pattern getPattern(AbstractOutputPort aon) {
+	def BbDvgTcl.Pattern getPattern(AbstractOutputPort aon) {
 		var EObject obj = aon.eContainer
-		if (obj instanceof bbn.Pattern) {
+		if (obj instanceof BbDvgTcl.Pattern) {
 			return obj	
 		}
 	}	

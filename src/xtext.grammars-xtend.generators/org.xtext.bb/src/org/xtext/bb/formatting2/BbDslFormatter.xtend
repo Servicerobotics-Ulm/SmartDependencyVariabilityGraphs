@@ -3,8 +3,8 @@
  */
 package org.xtext.bb.formatting2
 
-import bbn.BuildingBlock
-import bbn.BuildingBlockDescription
+import BbDvgTcl.BuildingBlock
+import BbDvgTcl.BuildingBlockDescription
 import com.google.inject.Inject
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
@@ -37,7 +37,6 @@ class BbDslFormatter extends AbstractFormatter2 {
 			inputRelationship.format
 		}
 		buildingBlock.sharedresources.format
-		buildingBlock.resourcegroupid.format
 	}
 	
 	// TODO: implement for DVG, Container, VariabilityEntitySet, Output, BuildingBlockInst, ParameterSet, PropertySet, ContextSet, PortElementSet, ParameterInst, ElementDef, BoundedDataObjectDef, UnboundedDataObjectDef, SIUnit, ComplexVSPInit, IntegerVSPInit, RealVSPInit, VI, Element, Bool, Integer, Real, String, PropertyInst, ContextInst, PortElement, Input, Mandatory, Optional, AND, XOR, OR, Loop, Sequential, Parallel, ConditionalFork, EquivalenceFork, Unsequenceable, Number, Condition, BBContainer, EPROD, EQUF, INIT, SAPRO, COMF, RPRO, APRO, TRAN, PTCC, CONT, MAGR, DMAGR, InitPort, InitCPort, InitWSMPort, StaticWeights, CombinationAssignment, Combination, Equal, Description, Precondition, Core, InternalCOMF, LinearNormalization, AGGR, DAGGR

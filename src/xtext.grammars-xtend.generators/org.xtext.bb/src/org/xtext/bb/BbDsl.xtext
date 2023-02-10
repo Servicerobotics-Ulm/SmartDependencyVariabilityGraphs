@@ -4,16 +4,16 @@ grammar org.xtext.bb.BbDsl with org.eclipse.xtext.common.Terminals
 import "http://www.example.org/dor" as dor
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://www.example.org/vi" as vi
-import "http://www.example.org/bbn" 
+import "http://www.example.org/bbdvgtcl"    
 
 BuildingBlockDescription returns BuildingBlockDescription:
 	'BuildingBlockDescription'
 	name=EString
+	('dvg' dvg=[DVG|EString])?
 	'{'
-		('dvg' dvg=[DVG|EString])?
-		'bb' '{' bb+=BuildingBlock ( "," bb+=BuildingBlock)* '}' 
-		('dt' '{' dt+=Decomposition ( "," dt+=Decomposition)* '}' )?
-		('c' '{' c+=Container ( "," c+=Container)* '}' )?
+		bb+=BuildingBlock (bb+=BuildingBlock)*
+		(dt+=Decomposition (dt+=Decomposition)*)?
+		(c+=Container (c+=Container)*)?
 	'}';
 
 BuildingBlock returns BuildingBlock:
@@ -138,18 +138,16 @@ OutputWSMPort returns OutputWSMPort:
 	OutputWSMPort_Impl | InitWSMPort;
 
 BuildingBlock_Impl returns BuildingBlock:
+	(blocktype=BlockType)?
 	'BuildingBlock'
 	name=EString
 	'{'
-		('taskName' taskName=EString)?
-		'blocktype' blocktype=BlockType
-		('dt' '(' dt+=[Decomposition|EString] ( "," dt+=[Decomposition|EString])* ')' )?
+		('Inputs' '{' ir+=InputRelationship (ir+=InputRelationship)* '}' )?
+		('Outputs' '{' o+=Output ( "," o+=Output)* '}' )?
 		('allocationCandidates' '(' allocationCandidates+=[BuildingBlockDescription|EString] ( "," allocationCandidates+=[BuildingBlockDescription|EString])* ')' )?
-		('ves' ves=VariabilityEntitySet)?
-		('o' '{' o+=Output ( "," o+=Output)* '}' )?
-		('ir' '{' ir+=InputRelationship ( "," ir+=InputRelationship)* '}' )?
+		(ves=VariabilityEntitySet)?
 		('sharedresources' sharedresources=SharedResources)?
-		('resourcegroupid' resourcegroupid=ResourceGroupId)?
+		('Decomposition' '(' dt+=[Decomposition|EString] ( "," dt+=[Decomposition|EString])* ')')?
 	'}';
 
 EString returns ecore::EString:
@@ -159,8 +157,8 @@ DVG returns DVG:
 	{DVG}
 	'DVG'
 	name=EString
+	('output' outputName=EString)?
 	'{'
-		('bb' bb=[BuildingBlock|EString])?
 		('pattern' '{' pattern+=Pattern ( "," pattern+=Pattern)* '}' )?
 		('bbcontainer' '{' bbcontainer+=BBContainer ( "," bbcontainer+=BBContainer)* '}' )?
 	'}';
@@ -169,274 +167,249 @@ Container returns Container:
 	{Container}
 	'Container'
 	name=EString
-	'{'
-		('bbr' bbr=[BuildingBlock|EString])?
-		('bbc' bbc=BuildingBlock)?
-		('bbi' bbi=BuildingBlockInst)?
-	'}';
+	('[' resourcegroupid=ResourceGroupId ']')?
+	('=>' bbr=[BuildingBlock|EString])?
+	('{' bbc=BuildingBlock '}')?
+	('=>' bbi=BuildingBlockInst)?
+	;
 
 VariabilityEntitySet returns VariabilityEntitySet:
 	{VariabilityEntitySet}
 	'VariabilityEntitySet'
 	'{'
-		('pas' pas=ParameterSet)?
-		('prs' prs=PropertySet)?
-		('cs' cs=ContextSet)?
-		('pes' pes=PortElementSet)?
+		(pas=ParameterSet)?
+		(prs=PropertySet)?
+		(cs=ContextSet)?
+		(pes=PortElementSet)?
 	'}';
 
 Output returns Output:
 	{Output}
-	'Output'
 	name=EString
-	'{'
-		('dor' dor=[dor::DataObjectDef|EString])?
-		('doc' doc=DataObjectDef)?
-	'}';
+	('is' dor=[dor::DataObjectDef|EString])?
+	('{' doc=DataObjectDef '}')? 
+	;
 
 enum BlockType returns BlockType:
-				CONCRETE = 'CONCRETE' | ABSTRACT = 'ABSTRACT' | ALLOCATABLE = 'ALLOCATABLE';
+	IDENTIFYING = 'IDENTIFYING' | SUPER_IDENTIFYING = 'SUPER_IDENTIFYING' | COMPOSED = 'COMPOSED' | ALLOCATABLE = 'ALLOCATABLE'
+;
 
 SharedResources returns SharedResources:
-	'SharedResources'
-	'{'
-		'number' number=EInt
-	'}';
+	number=EInt
+	;
 
 ResourceGroupId returns ResourceGroupId:
-	'ResourceGroupId'
-	'{'
-		'number' number=EInt
-	'}';
+	number=EInt
+	;
 
 BuildingBlockInst returns BuildingBlockInst:
 	'BuildingBlockInst'
 	name=EString
 	'{'
-		('taskName' taskName=EString)?
-		'blocktype' blocktype=BlockType
-		('dt' '(' dt+=[Decomposition|EString] ( "," dt+=[Decomposition|EString])* ')' )?
+		'=>' c=[Container|EString]
+		('Inputs' '{' ir+=InputRelationship (ir+=InputRelationship)* '}' )?
+		('Outputs' '{' o+=Output ( "," o+=Output)* '}' )?
+		(ves=VariabilityEntitySet)?
 		('allocationCandidates' '(' allocationCandidates+=[BuildingBlockDescription|EString] ( "," allocationCandidates+=[BuildingBlockDescription|EString])* ')' )?
-		'c' c=[Container|EString]
-		('ves' ves=VariabilityEntitySet)?
-		('o' '{' o+=Output ( "," o+=Output)* '}' )?
-		('ir' '{' ir+=InputRelationship ( "," ir+=InputRelationship)* '}' )?
-		('sharedresources' sharedresources=SharedResources)?
-		('resourcegroupid' resourcegroupid=ResourceGroupId)?
+		('sharedresources' sharedresources=SharedResources)?	
+		(dt+=[Decomposition|EString] ( "," dt+=[Decomposition|EString])*)?		
 	'}';
 
 ParameterSet returns ParameterSet:
 	{ParameterSet}
 	'ParameterSet'
 	'{'
-		('pi' '{' pi+=ParameterInst ( "," pi+=ParameterInst)* '}' )?
+		(pi+=ParameterInst ( "," pi+=ParameterInst)*)?
 	'}';
 
 PropertySet returns PropertySet:
 	{PropertySet}
 	'PropertySet'
 	'{'
-		('pi' '{' pi+=PropertyInst ( "," pi+=PropertyInst)* '}' )?
+		(pi+=PropertyInst ( "," pi+=PropertyInst)*)?
 	'}';
 
 ContextSet returns ContextSet:
 	{ContextSet}
 	'ContextSet'
 	'{'
-		('ci' '{' ci+=ContextInst ( "," ci+=ContextInst)* '}' )?
+		(ci+=ContextInst ( "," ci+=ContextInst)*)?
 	'}';
 
 PortElementSet returns PortElementSet:
 	{PortElementSet}
 	'PortElementSet'
 	'{'
-		('pe' '{' pe+=PortElement ( "," pe+=PortElement)* '}' )?
+		(pe+=PortElement ( "," pe+=PortElement)*)?
 	'}';
 
 ParameterInst returns ParameterInst:
 	{ParameterInst}
-	'ParameterInst'
 	name=EString
-	'{'
-		('dor' dor=[dor::DataObjectDef|EString])?
-		('doc' doc=DataObjectDef)?
-	'}';
+	('is' dor=[dor::DataObjectDef|EString])?
+	('{' doc=DataObjectDef '}')?
+	;
 
-ElementDef returns dor::ElementDef:
+ElementDef returns dor::ElementDef: 
 	'ElementDef'
 	name=EString
-	'{'
-		'td' td=TypeDef
-		('siunit' siunit=SIUnit)?
-	'}';
+	'is' td=TypeDef
+	(siunit=SIUnit)?
+	;
+	
+enum ElementRelationship returns dor::ElementRelationship:
+	AND = 'AND' | XOR = 'XOR'
+;	
 
 BoundedDataObjectDef returns dor::BoundedDataObjectDef:
 	'BoundedDataObjectDef'
 	name=EString
+	('['er=ElementRelationship']')?
 	'{'
 		('description' description=EString)?
-		'ed' '{' ed+=ElementDef ( "," ed+=ElementDef)* '}' 
-		'vi' vi=VSPInit
+		ed+=ElementDef ( "," ed+=ElementDef)*
+		vi=VSPInit
 	'}';
 
 UnboundedDataObjectDef returns dor::UnboundedDataObjectDef:
 	'UnboundedDataObjectDef'
 	name=EString
+	('['er=ElementRelationship']')?
 	'{'
 		('description' description=EString)?
-		'ed' '{' ed+=ElementDef ( "," ed+=ElementDef)* '}' 
+		ed+=ElementDef ( "," ed+=ElementDef)*
 	'}';
 
 SIUnit returns dor::SIUnit:
 	{dor::SIUnit}
 	'SIUnit'
 	name=EString
-	'{'
-		('prefix' prefix=Prefix)?
-	'}';
+	('prefix' prefix=Prefix)?
+	;
 
 ReferenceDef returns dor::ReferenceDef:
-	'ReferenceDef'
-	'{'
-		('cardinality' cardinality=EString)?
-		'dod' dod=[dor::DataObjectDef|EString]
-	'}';
+	'=>'
+	dod=[dor::DataObjectDef|EString]
+	('['cardinality=EString']')?
+	;
 
 BoolDef returns dor::BoolDef:
 	{dor::BoolDef}
-	'BoolDef'
-	'{'
-		('cardinality' cardinality=EString)?
-	'}';
+	'Bool'
+	('['cardinality=EString']')?
+	;
 
 IntegerDef returns dor::IntegerDef:
 	{dor::IntegerDef}
-	'IntegerDef'
-	'{'
-		('cardinality' cardinality=EString)?
-	'}';
+	'Integer'
+	('['cardinality=EString']')?
+	;
 
 RealDef returns dor::RealDef:
 	{dor::RealDef}
-	'RealDef'
-	'{'
-		('cardinality' cardinality=EString)?
-	'}';
+	'Real'
+	('['cardinality=EString']')?
+	;
 
 StringDef returns dor::StringDef:
 	{dor::StringDef}
-	'StringDef'
-	'{'
-		('cardinality' cardinality=EString)?
-	'}';
+	'String'
+	('['cardinality=EString']')?
+	;
 
 Prefix returns dor::Prefix:
 	{dor::Prefix}
-	'Prefix'
 	name=EString;
 
 ComplexVSPInit returns vi::ComplexVSPInit:
 	'ComplexVSPInit'
 	'{'
-		'vi' '{' vi+=VI ( "," vi+=VI)* '}' 
+		vi+=VI ( "," vi+=VI)*
 	'}';
 
 BoolVSPInit returns vi::BoolVSPInit:
 	'BoolVSPInit'
-	'{'
-		'vsp' '{' vsp+=EBoolean ( "," vsp+=EBoolean)* '}' 
-	'}';
+	'[' vsp+=EBoolean ( "," vsp+=EBoolean)* ']' 
+	;
 
 IntegerVSPInit returns vi::IntegerVSPInit:
 	{vi::IntegerVSPInit}
 	'IntegerVSPInit'
-	'{'
-		('vsp' '{' vsp+=EInt ( "," vsp+=EInt)* '}' )?
-		('irg' irg=IntegerRandomGenerator)?
-	'}';
+	('[' vsp+=EInt ( "," vsp+=EInt)* ']')?
+	(irg=IntegerRandomGenerator)?
+	;
 
 RealVSPInit returns vi::RealVSPInit:
 	{vi::RealVSPInit}
 	'RealVSPInit'
-	'{'
-		('vsp' '{' vsp+=EDouble ( "," vsp+=EDouble)* '}' )?
-		('rrg' rrg=RealRandomGenerator)?
-	'}';
+	('[' vsp+=EDouble ( "," vsp+=EDouble)* ']' )?
+	(rrg=RealRandomGenerator)?
+	;
 
 StringVSPInit returns vi::StringVSPInit:
 	'StringVSPInit'
-	'{'
-		'vsp' '{' vsp+=EString ( "," vsp+=EString)* '}' 
-	'}';
+	'[' vsp+=EString ( "," vsp+=EString)* ']' 
+	;
 
 VI returns vi::VI:
-	'VI'
-	'{'
-		'e' '{' e+=Element ( "," e+=Element)* '}' 
-	'}';
+	'['
+		e+=Element ( "," e+=Element)*
+	']';
 
 Element returns vi::Element:
 	'Element'
 	name=EString
-	'{'
-		't' t=Type
-	'}';
+	t=Type
+	;
 
 Bool returns vi::Bool:
-	'Bool'
-	'{'
-		'bv' '{' bv+=BoolValue ( "," bv+=BoolValue)* '}' 
-	'}';
+	'BoolVSPInit'
+	'['
+		bv+=BoolValue ( "," bv+=BoolValue)*
+	']';
 
 Integer returns vi::Integer:
-	'Integer'
-	'{'
-		'iv' '{' iv+=IntegerValue ( "," iv+=IntegerValue)* '}' 
-	'}';
+	'IntegerVSPInit'
+	'['
+		iv+=IntegerValue ( "," iv+=IntegerValue)*
+	']';
 
 Real returns vi::Real:
-	'Real'
-	'{'
-		'rv' '{' rv+=RealValue ( "," rv+=RealValue)* '}' 
-	'}';
+	'RealVSPInit'
+	'['
+		rv+=RealValue ( "," rv+=RealValue)*
+	']';
 
 String0 returns vi::String:
-	'String'
-	'{'
-		'sv' '{' sv+=StringValue ( "," sv+=StringValue)* '}' 
-	'}';
+	'StringVSPInit'
+	'['
+		sv+=StringValue ( "," sv+=StringValue)*
+	']';
 
 BoolValue returns vi::BoolValue:
-	value?='value'
-	'BoolValue'
+	value=EBoolean
 	;
 
 EBoolean returns ecore::EBoolean:
 	'true' | 'false';
 
 IntegerValue returns vi::IntegerValue:
-	'IntegerValue'
-	'{'
-		'value' value=EInt
-	'}';
+	value=EInt
+	;
 
 EInt returns ecore::EInt:
 	'-'? INT;
 
 RealValue returns vi::RealValue:
-	'RealValue'
-	'{'
-		'value' value=EDouble
-	'}';
+	value=EDouble
+	;
 
 EDouble returns ecore::EDouble:
 	'-'? INT? '.' INT (('E'|'e') '-'? INT)?;
 
 StringValue returns vi::StringValue:
-	'StringValue'
-	'{'
-		'value' value=EString
-	'}';
+	value=EString
+	;
 
 IntegerRandomGenerator returns vi::IntegerRandomGenerator:
 	'IntegerRandomGenerator'
@@ -456,129 +429,118 @@ RealRandomGenerator returns vi::RealRandomGenerator:
 
 PropertyInst returns PropertyInst:
 	{PropertyInst}
-	'PropertyInst'
 	name=EString
-	'{'
-		('dor' dor=[dor::DataObjectDef|EString])?
-		('doc' doc=DataObjectDef)?
-	'}';
+	('is' dor=[dor::DataObjectDef|EString])?
+	('{' doc=DataObjectDef '}')?
+	;
 
 ContextInst returns ContextInst:
 	{ContextInst}
-	'ContextInst'
 	name=EString
-	'{'
-		('dor' dor=[dor::DataObjectDef|EString])?
-		('doc' doc=DataObjectDef)?
-	'}';
+	('is' dor=[dor::DataObjectDef|EString])?
+	('{' doc=DataObjectDef '}')?
+	;
 
 PortElement returns PortElement:
-	'PortElement'
 	name=EString
-	'{'
-		('dor' dor=[dor::DataObjectDef|EString])?
-		'e' e=[dor::ElementDef|EString]
-		'port' port=[Port|EString]
-		('doc' doc=DataObjectDef)?
-	'}';
+	port=[Port|EString]
+	'element' e=[dor::ElementDef|EString]
+	('is' dor=[dor::DataObjectDef|EString])?
+	('{' doc=DataObjectDef '}')?
+	;
 
 Input returns Input:
 	{Input}
-	'Input'
 	name=EString
-	'{'
-		('dor' dor=[dor::DataObjectDef|EString])?
-		('doc' doc=DataObjectDef)?
-	'}';
+	('is' dor=[dor::DataObjectDef|EString])?
+	('{' doc=DataObjectDef '}')? 
+	;
 
 Mandatory returns Mandatory:
 	'Mandatory'
 	name=EString
-	'{'
-		'in' in=Input
-	'}';
+	in=Input
+	;
 
 Optional returns Optional:
 	'Optional'
 	name=EString
-	'{'
-		'in' in=Input
-	'}';
+	in=Input
+	;
 
 AND returns AND:
 	'AND'
 	name=EString
-	'{'
-		'in' '{' in+=Input ( "," in+=Input)* '}' 
-	'}';
+	'('
+		in+=Input ( "," in+=Input)*
+	')';
 
 XOR returns XOR:
 	'XOR'
 	name=EString
-	'{'
-		'in' '{' in+=Input ( "," in+=Input)* '}' 
-	'}';
+	'('
+		in+=Input ( "," in+=Input)*
+	')';
 
 OR returns OR:
 	'OR'
 	name=EString
-	'{'
-		'in' '{' in+=Input ( "," in+=Input)* '}' 
-	'}';
+	'('
+		in+=Input ( "," in+=Input)*
+	')';
 
 Loop returns Loop:
 	'Loop'
 	name=EString
 	'{'
-		'c' '{' c+=Container ( "," c+=Container)* '}' 
-		'n' n=Number
+		c+=Container ( "," c+=Container)*
+		n=Number
 	'}';
 
 Sequential returns Sequential:
 	'Sequential'
 	name=EString
 	'{'
-		'c' '{' c+=Container ( "," c+=Container)* '}' 
+		c+=Container ( "," c+=Container)*
 	'}';
 
 Parallel returns Parallel:
 	'Parallel'
 	name=EString
 	'{'
-		'p' p=Policy
-		'c' '{' c+=Container ( "," c+=Container)* '}' 
+		'policy' p=Policy
+		c+=Container ( "," c+=Container)*
 	'}';
 
 ConditionalFork returns ConditionalFork:
 	'ConditionalFork'
 	name=EString
 	'{'
-		'c' '{' c+=Container ( "," c+=Container)* '}' 
-		'co' co=Condition
+		co=Condition
+		c+=Container ( "," c+=Container)*
 	'}';
 
 EquivalenceFork returns EquivalenceFork:
 	'EquivalenceFork'
 	name=EString
 	'{'
-		'c' '{' c+=Container ( "," c+=Container)* '}' 
+		c+=Container ( "," c+=Container)*
 	'}';
 
 Unsequenceable returns Unsequenceable:
 	'Unsequenceable'
 	name=EString
 	'{'
-		'c' '{' c+=Container ( "," c+=Container)* '}' 
+		c+=Container ( "," c+=Container)*
 	'}';
 
 Number returns Number:
 	{Number}
 	'Number'
 	name=EString
-	'{'
-		('dor' dor=[dor::DataObjectDef|EString])?
-		('doc' doc=DataObjectDef)?
-	'}';
+	('is' dor=[dor::DataObjectDef|EString])?
+	('{' doc=DataObjectDef '}')?
+	;
 
 enum Policy returns Policy:
 				UNDEFINED = 'UNDEFINED' | WAITFORALL = 'WAITFORALL' | WAITFORFIRST = 'WAITFORFIRST';
@@ -589,17 +551,18 @@ Condition returns Condition:
 	name=EString
 	'{'
 		('description' description=EString)?
-		('dor' dor=[dor::DataObjectDef|EString])?
-		('doc' doc=DataObjectDef)?
+		('is' dor=[dor::DataObjectDef|EString])?
+		('{' doc=DataObjectDef '}')?
 	'}';
 
 BBContainer returns BBContainer:
 	{BBContainer}
 	'BBContainer'
+	'=>'
+	(container=[Container|EString])?
 	'{'
-		('buildingblock' buildingblock=[BuildingBlock|EString])?
-		('pattern' '{' pattern+=Pattern ( "," pattern+=Pattern)* '}' )?
-		('bbcontainer' '{' bbcontainer+=BBContainer ( "," bbcontainer+=BBContainer)* '}' )?
+		(pattern+=Pattern (pattern+=Pattern)*)?
+		(bbcontainer+=BBContainer (bbcontainer+=BBContainer)*)?
 	'}';
 
 EPROD returns EPROD:
@@ -742,31 +705,21 @@ enum RT returns RT:
 				ABSOLUTE = 'ABSOLUTE' | RELATIVE = 'RELATIVE';
 
 InitPort returns InitPort:
-	('isList' isList=EBoolean)?
 	'InitPort'
 	name=EString
 	'{'
 		'vt' vt=VT
 		('description' description=EString)?
 		('gii' gii=EInt)?
-		('kbisa' kbisa=EString)?
-		('kbname' kbname=EString)?
-		('kbvalue' kbvalue=EString)?
-		('tcbname' tcbname=EString)?
-		('tclCmd' tclCmd=EString)?
-		('nrParams' nrParams=EInt)?
 		('interface' interface=Interface)?
-		('kbCmd' kbCmd=EString)?
-		('toTclName' toTclName=EString)?
-		('toTclInst' toTclInst=EInt)?
 		'rt' rt=RT
 		've' ve=[VariabilityEntity|EString]
 		('bbi' bbi=[BuildingBlockInst|EString])?
-		'vi' vi=VSPInit
+		('vi' vi=VSPInit)?
 	'}';
 
 enum Interface returns Interface:
-				STANDARD = 'STANDARD' | FROMTCL = 'FROMTCL' | TOTCL = 'TOTCL';
+				INTERNAL = 'INTERNAL' | EXTERNAL = 'EXTERNAL';
 
 ExtInputPort returns ExtInputPort:
 	'ExtInputPort'
@@ -779,49 +732,29 @@ ExtInputPort returns ExtInputPort:
 	'}';
 
 InitCPort returns InitCPort:
-	('isList' isList=EBoolean)?
 	'InitCPort'
 	name=EString
 	'{'
 		'vt' vt=VT
 		('description' description=EString)?
 		('gii' gii=EInt)?
-		('kbisa' kbisa=EString)?
-		('kbname' kbname=EString)?
-		('kbvalue' kbvalue=EString)?
-		('tcbname' tcbname=EString)?
-		('tclCmd' tclCmd=EString)?
-		('nrParams' nrParams=EInt)?
 		('interface' interface=Interface)?
-		('kbCmd' kbCmd=EString)?
-		('toTclName' toTclName=EString)?
-		('toTclInst' toTclInst=EInt)?
 		've' ve=[VariabilityEntity|EString]
 		('bbi' bbi=[BuildingBlockInst|EString])?
-		'vi' vi=VSPInit
+		('vi' vi=VSPInit)?
 	'}';
 
 InitWSMPort returns InitWSMPort:
-	('isList' isList=EBoolean)?
 	'InitWSMPort'
 	name=EString
 	'{'
 		'vt' vt=VT
 		('description' description=EString)?
 		('gii' gii=EInt)?
-		('kbisa' kbisa=EString)?
-		('kbname' kbname=EString)?
-		('kbvalue' kbvalue=EString)?
-		('tcbname' tcbname=EString)?
-		('tclCmd' tclCmd=EString)?
-		('nrParams' nrParams=EInt)?
 		('interface' interface=Interface)?
-		('kbCmd' kbCmd=EString)?
-		('toTclName' toTclName=EString)?
-		('toTclInst' toTclInst=EInt)?
 		've' ve=[VariabilityEntity|EString]
 		('bbi' bbi=[BuildingBlockInst|EString])?
-		'sws' sws=StaticWeights
+		('sws' sws=StaticWeights)?
 	'}';
 
 StaticWeights returns StaticWeights:

@@ -7,7 +7,7 @@ import java.util.Set;
 
 @SuppressWarnings("all")
 public class Lookup {
-  public String generateLookupCode(final Map<String, Integer> pl, final List<AbstractMap.SimpleEntry<String, Integer>> pll) {
+  public static String generateLookupCode(final Map<String, Integer> pl, final List<AbstractMap.SimpleEntry<String, Integer>> pll) {
     StringBuilder lookupCode = new StringBuilder();
     lookupCode.append("\n\t\t");
     lookupCode.append("Map<String, Integer> lookupIndices = new HashMap<String, Integer>();");

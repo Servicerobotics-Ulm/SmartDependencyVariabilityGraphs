@@ -1,354 +1,633 @@
-//================================================================
-//
-//  Copyright (c) 2022 Technische Hochschule Ulm, Servicerobotics Ulm, Germany
-//
-//        Servicerobotik Ulm 
-//        Christian Schlegel
-//        Ulm University of Applied Sciences
-//        Prittwitzstr. 10
-//        89075 Ulm
-//        Germany
-//
-//	  http://www.servicerobotik-ulm.de/
-//
-//  This file is part of the SmartDependencyVariabilityGraph feature.
-//
-//  Author:
-//		Timo Blender
-//
-//  Licence:
-//
-//  BSD 3-Clause License
-//  
-//  Copyright (c) 2022, Technische Hochschule Ulm, Servicerobotics Ulm
-//  All rights reserved.
-//  
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//  
-//  * Redistributions of source code must retain the above copyright notice, this
-//    list of conditions and the following disclaimer.
-//  
-//  * Redistributions in binary form must reproduce the above copyright notice,
-//    this list of conditions and the following disclaimer in the documentation
-//    and/or other materials provided with the distribution.
-//  
-//  * Neither the name of the copyright holder nor the names of its
-//    contributors may be used to endorse or promote products derived from
-//    this software without specific prior written permission.
-//  
-//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-//  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-//  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-//  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-//  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-//  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-//  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-//  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-//  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//  https://opensource.org/licenses/BSD-3-Clause
-//
-//================================================================
-
 package org.xtext.bb.generator
 
 import java.util.List
 import java.util.Map
+import BbDvgTcl.AbstractInitPort
+import BbDvgTcl.InitPort
+import org.eclipse.emf.ecore.EObject
+import vi.BoolVSPInit
+import vi.IntegerVSPInit
+import vi.RealVSPInit
+import vi.StringVSPInit
+import vi.ComplexVSPInit
+import java.util.ArrayList
+import BbDvgTcl.InitWSMPort
+import java.util.HashMap
+import BbDvgTcl.InitCPort
+import vi.Type
+import vi.Real
 
 class Leafs {
-
-	def String generateLeafValuesInitBool(String name, List<Boolean> leafValues) {
-		var StringBuilder code = new StringBuilder()
-		code.append("leafValues = new ArrayList<Object>();")
-		code.append("\n\t\t")
-		for (i : leafValues) {
-			code.append("leafValues.add("+i+");")
-			code.append("\n\t\t")			
-		}
-		code.append("nodeObject = new NodeObject(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObject.initLeaf(leafValues);")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObject"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}
-
-	def String generateLeafValuesInitBool(String name, List<Boolean> leafValues, int id) {
-		var StringBuilder code = new StringBuilder()
-		code.append("leafValues = new ArrayList<Object>();")
-		code.append("\n\t\t")
-		for (i : leafValues) {
-			code.append("leafValues.add("+i+");")
-			code.append("\n\t\t")			
-		}
-		code.append("nodeObject = new NodeObject(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObject.initLeaf(leafValues, "+id+");")
-		code.append("\n\t\t")	
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObject"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}	
 	
-	def String generateLeafValuesInitInteger(String name, List<Integer> leafValues) {
-		var StringBuilder code = new StringBuilder()
-		code.append("leafValues = new ArrayList<Object>();")
-		code.append("\n\t\t")
-		for (i : leafValues) {
-			code.append("leafValues.add("+i+");")
-			code.append("\n\t\t")			
-		}
-		code.append("nodeObject = new NodeObject(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObject.initLeaf(leafValues);")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObject"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}
+	static def String generateLeaf(AbstractInitPort inn) {
 
-	def String generateLeafValuesInitInteger(String name, List<Integer> leafValues, int id) {
-		var StringBuilder code = new StringBuilder()
-		code.append("leafValues = new ArrayList<Object>();")
-		code.append("\n\t\t")
-		for (i : leafValues) {
-			code.append("leafValues.add("+i+");")
-			code.append("\n\t\t")			
-		}
-		code.append("nodeObject = new NodeObject(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObject.initLeaf(leafValues, "+id+");")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObject"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}
+		var String res = "";
 		
-	def String generateLeafValuesInitReal(String name, List<Double> leafValues) {
-		var StringBuilder code = new StringBuilder()
-		code.append("leafValues = new ArrayList<Object>();")
-		code.append("\n\t\t")
-		for (i : leafValues) {
-			code.append("leafValues.add("+i+");")
-			code.append("\n\t\t")			
-		}
-		code.append("nodeObject = new NodeObject(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObject.initLeaf(leafValues);")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObject"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}
-
-	def String generateLeafValuesInitReal(String name, List<Double> leafValues, int id) {
-		var StringBuilder code = new StringBuilder()
-		code.append("leafValues = new ArrayList<Object>();")
-		code.append("\n\t\t")
-		for (i : leafValues) {
-			code.append("leafValues.add("+i+");")
-			code.append("\n\t\t")			
-		}
-		code.append("nodeObject = new NodeObject(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObject.initLeaf(leafValues, "+id+");")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObject"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}	
-	
-	def String generateLeafValuesInitString(String name, List<String> leafValues) {
-		var StringBuilder code = new StringBuilder()
-		code.append("leafValues = new ArrayList<Object>();")
-		code.append("\n\t\t")
-		for (i : leafValues) {
-			code.append("leafValues.add(\""+i+"\");")
-			code.append("\n\t\t")			
-		}
-		code.append("nodeObject = new NodeObject(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObject.initLeaf(leafValues);")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObject"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}
-
-	def String generateLeafValuesInitString(String name, List<String> leafValues, int id) {
-		var StringBuilder code = new StringBuilder()
-		code.append("leafValues = new ArrayList<Object>();")
-		code.append("\n\t\t")
-		for (i : leafValues) {
-			code.append("leafValues.add(\""+i+"\");")
-			code.append("\n\t\t")			
-		}
-		code.append("nodeObject = new NodeObject(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObject.initLeaf(leafValues, "+id+");")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObject"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}	
-	
-	def String generateRandomIntegers(String name, int number, int min, int max) {
-		var StringBuilder code = new StringBuilder()
-		code.append("leafValues = new ArrayList<Object>();")
-		code.append("\n\t\t")
-		code.append("random = new Random();")
-		code.append("\n\t\t")
-		code.append("leafValues = random.ints("+number+","+min+","+max+").boxed().collect(Collectors.toList());")
-		code.append("\n\t\t")
-		code.append("nodeObject = new NodeObject(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObject.initLeaf(leafValues);")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObject"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}
-	
-	def String generateRandomReals(String name, int number, double min, double max) {
-		var StringBuilder code = new StringBuilder()
-		code.append("leafValues = new ArrayList<Object>();")
-		code.append("\n\t\t")
-		code.append("random = new Random();")
-		code.append("\n\t\t")
-		code.append("leafValues = random.doubles("+number+","+min+","+max+").boxed().collect(Collectors.toList());")
-		code.append("\n\t\t")
-		code.append("nodeObject = new NodeObject(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObject.initLeaf(leafValues);")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObject"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}
-	
-	def String generateLeafValuesInit(String name, Map<String,Double> leafValues) {
-		var StringBuilder code = new StringBuilder()
-		code.append("leafValuesPsMapList= new ArrayList<Map<String,Double>>();")
-		code.append("leafValuesPsMap = new HashMap<String,Double>();")
-		code.append("\n\t\t")
-		for (i : leafValues.entrySet) {
-			code.append("leafValuesPsMap.put(\""+i.key+"\","+i.value+");")
-			code.append("\n\t\t")			
-		}
-		code.append("nodePs = new NodePs(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("leafValuesPsMapList.add(leafValuesPsMap);")
-		code.append("\n\t\t")
-		code.append("nodePs.initLeaf(leafValuesPsMapList);")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodePs"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}
-	
-	def String generateLeafValuesInit(String name, List<List<Object>> leafValues) {
-		var StringBuilder code = new StringBuilder()
-		
-		code.append("leafValues_2 = new ArrayList<List<Object>>();")
-		code.append("\n\t\t")
-		for (i : leafValues) {
-			code.append("leafValues = new ArrayList<Object>();")
-			for (j : i) {
-				code.append("leafValues.add("+j+");")
-				code.append("\n\t\t")	
+		if (inn instanceof InitPort) {
+			var EObject tmp = inn.vi
+			if (tmp instanceof BoolVSPInit) {
+				res += generateLeafValuesBoolean(inn.name, tmp.vsp)
 			}
-			code.append("leafValues_2.add(leafValues);")
-		}
-		
-		code.append("nodeObjectList = new NodeObjectList(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObjectList.initLeaf_2(leafValues_2);")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObjectList"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}
-	
-	def String generateLeafValuesInit(String name, List<List<Object>> leafValues, int id) {
-		var StringBuilder code = new StringBuilder()
-		
-		code.append("leafValues_2 = new ArrayList<List<Object>>();")
-		code.append("\n\t\t")
-		for (i : leafValues) {
-			code.append("leafValues = new ArrayList<Object>();")
-			for (j : i) {
-				code.append("leafValues.add("+j+");")
-				code.append("\n\t\t")	
+			else if (tmp instanceof IntegerVSPInit) {
+				if (tmp.irg !== null) {
+					res += generateRandomIntegers(inn.name, tmp.irg.number, tmp.irg.min, tmp.irg.max)
+				}
+				else {
+					res += generateLeafValuesInteger(inn.name, tmp.vsp)
+				}
+			}	
+			else if (tmp instanceof RealVSPInit) {
+				if (tmp.rrg !== null) {
+					res += generateRandomReals(inn.name, tmp.rrg.number, tmp.rrg.min, tmp.rrg.max)
+				}
+				else {
+					res += generateLeafValuesDouble(inn.name, tmp.vsp)
+				}
 			}
-			code.append("leafValues_2.add(leafValues);")
+			else if (tmp instanceof StringVSPInit) {
+				res += generateLeafValuesString(inn.name, tmp.vsp)
+			}
+			
+			else if (tmp instanceof ComplexVSPInit) {
+				
+				//System.out.println("Is Complex VSP INIT *********************************************************")
+				
+				// We expect here either a list of Elements > 1 each with cardinality = 1 
+				// or one Element with cardinality > 1
+				if (tmp.vi.get(0).e.size() > 1) {
+					// More than one element for the first VI
+					// Must be the same for all other VIs
+					// Each Element must have cardinality = 1
+					var Type ty = null
+					
+					var List<List<Object>> vsp = new ArrayList<List<Object>>()
+					
+					// For each VI
+					for (var int i = 0; i < tmp.vi.size(); i++) {
+						// For each Element of a VI					
+						var List<Object> vi = new ArrayList<Object>()
+						for (var int j = 0; j < tmp.vi.get(i).e.size(); j++) {
+							ty = tmp.vi.get(i).e.get(j).t
+							
+							if (ty instanceof Real) {
+								// Only one value
+								vi.add(ty.rv.get(0).value)
+							}
+							else if (ty instanceof vi.String) {
+								vi.add(ty.sv.get(0).value)
+							}
+							// TODO: Add other types										
+						}
+						
+						vsp.add(vi)
+						
+						res += generateLeafValues(inn.name, vsp)		
+					}
+					
+				}
+				else if (tmp.vi.get(0).e.size() == 1) {
+					
+					var Type ty = null
+					var List<List<Object>> vsp = new ArrayList<List<Object>>()
+					
+					// For each VI
+					for (var int i = 0; i < tmp.vi.size(); i++) {
+						// For each Value of the single Element of a VI					
+						var List<Object> vi = new ArrayList<Object>()
+						ty = tmp.vi.get(i).e.get(0).t
+						
+						if (ty instanceof Real) {
+							// More than one value
+							
+							for (var int j = 0; j < ty.rv.size(); j++) {
+								vi.add(ty.rv.get(j).value)
+							}
+							
+							vsp.add(vi)
+						}
+						else if (ty instanceof vi.String) {
+							vi.add(ty.sv.get(0).value)
+						}
+						// TODO: Add other types						
+						
+						res += generateLeafValues(inn.name, vsp)		
+					}
+					
+				}
+			}
+			
 		}
 		
-		code.append("nodeObjectList = new NodeObjectList(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObjectList.initLeaf_2(leafValues_2, "+id+");")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObjectList"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
-	}	
-	
-	def String generateLeafValuesInitComplexTcl(String name) {
-		var StringBuilder code = new StringBuilder()
+		else if (inn instanceof InitCPort) {
+			var EObject tmp = inn.vi
+			if (tmp instanceof BoolVSPInit) {
+				res += generateLeafValuesBoolean(inn.name, tmp.vsp)
+			}
+			else if (tmp instanceof IntegerVSPInit) {
+				if (tmp.irg !== null) {
+					res += generateRandomIntegers(inn.name, tmp.irg.number, tmp.irg.min, tmp.irg.max)
+				}
+				else {
+					res += generateLeafValuesInteger(inn.name, tmp.vsp)
+				}
+			}	
+			else if (tmp instanceof RealVSPInit) {
+				if (tmp.rrg !== null) {
+					res += generateRandomReals(inn.name, tmp.rrg.number, tmp.rrg.min, tmp.rrg.max)
+				}
+				else {
+					res += generateLeafValuesDouble(inn.name, tmp.vsp)
+				}
+			}
+			else if (tmp instanceof StringVSPInit) {
+				res += generateLeafValuesString(inn.name, tmp.vsp)
+			}
+			
+		}
 		
-		code.append("leafValues_2 = new ArrayList<List<Object>>();")
-		code.append("\n\t\t")
-		//for (i : leafValues) {
-			code.append("leafValues = new ArrayList<Object>();")
-			code.append("dataFromFile = getDataFromFile(\""+name+"\");")
-			code.append("for (int i = 0; i < dataFromFile.length; i++) {")
-			code.append("leafValues.add(Double.parseDouble(dataFromFile[i]));") // Currently always treated as double
-			code.append("}")
-			code.append("leafValues_2.add(leafValues);")
-		//}
+		else if (inn instanceof InitWSMPort) {
+			
+			var Map<String,Double> dwStruct = new HashMap<String,Double>()
 		
-		code.append("nodeObjectList = new NodeObjectList(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObjectList.initLeaf_2(leafValues_2);")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObjectList"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
+			for (i : inn.sws.sw) {
+				dwStruct.put(i.inputport.outputport.name, i.weight)
+			}
+		
+			res += generateLeafValues(inn.name, dwStruct)
+		}
+		
+		return res
 	}
 	
-	def String generateLeafValuesInitTcl(String name) {
-		var StringBuilder code = new StringBuilder()
+	static def String generateLeaf(AbstractInitPort inn, String name) {
 		
-		code.append("leafValues = new ArrayList<Object>();")
-		code.append("dataFromFile = getDataFromFile(\""+name+"\");")
-		code.append("for (int i = 0; i < dataFromFile.length; i++) {")
-		code.append("leafValues.add(Double.parseDouble(dataFromFile[i]));") // Currently always treated as double
-		code.append("}")
+		var String res = "";
 		
-		code.append("nodeObject = new NodeObject(\""+name+"\");")
-		code.append("\n\t\t")
-		code.append("nodeObject.initLeaf(leafValues);")
-		code.append("\n\t\t")
-		code.append("this.NODE_COLLECTION.put(\""+name+"\", nodeObject"+");")
-		code.append("\n\t\t")
-		code.append("\n\t\t")
-		return code.toString
+		if (inn instanceof InitPort) {
+			var EObject tmp = inn.vi
+			if (tmp instanceof BoolVSPInit) {
+				res += Leafs.generateLeafValuesBoolean(name, tmp.vsp)
+			}
+			else if (tmp instanceof IntegerVSPInit) {
+				if (tmp.irg !== null) {
+					res += Leafs.generateRandomIntegers(name, tmp.irg.number, tmp.irg.min, tmp.irg.max)
+				}
+				else {
+					res += Leafs.generateLeafValuesInteger(name, tmp.vsp)
+				}
+			}	
+			else if (tmp instanceof RealVSPInit) {
+				if (tmp.rrg !== null) {
+					res += Leafs.generateRandomReals(name, tmp.rrg.number, tmp.rrg.min, tmp.rrg.max)
+				}
+				else {
+					res += Leafs.generateLeafValuesDouble(name, tmp.vsp)
+				}
+			}
+			else if (tmp instanceof StringVSPInit) {
+				res += Leafs.generateLeafValuesString(name, tmp.vsp)
+			}
+			
+			else if (tmp instanceof ComplexVSPInit) {
+				
+				//System.out.println("Is Complex VSP INIT *********************************************************")
+				
+				// We expect here either a list of Elements > 1 each with cardinality = 1 
+				// or one Element with cardinality > 1
+				if (tmp.vi.get(0).e.size() > 1) {
+					// More than one element for the first VI
+					// Must be the same for all other VIs
+					// Each Element must have cardinality = 1
+					var Type ty = null
+					
+					var List<List<Object>> vsp = new ArrayList<List<Object>>()
+					
+					// For each VI
+					for (var int i = 0; i < tmp.vi.size(); i++) {
+						// For each Element of a VI					
+						var List<Object> vi = new ArrayList<Object>()
+						for (var int j = 0; j < tmp.vi.get(i).e.size(); j++) {
+							ty = tmp.vi.get(i).e.get(j).t
+							
+							if (ty instanceof Real) {
+								// Only one value
+								vi.add(ty.rv.get(0).value)
+							}
+							else if (ty instanceof vi.String) {
+								vi.add(ty.sv.get(0).value)
+							}
+							// TODO: Add other types
+						}
+						
+						vsp.add(vi)
+						
+						res += Leafs.generateLeafValues(name, vsp)		
+					}
+					
+				}
+				else if (tmp.vi.get(0).e.size() == 1) {
+					
+					var Type ty = null
+					var List<List<Object>> vsp = new ArrayList<List<Object>>()
+					
+					// For each VI
+					for (var int i = 0; i < tmp.vi.size(); i++) {
+						// For each Value of the single Element of a VI					
+						var List<Object> vi = new ArrayList<Object>()
+						ty = tmp.vi.get(i).e.get(0).t
+						
+						if (ty instanceof Real) {
+							// More than one value
+							
+							for (var int j = 0; j < ty.rv.size(); j++) {
+								vi.add(ty.rv.get(j).value)
+							}
+							
+							vsp.add(vi)
+						}
+						// TODO: Add other types
+						
+						res += Leafs.generateLeafValues(name, vsp)		
+					}
+					
+				}
+			}
+		}
+		
+		else if (inn instanceof InitCPort) {
+			var EObject tmp = inn.vi
+			if (tmp instanceof BoolVSPInit) {
+				res += Leafs.generateLeafValuesBoolean(name, tmp.vsp)
+			}
+			else if (tmp instanceof IntegerVSPInit) {
+				if (tmp.irg !== null) {
+					res += Leafs.generateRandomIntegers(name, tmp.irg.number, tmp.irg.min, tmp.irg.max)
+				}
+				else {
+					res += Leafs.generateLeafValuesInteger(name, tmp.vsp)
+				}
+			}	
+			else if (tmp instanceof RealVSPInit) {
+				if (tmp.rrg !== null) {
+					res += Leafs.generateRandomReals(name, tmp.rrg.number, tmp.rrg.min, tmp.rrg.max)
+				}
+				else {
+					res += Leafs.generateLeafValuesDouble(name, tmp.vsp)
+				}
+			}
+			else if (tmp instanceof StringVSPInit) {
+				res += Leafs.generateLeafValuesString(name, tmp.vsp)
+			}
+			
+		}
+		
+		else if (inn instanceof InitWSMPort) {
+			
+			var Map<String,Double> dwStruct = new HashMap<String,Double>()
+		
+			for (i : inn.sws.sw) {
+				dwStruct.put(i.inputport.outputport.name, i.weight)
+			}
+		
+			res += Leafs.generateLeafValues(name, dwStruct)
+		}
+		
+		return res
+	}		
+	
+	static def String generateLeaf(AbstractInitPort inn, String name, int id) {
+		
+		var String res = "";
+		
+		if (inn instanceof InitPort) {
+			var EObject tmp = inn.vi
+			if (tmp instanceof BoolVSPInit) {
+				res += Leafs.generateLeafValuesBoolean(name, tmp.vsp, id)
+			}
+			else if (tmp instanceof IntegerVSPInit) {
+				if (tmp.irg !== null) {
+					res += Leafs.generateRandomIntegers(name, tmp.irg.number, tmp.irg.min, tmp.irg.max)
+				}
+				else {
+					res += Leafs.generateLeafValuesInteger(name, tmp.vsp, id)
+				}
+			}	
+			else if (tmp instanceof RealVSPInit) {
+				if (tmp.rrg !== null) {
+					res += Leafs.generateRandomReals(name, tmp.rrg.number, tmp.rrg.min, tmp.rrg.max)
+				}
+				else {
+					res += Leafs.generateLeafValuesDouble(name, tmp.vsp, id)
+				}
+			}
+			else if (tmp instanceof StringVSPInit) {
+				res += Leafs.generateLeafValuesString(name, tmp.vsp, id)
+			}
+			
+			else if (tmp instanceof ComplexVSPInit) {
+				
+				//System.out.println("Is Complex VSP INIT *********************************************************")
+				
+				// We expect here either a list of Elements > 1 each with cardinality = 1 
+				// or one Element with cardinality > 1
+				if (tmp.vi.get(0).e.size() > 1) {
+					// More than one element for the first VI
+					// Must be the same for all other VIs
+					// Each Element must have cardinality = 1
+					var Type ty = null
+					
+					var List<List<Object>> vsp = new ArrayList<List<Object>>()
+					
+					// For each VI
+					for (var int i = 0; i < tmp.vi.size(); i++) {
+						// For each Element of a VI					
+						var List<Object> vi = new ArrayList<Object>()
+						for (var int j = 0; j < tmp.vi.get(i).e.size(); j++) {
+							ty = tmp.vi.get(i).e.get(j).t
+							
+							if (ty instanceof Real) {
+								// Only one value
+								vi.add(ty.rv.get(0).value)
+							}
+						}
+						
+						vsp.add(vi)
+						
+						res += Leafs.generateLeafValues(name, vsp, id)		
+					}
+					
+				}
+				else if (tmp.vi.get(0).e.size() == 1) {
+					
+					var Type ty = null
+					var List<List<Object>> vsp = new ArrayList<List<Object>>()
+					
+					// For each VI
+					for (var int i = 0; i < tmp.vi.size(); i++) {
+						// For each Value of the single Element of a VI					
+						var List<Object> vi = new ArrayList<Object>()
+						ty = tmp.vi.get(i).e.get(0).t
+						
+						if (ty instanceof Real) {
+							// More than one value
+							
+							for (var int j = 0; j < ty.rv.size(); j++) {
+								vi.add(ty.rv.get(j).value)
+							}
+							
+							vsp.add(vi)
+						}
+						
+						res += Leafs.generateLeafValues(name, vsp, id)		
+					}
+					
+				}
+			}
+			
+			//res += "// assign node "+ name+ "a UNIQUE RES ID of "+ this.UNIQUE_RESOURCE_ID.get(inn)
+			//res += "\n\n
+		}
+		
+		else if (inn instanceof InitCPort) {
+			var EObject tmp = inn.vi
+			if (tmp instanceof BoolVSPInit) {
+				res += Leafs.generateLeafValuesBoolean(name, tmp.vsp)
+			}
+			else if (tmp instanceof IntegerVSPInit) {
+				if (tmp.irg !== null) {
+					res += Leafs.generateRandomIntegers(name, tmp.irg.number, tmp.irg.min, tmp.irg.max)
+				}
+				else {
+					res += Leafs.generateLeafValuesInteger(name, tmp.vsp)
+				}
+			}	
+			else if (tmp instanceof RealVSPInit) {
+				if (tmp.rrg !== null) {
+					res += Leafs.generateRandomReals(name, tmp.rrg.number, tmp.rrg.min, tmp.rrg.max)
+				}
+				else {
+					res += Leafs.generateLeafValuesDouble(name, tmp.vsp)
+				}
+			}
+			else if (tmp instanceof StringVSPInit) {
+				res += Leafs.generateLeafValuesString(name, tmp.vsp)
+			}
+			
+		}
+		
+		else if (inn instanceof InitWSMPort) {
+			
+			var Map<String,Double> dwStruct = new HashMap<String,Double>()
+		
+			for (i : inn.sws.sw) {
+				dwStruct.put(i.inputport.outputport.name, i.weight)
+			}
+		
+			res += Leafs.generateLeafValues(name, dwStruct)
+		}
+		
+		return res
+	}			
+	
+	static def generateLeafValuesBoolean(String name, List<Boolean> leafValues) {
+		'''
+		leafValues = new ArrayList<Object>();
+		«FOR i : leafValues»
+			leafValues.add(«i»);
+		«ENDFOR»
+		nodeObject = new NodeObject("«name»");
+		nodeObject.initLeaf(leafValues);
+		this.NODE_COLLECTION.put("«name»", nodeObject);
+		'''
+	}
+	
+	static def generateLeafValuesBoolean(String name, List<Boolean> leafValues, int id) {
+		'''
+		leafValues = new ArrayList<Object>();
+		«FOR i : leafValues»
+			leafValues.add(«i»);
+		«ENDFOR»
+		nodeObject = new NodeObject("«name»");
+		nodeObject.initLeaf(leafValues, «id»);
+		this.NODE_COLLECTION.put("«name»", nodeObject);
+		'''
 	}	
+	
+	static def generateLeafValuesDouble(String name, List<Double> leafValues) {
+		'''
+		leafValues = new ArrayList<Object>();
+		«FOR i : leafValues»
+			leafValues.add(«i»);
+		«ENDFOR»
+		nodeObject = new NodeObject("«name»");
+		nodeObject.initLeaf(leafValues);
+		this.NODE_COLLECTION.put("«name»", nodeObject);
+		'''
+	}
+	
+	static def generateLeafValuesDouble(String name, List<Double> leafValues, int id) {
+		'''
+		leafValues = new ArrayList<Object>();
+		«FOR i : leafValues»
+			leafValues.add(«i»);
+		«ENDFOR»
+		nodeObject = new NodeObject("«name»");
+		nodeObject.initLeaf(leafValues, «id»);
+		this.NODE_COLLECTION.put("«name»", nodeObject);
+		'''
+	}	
+	
+	static def generateLeafValuesInteger(String name, List<Integer> leafValues) {
+		'''
+		leafValues = new ArrayList<Object>();
+		«FOR i : leafValues»
+			leafValues.add(«i»);
+		«ENDFOR»
+		nodeObject = new NodeObject("«name»");
+		nodeObject.initLeaf(leafValues);
+		this.NODE_COLLECTION.put("«name»", nodeObject);
+		'''
+	}	
+	
+	static def generateLeafValuesInteger(String name, List<Integer> leafValues, int id) {
+		'''
+		leafValues = new ArrayList<Object>();
+		«FOR i : leafValues»
+			leafValues.add(«i»);
+		«ENDFOR»
+		nodeObject = new NodeObject("«name»");
+		nodeObject.initLeaf(leafValues, «id»);
+		this.NODE_COLLECTION.put("«name»", nodeObject);
+		'''
+	}		
+	
+	static def generateLeafValuesString(String name, List<String> leafValues) {
+		'''
+		leafValues = new ArrayList<Object>();
+		«FOR i : leafValues»
+			leafValues.add("«i»");
+		«ENDFOR»
+		nodeObject = new NodeObject("«name»");
+		nodeObject.initLeaf(leafValues);
+		this.NODE_COLLECTION.put("«name»", nodeObject);
+		'''
+	}	
+	
+	static def generateLeafValuesString(String name, List<String> leafValues, int id) {
+		'''
+		leafValues = new ArrayList<Object>();
+		«FOR i : leafValues»
+			leafValues.add("«i»");
+		«ENDFOR»
+		nodeObject = new NodeObject("«name»");
+		nodeObject.initLeaf(leafValues, «id»);
+		this.NODE_COLLECTION.put("«name»", nodeObject);
+		'''
+	}
+	
+	static def generateRandomIntegers(String name, int number, int min, int max) {
+		'''
+		leafValues = new ArrayList<Object>();
+		random = new Random();
+		leafValues = random.ints(«number», «min», «max»).boxed().collect(Collectors.toList());
+		nodeObject = new NodeObject("«name»");
+		nodeObject.initLeaf(leafValues);
+		this.NODE_COLLECTION.put("«name»", nodeObject);
+		'''
+	}
+	
+	static def generateRandomReals(String name, int number, double min, double max) {
+		'''
+		leafValues = new ArrayList<Object>();
+		random = new Random();
+		leafValues = random.doubles(«number», «min», «max»).boxed().collect(Collectors.toList());
+		nodeObject = new NodeObject("«name»");
+		nodeObject.initLeaf(leafValues);
+		this.NODE_COLLECTION.put("«name»", nodeObject);
+		'''
+	}	
+	
+	static def generateLeafValues(String name, Map<String,Double> leafValues) {
+		'''
+		leafValuesPsMapList= new ArrayList<Map<String,Double>>();
+		leafValuesPsMap = new HashMap<String,Double>();
+		«FOR i : leafValues.entrySet»
+			leafValuesPsMap.put("«i.key»",«i.value»);
+		«ENDFOR»
+		nodePs = new NodePs("«name»");
+		leafValuesPsMapList.add(leafValuesPsMap);
+		nodePs.initLeaf(leafValuesPsMapList);
+		this.NODE_COLLECTION.put("«name»", nodePs);
+		'''
+	}
+	
+	static def generateLeafValues(String name, List<List<Object>> leafValues) {
+		'''
+		leafValues_2 = new ArrayList<List<Object>>();
+		«FOR i : leafValues»
+			leafValues = new ArrayList<Object>();
+			«FOR j : i»
+				«IF j instanceof String»
+					leafValues.add("«j»");
+				«ELSE»
+					leafValues.add(«j»);
+				«ENDIF»
+				
+			«ENDFOR»
+			leafValues_2.add(leafValues);
+		«ENDFOR»
+
+		nodeObjectList = new NodeObjectList("«name»");
+		nodeObjectList.initLeaf_2(leafValues_2);
+		this.NODE_COLLECTION.put("«name»", nodeObjectList);
+		'''
+	}
+	
+	static def generateLeafValues(String name, List<List<Object>> leafValues, int id) {
+		'''
+		leafValues_2 = new ArrayList<List<Object>>();
+		«FOR i : leafValues»
+			leafValues = new ArrayList<Object>();
+			«FOR j : i»
+				leafValues.add(«j»);
+			«ENDFOR»
+			leafValues_2.add(leafValues);
+		«ENDFOR»
+
+		nodeObjectList = new NodeObjectList("«name»");
+		nodeObjectList.initLeaf_2(leafValues_2, «id»);
+		this.NODE_COLLECTION.put("«name»", nodeObjectList);
+		'''
+	}
+	
+	static def generateLeafValuesComplexTcl(String name) {
+		'''
+		leafValues_2 = new ArrayList<List<Object>>();
+		leafValues = new ArrayList<Object>();
+		dataFromFile = getDataFromFile("«name»");
+		for (int i = 0; i < dataFromFile.length; i++) {
+			leafValues.add(Double.parseDouble(dataFromFile[i])); «/*Currently always treated as double*/»
+		}
+		leafValues_2.add(leafValues);
+		
+		nodeObjectList = new NodeObjectList("«name»");
+		nodeObjectList.initLeaf_2(leafValues_2);
+		this.NODE_COLLECTION.put("«name»", nodeObjectList);
+		'''
+	}
+	
+	static def generateLeafValuesTcl(String name) {
+		'''
+		leafValues = new ArrayList<Object>();
+		dataFromFile = getDataFromFile("«name»");
+		for (int i = 0; i < dataFromFile.length; i++) {
+			leafValues.add(Double.parseDouble(dataFromFile[i])); «/*Currently always treated as double*/»
+		}
+		
+		nodeObject = new NodeObject("«name»");
+		nodeObject.initLeaf(leafValues);
+		this.NODE_COLLECTION.put("«name»", nodeObject);
+		'''
+	}
 	
 }
