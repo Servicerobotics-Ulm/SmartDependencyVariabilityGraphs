@@ -3,7 +3,7 @@
  */
 package org.xtext.bb.tests;
 
-import bbn.BuildingBlockDescription;
+import BbDvgTcl.BuildingBlockDescription;
 import com.google.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;

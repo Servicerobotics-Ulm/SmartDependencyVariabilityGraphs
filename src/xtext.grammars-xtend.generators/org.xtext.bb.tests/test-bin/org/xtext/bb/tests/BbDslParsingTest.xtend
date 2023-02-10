@@ -3,7 +3,7 @@
  */
 package org.xtext.bb.tests
 
-import bbn.BuildingBlockDescription
+import BbDvgTcl.BuildingBlockDescription
 import com.google.inject.Inject
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.extensions.InjectionExtension
