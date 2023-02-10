@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="tcl" version="12.0.0.2017041100">
+  <ownedViewpoints name="TCLViewpoint">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="Tcl" domainClass="BbDvgTcl::Behavior" enablePopupBars="true">
+      <metamodel href="file:/home/timo/eclipse-workspace-post-diss-src/bbn/model/bbn.ecore#/"/>
+      <defaultLayer name="Default">
+        <nodeMappings name="FunctionCall" semanticCandidatesExpression="feature:eContents" domainClass="BbDvgTcl::FunctionCall">
+          <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:sequenceNumber" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <forbiddenSides>WEST</forbiddenSides>
+            <forbiddenSides>EAST</forbiddenSides>
+            <forbiddenSides>NORTH</forbiddenSides>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="tcb" sourceMapping="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='TCBCall'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='OneOf']/@borderedNodeMappings[name='TCBCall'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='Parallel']/@borderedNodeMappings[name='TCBCall'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='Rule']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='TCBCall'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='Rule']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='Parallel']/@borderedNodeMappings[name='TCBCall'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='Rule']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='OneOf']/@borderedNodeMappings[name='TCBCall'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='EventHandler']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='TCBCall'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='EventHandler']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='Parallel']/@borderedNodeMappings[name='TCBCall'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='EventHandler']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='OneOf']/@borderedNodeMappings[name='TCBCall'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='Function']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='Parallel']/@borderedNodeMappings[name='TCBCall'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='Function']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='OneOf']/@borderedNodeMappings[name='TCBCall'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='Function']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='TCBCall']" targetMapping="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='SameSignatureTCBs'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='SameNameTCBs']" targetFinderExpression="feature:abstracttcb">
+          <style sizeComputationExpression="3" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_gray']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="rule" sourceMapping="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB']" targetMapping="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='Rule']" targetFinderExpression="feature:rule">
+          <style lineStyle="dash" sizeComputationExpression="2" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="Event" sourceMapping="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB']/@borderedNodeMappings[name='EventActivation']" targetMapping="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='EventHandler']" targetFinderExpression="feature:eventhandler">
+          <style lineStyle="dash_dot" sizeComputationExpression="2" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='blue']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="function" sourceMapping="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@nodeMappings[name='FunctionCall']" targetMapping="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='Function']" targetFinderExpression="feature:function">
+          <style sizeComputationExpression="3" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="tcbRef" sourceMapping="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='Rule']/@borderedNodeMappings[name='TCBRef']" targetMapping="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB'] //@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='SameNameTCBs']" targetFinderExpression="feature:abstracttcb">
+          <style lineStyle="dash" sizeComputationExpression="2" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <containerMappings name="TCB" semanticCandidatesExpression="feature:eContents" domainClass="BbDvgTcl::TCB" reusedBorderedNodeMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@nodeMappings[name='FunctionCall']">
+          <borderedNodeMappings name="Plan" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::Plan">
+            <borderedNodeMappings name="TCBCall" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::TCBCall">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:sequenceNumber" labelPosition="node" resizeKind="NSEW">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <forbiddenSides>WEST</forbiddenSides>
+                <forbiddenSides>EAST</forbiddenSides>
+                <forbiddenSides>NORTH</forbiddenSides>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+              </style>
+            </borderedNodeMappings>
+            <borderedNodeMappings name="OneOf" semanticCandidatesExpression="feature:eContents" domainClass="BbDvgTcl::OneOf">
+              <borderedNodeMappings name="TCBCall" semanticCandidatesExpression="feature:eContents" domainClass="BbDvgTcl::TCBCall">
+                <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:sequenceNumber" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <forbiddenSides>WEST</forbiddenSides>
+                  <forbiddenSides>EAST</forbiddenSides>
+                  <forbiddenSides>NORTH</forbiddenSides>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+                </style>
+              </borderedNodeMappings>
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="one-of" labelPosition="node" resizeKind="NSEW" width="10" height="3">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <forbiddenSides>WEST</forbiddenSides>
+                <forbiddenSides>EAST</forbiddenSides>
+                <forbiddenSides>NORTH</forbiddenSides>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+              </style>
+            </borderedNodeMappings>
+            <borderedNodeMappings name="Parallel" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::Parallel">
+              <borderedNodeMappings name="TCBCall" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::TCBCall">
+                <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:sequenceNumber" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <forbiddenSides>WEST</forbiddenSides>
+                  <forbiddenSides>EAST</forbiddenSides>
+                  <forbiddenSides>NORTH</forbiddenSides>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                </style>
+              </borderedNodeMappings>
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="parallel" labelPosition="node" resizeKind="NSEW" width="10" height="3">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <forbiddenSides>WEST</forbiddenSides>
+                <forbiddenSides>EAST</forbiddenSides>
+                <forbiddenSides>NORTH</forbiddenSides>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+              </style>
+            </borderedNodeMappings>
+            <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Plan" labelPosition="node" resizeKind="NSEW" width="10" height="3">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <forbiddenSides>WEST</forbiddenSides>
+              <forbiddenSides>EAST</forbiddenSides>
+              <forbiddenSides>NORTH</forbiddenSides>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="EventActivation" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::EventActivation">
+            <style xsi:type="style:DotDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="EA" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <forbiddenSides>SOUTH</forbiddenSides>
+              <forbiddenSides>NORTH</forbiddenSides>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="ErrorRef" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::ErrorRef">
+            <style xsi:type="style:LozengeNodeDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.error.name" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <forbiddenSides>WEST</forbiddenSides>
+              <forbiddenSides>SOUTH</forbiddenSides>
+              <forbiddenSides>EAST</forbiddenSides>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </style>
+          </borderedNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="Rule" semanticCandidatesExpression="feature:block" domainClass="BbDvgTcl::Rule" reusedBorderedNodeMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@nodeMappings[name='FunctionCall']">
+          <borderedNodeMappings name="Plan" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::Plan">
+            <borderedNodeMappings name="TCBCall" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::TCBCall">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:sequenceNumber" labelPosition="node" resizeKind="NSEW">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <forbiddenSides>WEST</forbiddenSides>
+                <forbiddenSides>EAST</forbiddenSides>
+                <forbiddenSides>NORTH</forbiddenSides>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+              </style>
+            </borderedNodeMappings>
+            <borderedNodeMappings name="OneOf" semanticCandidatesExpression="feature:eContents" domainClass="BbDvgTcl::OneOf">
+              <borderedNodeMappings name="TCBCall" semanticCandidatesExpression="feature:eContents" domainClass="BbDvgTcl::TCBCall">
+                <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.tcb.name" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <forbiddenSides>WEST</forbiddenSides>
+                  <forbiddenSides>EAST</forbiddenSides>
+                  <forbiddenSides>NORTH</forbiddenSides>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+                </style>
+              </borderedNodeMappings>
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="one-of" labelPosition="node" resizeKind="NSEW" width="10" height="3">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <forbiddenSides>WEST</forbiddenSides>
+                <forbiddenSides>EAST</forbiddenSides>
+                <forbiddenSides>NORTH</forbiddenSides>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+              </style>
+            </borderedNodeMappings>
+            <borderedNodeMappings name="Parallel" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::Parallel">
+              <borderedNodeMappings name="TCBCall" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::TCBCall">
+                <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.tcb.name" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <forbiddenSides>WEST</forbiddenSides>
+                  <forbiddenSides>EAST</forbiddenSides>
+                  <forbiddenSides>NORTH</forbiddenSides>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+                </style>
+              </borderedNodeMappings>
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="parallel" labelPosition="node" resizeKind="NSEW" width="10" height="3">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <forbiddenSides>WEST</forbiddenSides>
+                <forbiddenSides>EAST</forbiddenSides>
+                <forbiddenSides>NORTH</forbiddenSides>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+              </style>
+            </borderedNodeMappings>
+            <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.sequenceNumber+': Plan'" labelPosition="node" resizeKind="NSEW" width="10" height="3">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <forbiddenSides>WEST</forbiddenSides>
+              <forbiddenSides>EAST</forbiddenSides>
+              <forbiddenSides>NORTH</forbiddenSides>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="ErrorRef" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::ErrorRef">
+            <style xsi:type="style:LozengeNodeDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.error.name" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <forbiddenSides>WEST</forbiddenSides>
+              <forbiddenSides>SOUTH</forbiddenSides>
+              <forbiddenSides>EAST</forbiddenSides>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="TCBRef" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::TCBRef">
+            <style xsi:type="style:BundledImageDescription" labelSize="12" showIcon="false" labelExpression="aql:''" labelPosition="node" resizeKind="NSEW" shape="triangle">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="Any" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::Any">
+            <style xsi:type="style:BundledImageDescription" labelSize="12" showIcon="false" labelExpression="A" labelPosition="node" resizeKind="NSEW" shape="triangle">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+            </style>
+          </borderedNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:self.name+':'+self.error.name">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="EventHandler" semanticCandidatesExpression="feature:block" domainClass="BbDvgTcl::EventHandler">
+          <borderedNodeMappings name="ErrorRef" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::ErrorRef">
+            <style xsi:type="style:LozengeNodeDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.error.name" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <forbiddenSides>WEST</forbiddenSides>
+              <forbiddenSides>SOUTH</forbiddenSides>
+              <forbiddenSides>EAST</forbiddenSides>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </style>
+          </borderedNodeMappings>
+          <borderedNodeMappings name="Plan" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::Plan">
+            <borderedNodeMappings name="TCBCall" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::TCBCall">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:sequenceNumber" labelPosition="node" resizeKind="NSEW">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <forbiddenSides>WEST</forbiddenSides>
+                <forbiddenSides>EAST</forbiddenSides>
+                <forbiddenSides>NORTH</forbiddenSides>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+              </style>
+            </borderedNodeMappings>
+            <borderedNodeMappings name="OneOf" semanticCandidatesExpression="feature:eContents" domainClass="BbDvgTcl::OneOf">
+              <borderedNodeMappings name="TCBCall" semanticCandidatesExpression="feature:eContents" domainClass="BbDvgTcl::TCBCall">
+                <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:sequenceNumber" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <forbiddenSides>WEST</forbiddenSides>
+                  <forbiddenSides>EAST</forbiddenSides>
+                  <forbiddenSides>NORTH</forbiddenSides>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+                </style>
+              </borderedNodeMappings>
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="one-of" labelPosition="node" resizeKind="NSEW" width="10" height="3">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <forbiddenSides>WEST</forbiddenSides>
+                <forbiddenSides>EAST</forbiddenSides>
+                <forbiddenSides>NORTH</forbiddenSides>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+              </style>
+            </borderedNodeMappings>
+            <borderedNodeMappings name="Parallel" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::Parallel">
+              <borderedNodeMappings name="TCBCall" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::TCBCall">
+                <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.tcb.name" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <forbiddenSides>WEST</forbiddenSides>
+                  <forbiddenSides>EAST</forbiddenSides>
+                  <forbiddenSides>NORTH</forbiddenSides>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+                </style>
+              </borderedNodeMappings>
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="parallel" labelPosition="node" resizeKind="NSEW" width="10" height="3">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <forbiddenSides>WEST</forbiddenSides>
+                <forbiddenSides>EAST</forbiddenSides>
+                <forbiddenSides>NORTH</forbiddenSides>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+              </style>
+            </borderedNodeMappings>
+            <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Plan" labelPosition="node" resizeKind="NSEW" width="10" height="3">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <forbiddenSides>WEST</forbiddenSides>
+              <forbiddenSides>EAST</forbiddenSides>
+              <forbiddenSides>NORTH</forbiddenSides>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+            </style>
+          </borderedNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="Function" semanticCandidatesExpression="feature:block" domainClass="BbDvgTcl::Function">
+          <borderedNodeMappings name="Plan" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::Plan">
+            <borderedNodeMappings name="TCBCall" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::TCBCall">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:sequenceNumber" labelPosition="node" resizeKind="NSEW">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <forbiddenSides>WEST</forbiddenSides>
+                <forbiddenSides>EAST</forbiddenSides>
+                <forbiddenSides>NORTH</forbiddenSides>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+              </style>
+            </borderedNodeMappings>
+            <borderedNodeMappings name="OneOf" semanticCandidatesExpression="feature:eContents" domainClass="BbDvgTcl::OneOf">
+              <borderedNodeMappings name="TCBCall" semanticCandidatesExpression="feature:eContents" domainClass="BbDvgTcl::TCBCall">
+                <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="feature:sequenceNumber" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <forbiddenSides>WEST</forbiddenSides>
+                  <forbiddenSides>EAST</forbiddenSides>
+                  <forbiddenSides>NORTH</forbiddenSides>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+                </style>
+              </borderedNodeMappings>
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="one-of" labelPosition="node" resizeKind="NSEW" width="10" height="3">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <forbiddenSides>WEST</forbiddenSides>
+                <forbiddenSides>EAST</forbiddenSides>
+                <forbiddenSides>NORTH</forbiddenSides>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+              </style>
+            </borderedNodeMappings>
+            <borderedNodeMappings name="Parallel" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::Parallel">
+              <borderedNodeMappings name="TCBCall" semanticCandidatesExpression="feature:eAllContents" domainClass="BbDvgTcl::TCBCall">
+                <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.tcb.name" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <forbiddenSides>WEST</forbiddenSides>
+                  <forbiddenSides>EAST</forbiddenSides>
+                  <forbiddenSides>NORTH</forbiddenSides>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                </style>
+              </borderedNodeMappings>
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="parallel" labelPosition="node" resizeKind="NSEW" width="10" height="3">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <forbiddenSides>WEST</forbiddenSides>
+                <forbiddenSides>EAST</forbiddenSides>
+                <forbiddenSides>NORTH</forbiddenSides>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+              </style>
+            </borderedNodeMappings>
+            <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Plan" labelPosition="node" resizeKind="NSEW" width="10" height="3">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <forbiddenSides>WEST</forbiddenSides>
+              <forbiddenSides>EAST</forbiddenSides>
+              <forbiddenSides>NORTH</forbiddenSides>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+            </style>
+          </borderedNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="SameSignatureTCBs" semanticCandidatesExpression="feature:block" domainClass="BbDvgTcl::SameSignatureTCBs" reusedContainerMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB']">
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:'ConditionalFork: '+self.name">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+            <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.1"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="SameNameTCBs" semanticCandidatesExpression="feature:block" domainClass="BbDvgTcl::SameNameTCBs" reusedContainerMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB']">
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:'SubNameFork: '+self.name">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+            <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.1"/>
+          </style>
+        </containerMappings>
+        <toolSections name="TCL">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="TCB" containerMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="BbDvgTcl::TCB" referenceName="block"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Plan" nodeMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB']/@borderedNodeMappings[name='Plan']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="BbDvgTcl::Plan" referenceName="plan"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="TCBCall" nodeMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB']/@borderedNodeMappings[name='Plan']/@borderedNodeMappings[name='TCBCall']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="BbDvgTcl::TCBCall" referenceName="callsequence"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Rule" containerMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='Rule']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="BbDvgTcl::Rule" referenceName="block"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="EventHandler" containerMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='EventHandler']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="BbDvgTcl::EventHandler" referenceName="block"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="ReturnError" nodeMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB']/@borderedNodeMappings[name='ErrorRef']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="BbDvgTcl::ErrorRef" referenceName="actioninstruction"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="EventActivation" nodeMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='TCB']/@borderedNodeMappings[name='EventActivation']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="BbDvgTcl::EventActivation" referenceName="actioninstruction"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="TCB->TCB" edgeMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@edgeMappings[name='tcb']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="abstracttcb" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="EventActivation->EventHandler" edgeMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@edgeMappings[name='Event']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="eventhandler" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="TCB->Rule" edgeMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@edgeMappings[name='rule']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="rule" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Rule->TCB" edgeMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@edgeMappings[name='tcbRef']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="abstracttcb" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Any" nodeMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='Rule']/@borderedNodeMappings[name='Any']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="BbDvgTcl::Any" referenceName="linkagetype"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="TCBRef" nodeMappings="//@ownedViewpoints[name='TCLViewpoint']/@ownedRepresentations[name='Tcl']/@defaultLayer/@containerMappings[name='Rule']/@borderedNodeMappings[name='TCBRef']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="BbDvgTcl::TCBRef" referenceName="linkagetype"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </defaultLayer>
+    </ownedRepresentations>
+    <ownedJavaExtensions qualifiedClassName="tcl.design.Services"/>
+  </ownedViewpoints>
+</description:Group>
