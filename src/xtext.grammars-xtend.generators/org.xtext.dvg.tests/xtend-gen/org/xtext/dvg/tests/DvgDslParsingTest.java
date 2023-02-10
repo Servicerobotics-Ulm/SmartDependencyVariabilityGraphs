@@ -3,7 +3,7 @@
  */
 package org.xtext.dvg.tests;
 
-import bbn.DVG;
+import BbDvgTcl.DVG;
 import com.google.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;

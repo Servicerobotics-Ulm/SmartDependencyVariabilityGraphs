@@ -3,7 +3,7 @@
  */
 package org.xtext.dvg.tests
 
-import bbn.DVG
+import BbDvgTcl.DVG
 import com.google.inject.Inject
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.extensions.InjectionExtension
