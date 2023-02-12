@@ -11,10 +11,12 @@ A code generator is then able to generate a solver of such models that determine
 
 # Installation
 To try it out, you need to do the following:
-1) Download and install Eclipse Modeling Tools (https://www.eclipse.org/downloads/packages/release/2022-06/r/eclipse-modeling-tools)
+1) Download and install Eclipse Modeling Tools 2022-06 (https://www.eclipse.org/downloads/packages/release/2022-06/r/eclipse-modeling-tools)
 2) Start Eclipse
-3) *Install New Software* (*Xtext Complete SDK*, *Sirius Specifier Environment*, *Sirius Properties Views - Specifier Support*)
+3) *Help*->*Install New Software* (*Xtext Complete SDK* and *Sirius Specifier Environment*)
 4) Restart Eclipse
 5) *Install New Software* -> *Add* -> *Archive* -> Select *SmartDependencyVariabilityGraphs.zip* in the *feature* folder -> *Add*
 6) Unselect *Group items by category* -> Select *SmartDependencyVariabilityGraphs* -> *Next* -> *Next* -> Accept and *Finish*
 7) Select *Unsigned* -> *Trust Selected* -> *Restart Now*
+8) *Help*->*Check for Updates*->Make sure that all available updates are selected->*Next*->*Next*-> Accept and *Finish*
+9) Select the *Type*s you need to trust -> *Trust Selected* -> *Restart Now*
