@@ -24,4 +24,4 @@ To try it out, you need to do the following:
 9) Select the *Type*s you need to trust -> *Trust Selected* -> *Restart Now*
 
 # Usage
-https://wiki.servicerobotik-ulm.de/sdvg:smartdependencyvariabilitygraphs
+[Here](https://wiki.servicerobotik-ulm.de/sdvg:smartdependencyvariabilitygraphs) you can find more information about the use. 
