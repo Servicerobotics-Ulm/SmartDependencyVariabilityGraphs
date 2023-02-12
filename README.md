@@ -5,7 +5,7 @@ The model-driven implementation in Eclipse allows users to describe via DSLs:
 1) Building blocks at different levels of abstraction, their variability entities and the decomposition relationships between building blocks.
 2) Dependency Variability Graphs: The graph-based dependency relationships between variability entities (including their values by applying function composition).
 
-Furthermore, it offers an implementation of the LISP-based DSL [SmartTCL](https://wiki.servicerobotik-ulm.de/about-smartsoft:robotic-behavior:smarttcl) with the Eclipse Modeling Tools to program concrete behavior for simulated or real robots in combination with the [SmartSoft Approach](https://wiki.servicerobotik-ulm.de/about-smartsoft:approach). 
+Furthermore, it offers an implementation of the LISP-based DSL [SmartTCL](https://wiki.servicerobotik-ulm.de/about-smartsoft:robotic-behavior:smarttcl) with the Eclipse Modeling Tools. This allows to program concrete behavior for simulated or real robots in combination with the [SmartSoft Approach](https://wiki.servicerobotik-ulm.de/about-smartsoft:approach). 
 
 ![SmartDVG-2](https://user-images.githubusercontent.com/95618174/184313669-f6b2ac7e-745f-457a-bbca-5f195e153078.png)
 
