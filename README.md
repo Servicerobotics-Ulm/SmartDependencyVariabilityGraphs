@@ -20,3 +20,6 @@ To try it out, you need to do the following:
 7) Select *Unsigned* -> *Trust Selected* -> *Restart Now*
 8) *Help*->*Check for Updates*->Make sure that all available updates are selected->*Next*->*Next*-> Accept and *Finish*
 9) Select the *Type*s you need to trust -> *Trust Selected* -> *Restart Now*
+
+# Usage
+https://wiki.servicerobotik-ulm.de/sdvg:smartdependencyvariabilitygraphs
