@@ -1,0 +1,13 @@
+DVG OrderPickingEQUF outputName OrderPickingEQUFTime FinalOperation MIN { 
+	MAGR OrderPickingVsSharedOrderPicking { 
+		AGGR { 
+			OutputPort OrderPickingEQUFTime => "AllocOrderPickingEQUF.AllocOrderPickingEQUF.Time" {
+				VariabilityType ACTIVE
+				RepresentationType ABSOLUTE
+				Description Time 
+			} 		
+			ExtInputPort I1 => "AllocOrderPicking.SAPROOrderPickingTime.OrderPickingTime" { RepresentationType ABSOLUTE DataObject UdoTime },
+			ExtInputPort I2 => "AllocSharedOrderPicking.SAPROSharedOrderPickingTime.SharedOrderPickingTime" { RepresentationType ABSOLUTE DataObject UdoTime } 
+		}
+	} 
+}

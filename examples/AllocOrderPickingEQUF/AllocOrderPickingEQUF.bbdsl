@@ -1,0 +1,15 @@
+BuildingBlockDescription AllocOrderPickingEQUF dvg OrderPickingEQUF {                    
+	ALLOCATABLE BuildingBlock AllocOrderPickingEQUF {    
+		Inputs { 
+			Mandatory M1 NumberObjects is UdoSimpleInteger 
+		}
+		allocationCandidates (Robotino, Larry, Macy, Robotino_2) 
+		VariabilityEntitySet { PropertySet { Time is UdoTime } }
+		Decomposition(OrderPickingVsSharedOrderPicking)
+	}
+	
+	EquivalenceFork OrderPickingVsSharedOrderPicking {
+		Container C1 => "AllocOrderPicking.AllocOrderPicking",
+		Container C2 => "AllocSharedOrderPicking.AllocSharedOrderPicking"
+	}
+}

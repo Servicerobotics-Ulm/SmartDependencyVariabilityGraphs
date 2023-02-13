@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>AllocOrderPickingEQUF</name>
+	<comment></comment>
+	<projects>
+		<project>AllocOrderPicking</project>
+		<project>AllocSharedOrderPicking</project>
+		<project>DataObjectRepository</project>
+		<project>Larry</project>
+		<project>Macy</project>
+		<project>Robotino</project>
+		<project>Robotino_2</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.xtext.ui.shared.xtextBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.sirius.nature.modelingproject</nature>
+		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
+	</natures>
+</projectDescription>
