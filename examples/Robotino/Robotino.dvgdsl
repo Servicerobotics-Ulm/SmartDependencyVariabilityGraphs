@@ -1,0 +1,25 @@
+DVG Robotino {   
+	
+	INIT INITRobotinoVelocity { 
+		InitPort RobotinoVelocity => "BBRepo.GotoLocation.Velocity" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			Description "Robotino:MaxVelocity (mm/s)" 
+			RealVSPInit [ 1200.0 ]
+		} 
+	}
+	
+	INIT INITRobotinoStartPosition {
+		InitPort RobotinoStartPosition => "BBRepo.GotoLocation.CurrentPosition" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			Description "Robotino:CurrentPosition" 
+			ComplexVSPInit {   
+				[  
+					Element x RealInit [ 0.0 ], 
+					Element y RealInit [ 1000.0 ]  
+				]
+			}
+		} 
+	}	
+}

@@ -1,0 +1,11 @@
+BuildingBlockDescription Robotino dvg Robotino {         
+	
+	BuildingBlock CollectBox {}   
+	
+	BuildingBlock DockToRobot {}
+	
+	BuildingBlock DeliverBox {}
+	
+	Container GotoLocation => "BBRepo.GotoLocation" 
+	
+}
