@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bbdvgtcl="http://www.example.org/bbdvgtcl" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:vi="http://www.example.org/vi" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
+  <viewpoint:DAnalysis uid="_BN3NwEofEe2JzIgDzLkLsw" selectedViews="_v4xUwEofEe2JzIgDzLkLsw _0donEEofEe2JzIgDzLkLsw" version="15.0.0.202209061200">
+    <semanticResources>Larry.bbdsl</semanticResources>
+    <semanticResources>Larry.dvgdsl</semanticResources>
+    <semanticResources>platform:/resource/BuildingBlockRepository/BuildingBlockRepository.bbdsl</semanticResources>
+    <semanticResources>platform:/resource/DataObjectRepository/DataObjectRepository.dordsl</semanticResources>
+    <ownedViews xmi:type="viewpoint:DView" uid="_v4xUwEofEe2JzIgDzLkLsw">
+      <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/bb.design/description/bb.odesign#//@ownedViewpoints[name='BBViewpoint']"/>
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_wc5VgEofEe2JzIgDzLkLsw" name="Larry" repPath="#_wc4HYEofEe2JzIgDzLkLsw" changeId="6e12bfc4-9e48-4765-8f4e-32baf4a8e2b2">
+        <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/bb.design/description/bb.odesign#//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']"/>
+        <target xmi:type="bbdvgtcl:BuildingBlockDescription" href="Larry.bbdsl#/"/>
+      </ownedRepresentationDescriptors>
+    </ownedViews>
+    <ownedViews xmi:type="viewpoint:DView" uid="_0donEEofEe2JzIgDzLkLsw">
+      <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']"/>
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_03DzsEofEe2JzIgDzLkLsw" name="Larry" repPath="#_028e8EofEe2JzIgDzLkLsw" changeId="0705a369-fb12-4a40-9aec-526de7c01cd0">
+        <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']"/>
+        <target xmi:type="bbdvgtcl:DVG" href="Larry.dvgdsl#/"/>
+      </ownedRepresentationDescriptors>
+    </ownedViews>
+  </viewpoint:DAnalysis>
+  <diagram:DSemanticDiagram uid="_wc4HYEofEe2JzIgDzLkLsw">
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_wc58kEofEe2JzIgDzLkLsw" source="GMF_DIAGRAMS">
+      <data xmi:type="notation:Diagram" xmi:id="_wc58kUofEe2JzIgDzLkLsw" type="Sirius" element="_wc4HYEofEe2JzIgDzLkLsw" measurementUnit="Pixel">
+        <children xmi:type="notation:Node" xmi:id="_wdVaYkofEe2JzIgDzLkLsw" type="2002" element="_wc6joEofEe2JzIgDzLkLsw">
+          <children xmi:type="notation:Node" xmi:id="_wdWBcEofEe2JzIgDzLkLsw" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_wdWBcUofEe2JzIgDzLkLsw" type="7001">
+            <styles xmi:type="notation:SortingStyle" xmi:id="_wdWBckofEe2JzIgDzLkLsw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_wdWBc0ofEe2JzIgDzLkLsw"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_wdVaY0ofEe2JzIgDzLkLsw" fontColor="16777215" fontName="Noto Sans" fontHeight="12" bold="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wdVaZEofEe2JzIgDzLkLsw" x="645" y="185"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_wdWBdEofEe2JzIgDzLkLsw" type="2002" element="_wc7KsUofEe2JzIgDzLkLsw">
+          <children xmi:type="notation:Node" xmi:id="_wdWBd0ofEe2JzIgDzLkLsw" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_wdWBeEofEe2JzIgDzLkLsw" type="7001">
+            <styles xmi:type="notation:SortingStyle" xmi:id="_wdWBeUofEe2JzIgDzLkLsw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_wdWBekofEe2JzIgDzLkLsw"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_wdWBdUofEe2JzIgDzLkLsw" fontColor="16777215" fontName="Noto Sans" fontHeight="12" bold="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wdWBdkofEe2JzIgDzLkLsw" x="810" y="185"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_wdWBe0ofEe2JzIgDzLkLsw" type="2002" element="_wc7xwEofEe2JzIgDzLkLsw">
+          <children xmi:type="notation:Node" xmi:id="_wdWogEofEe2JzIgDzLkLsw" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_wdWogUofEe2JzIgDzLkLsw" type="7001">
+            <styles xmi:type="notation:SortingStyle" xmi:id="_wdWogkofEe2JzIgDzLkLsw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_wdWog0ofEe2JzIgDzLkLsw"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_wdWBfEofEe2JzIgDzLkLsw" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wdWBfUofEe2JzIgDzLkLsw" x="680" y="100"/>
+        </children>
+        <styles xmi:type="notation:DiagramStyle" xmi:id="_wc58kkofEe2JzIgDzLkLsw"/>
+      </data>
+    </ownedAnnotationEntries>
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_wdVaYEofEe2JzIgDzLkLsw" source="DANNOTATION_CUSTOMIZATION_KEY">
+      <data xmi:type="diagram:ComputedStyleDescriptionRegistry" uid="_wdVaYUofEe2JzIgDzLkLsw"/>
+    </ownedAnnotationEntries>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_wc6joEofEe2JzIgDzLkLsw" name="DetectObjects">
+      <target xmi:type="bbdvgtcl:BuildingBlock" href="Larry.bbdsl#//@bb.0"/>
+      <semanticElements xmi:type="bbdvgtcl:BuildingBlock" href="Larry.bbdsl#//@bb.0"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_wc6joUofEe2JzIgDzLkLsw" labelSize="12" iconPath="/bb.design/icons/bb-medium.png" labelColor="255,255,255" borderSize="5" borderSizeComputationExpression="5" borderColor="189,189,189" backgroundColor="3,169,244" foregroundColor="2,136,209">
+        <labelFormat>bold</labelFormat>
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/bb.design/description/bb.odesign#//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/bb.design/description/bb.odesign#//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_wc7KsUofEe2JzIgDzLkLsw" name="PickAndPlace">
+      <target xmi:type="bbdvgtcl:BuildingBlock" href="Larry.bbdsl#//@bb.1"/>
+      <semanticElements xmi:type="bbdvgtcl:BuildingBlock" href="Larry.bbdsl#//@bb.1"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_wc7KskofEe2JzIgDzLkLsw" labelSize="12" iconPath="/bb.design/icons/bb-medium.png" labelColor="255,255,255" borderSize="5" borderSizeComputationExpression="5" borderColor="189,189,189" backgroundColor="3,169,244" foregroundColor="2,136,209">
+        <labelFormat>bold</labelFormat>
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/bb.design/description/bb.odesign#//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/bb.design/description/bb.odesign#//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='BuildingBlock']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_wc7xwEofEe2JzIgDzLkLsw" name="GotoLocation=>GotoLocation">
+      <target xmi:type="bbdvgtcl:Container" href="Larry.bbdsl#//@c.0"/>
+      <semanticElements xmi:type="bbdvgtcl:Container" href="Larry.bbdsl#//@c.0"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_wdUzUEofEe2JzIgDzLkLsw" labelSize="12" iconPath="/bb.design/icons/ref.png" borderSize="1" borderSizeComputationExpression="1" foregroundColor="255,255,255">
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/bb.design/description/bb.odesign#//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Container']/@conditionnalStyles.0/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/bb.design/description/bb.odesign#//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer/@containerMappings[name='Container']"/>
+    </ownedDiagramElements>
+    <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/bb.design/description/bb.odesign#//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']"/>
+    <filterVariableHistory xmi:type="diagram:FilterVariableHistory" uid="_wc4HYUofEe2JzIgDzLkLsw"/>
+    <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/bb.design/description/bb.odesign#//@ownedViewpoints[name='BBViewpoint']/@ownedRepresentations[name='BB']/@defaultLayer"/>
+    <target xmi:type="bbdvgtcl:BuildingBlockDescription" href="Larry.bbdsl#/"/>
+  </diagram:DSemanticDiagram>
+  <diagram:DSemanticDiagram uid="_028e8EofEe2JzIgDzLkLsw">
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_03EawUofEe2JzIgDzLkLsw" source="GMF_DIAGRAMS">
+      <data xmi:type="notation:Diagram" xmi:id="_03EawkofEe2JzIgDzLkLsw" type="Sirius" element="_028e8EofEe2JzIgDzLkLsw" measurementUnit="Pixel">
+        <children xmi:type="notation:Node" xmi:id="_04AO4EofEe2JzIgDzLkLsw" type="2002" element="_03G3AEofEe2JzIgDzLkLsw">
+          <children xmi:type="notation:Node" xmi:id="_04A18EofEe2JzIgDzLkLsw" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_04A18UofEe2JzIgDzLkLsw" type="7001">
+            <styles xmi:type="notation:SortingStyle" xmi:id="_04A18kofEe2JzIgDzLkLsw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_04A180ofEe2JzIgDzLkLsw"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_04BdBEofEe2JzIgDzLkLsw" type="3012" element="_03IFIUofEe2JzIgDzLkLsw">
+            <children xmi:type="notation:Node" xmi:id="_04BdB0ofEe2JzIgDzLkLsw" type="5010">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_04BdCEofEe2JzIgDzLkLsw" x="-85" y="-24"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_04CrIEofEe2JzIgDzLkLsw" type="3003" element="_03tT8EofEe2JzIgDzLkLsw">
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_04CrIUofEe2JzIgDzLkLsw" fontName="Noto Sans"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_04CrIkofEe2JzIgDzLkLsw"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_04CrI0ofEe2JzIgDzLkLsw" type="3012" element="_03t7AEofEe2JzIgDzLkLsw">
+              <children xmi:type="notation:Node" xmi:id="_04CrJkofEe2JzIgDzLkLsw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_04CrJ0ofEe2JzIgDzLkLsw" y="5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_04DSMEofEe2JzIgDzLkLsw" type="3003" element="_03t7AUofEe2JzIgDzLkLsw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_04DSMUofEe2JzIgDzLkLsw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_04DSMkofEe2JzIgDzLkLsw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_04CrJEofEe2JzIgDzLkLsw" fontName="Noto Sans" fontHeight="12"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_04CrJUofEe2JzIgDzLkLsw" x="42" y="10" width="80" height="30"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_04BdBUofEe2JzIgDzLkLsw" fontName="Noto Sans" fontHeight="12"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_04BdBkofEe2JzIgDzLkLsw" x="14" y="-42" width="50" height="50"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_04AO4UofEe2JzIgDzLkLsw" fontName="Noto Sans" fontHeight="12" bold="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_04AO4kofEe2JzIgDzLkLsw" x="325" y="185"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_04A19EofEe2JzIgDzLkLsw" type="2002" element="_03HeEUofEe2JzIgDzLkLsw">
+          <children xmi:type="notation:Node" xmi:id="_04BdAEofEe2JzIgDzLkLsw" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_04BdAUofEe2JzIgDzLkLsw" type="7001">
+            <styles xmi:type="notation:SortingStyle" xmi:id="_04BdAkofEe2JzIgDzLkLsw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_04BdA0ofEe2JzIgDzLkLsw"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_04DSM0ofEe2JzIgDzLkLsw" type="3012" element="_03uiEEofEe2JzIgDzLkLsw">
+            <children xmi:type="notation:Node" xmi:id="_04DSNkofEe2JzIgDzLkLsw" type="5010">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_04DSN0ofEe2JzIgDzLkLsw" x="-71" y="-24"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_04EgUEofEe2JzIgDzLkLsw" type="3003" element="_03yMcEofEe2JzIgDzLkLsw">
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_04EgUUofEe2JzIgDzLkLsw" fontName="Noto Sans"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_04EgUkofEe2JzIgDzLkLsw"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_04EgU0ofEe2JzIgDzLkLsw" type="3012" element="_03zakEofEe2JzIgDzLkLsw">
+              <children xmi:type="notation:Node" xmi:id="_04FHYEofEe2JzIgDzLkLsw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_04FHYUofEe2JzIgDzLkLsw" y="5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_04FHYkofEe2JzIgDzLkLsw" type="3003" element="_039yoEofEe2JzIgDzLkLsw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_04FHY0ofEe2JzIgDzLkLsw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_04FHZEofEe2JzIgDzLkLsw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_04EgVEofEe2JzIgDzLkLsw" fontColor="16777215" fontName="Noto Sans" fontHeight="12" bold="true"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_04EgVUofEe2JzIgDzLkLsw" x="42" y="10" width="70" height="30"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_04DSNEofEe2JzIgDzLkLsw" fontName="Noto Sans" fontHeight="12"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_04DSNUofEe2JzIgDzLkLsw" x="14" y="-42" width="50" height="50"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_04A19UofEe2JzIgDzLkLsw" fontName="Noto Sans" fontHeight="12" bold="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_04A19kofEe2JzIgDzLkLsw" x="530" y="185"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_kwREYEohEe2JzIgDzLkLsw" type="2002" element="_kvtqxEohEe2JzIgDzLkLsw">
+          <children xmi:type="notation:Node" xmi:id="_kwREY0ohEe2JzIgDzLkLsw" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_kwREZEohEe2JzIgDzLkLsw" type="7001">
+            <styles xmi:type="notation:SortingStyle" xmi:id="_kwREZUohEe2JzIgDzLkLsw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_kwREZkohEe2JzIgDzLkLsw"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_kwREZ0ohEe2JzIgDzLkLsw" type="3012" element="_kvuR0kohEe2JzIgDzLkLsw">
+            <children xmi:type="notation:Node" xmi:id="_kwRrcEohEe2JzIgDzLkLsw" type="5010">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_kwRrcUohEe2JzIgDzLkLsw" x="-71" y="-24"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_kwRrckohEe2JzIgDzLkLsw" type="3003" element="_kwGsUEohEe2JzIgDzLkLsw">
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_kwRrc0ohEe2JzIgDzLkLsw" fontName="Noto Sans"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kwRrdEohEe2JzIgDzLkLsw"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_kwRrdUohEe2JzIgDzLkLsw" type="3012" element="_kwHTYUohEe2JzIgDzLkLsw">
+              <children xmi:type="notation:Node" xmi:id="_kwSSgEohEe2JzIgDzLkLsw" type="5010">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_kwSSgUohEe2JzIgDzLkLsw" y="5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_kwSSgkohEe2JzIgDzLkLsw" type="3003" element="_kwHTYkohEe2JzIgDzLkLsw">
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_kwSSg0ohEe2JzIgDzLkLsw" fontName="Noto Sans"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kwSShEohEe2JzIgDzLkLsw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_kwRrdkohEe2JzIgDzLkLsw" fontName="Noto Sans" fontHeight="12"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kwRrd0ohEe2JzIgDzLkLsw" x="42" y="10" width="80" height="30"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_kwREaEohEe2JzIgDzLkLsw" fontName="Noto Sans" fontHeight="12"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kwREaUohEe2JzIgDzLkLsw" x="14" y="-42" width="50" height="50"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_kwREYUohEe2JzIgDzLkLsw" fontName="Noto Sans" fontHeight="12" bold="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kwREYkohEe2JzIgDzLkLsw" x="730" y="185" width="80" height="50"/>
+        </children>
+        <styles xmi:type="notation:DiagramStyle" xmi:id="_03Eaw0ofEe2JzIgDzLkLsw"/>
+      </data>
+    </ownedAnnotationEntries>
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_03_AwEofEe2JzIgDzLkLsw" source="DANNOTATION_CUSTOMIZATION_KEY">
+      <data xmi:type="diagram:ComputedStyleDescriptionRegistry" uid="_03_n0EofEe2JzIgDzLkLsw"/>
+    </ownedAnnotationEntries>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_03G3AEofEe2JzIgDzLkLsw" name=" INIT" width="8" height="5">
+      <target xmi:type="bbdvgtcl:INIT" href="Larry.dvgdsl#//@pattern.0"/>
+      <semanticElements xmi:type="bbdvgtcl:INIT" href="Larry.dvgdsl#//@pattern.0"/>
+      <ownedBorderedNodes xmi:type="diagram:DNode" uid="_03IFIUofEe2JzIgDzLkLsw" name="Larry:MaxVelocity (mm/s)" width="5" height="5">
+        <target xmi:type="bbdvgtcl:InitPort" href="Larry.dvgdsl#//@pattern.0/@ainip"/>
+        <semanticElements xmi:type="bbdvgtcl:InitPort" href="Larry.dvgdsl#//@pattern.0/@ainip"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" uid="_03t7AEofEe2JzIgDzLkLsw" name="[1000.0]" width="8" height="3" resizeKind="NSEW">
+          <target xmi:type="vi:RealVSPInit" href="Larry.dvgdsl#//@pattern.0/@ainip/@vi"/>
+          <semanticElements xmi:type="vi:RealVSPInit" href="Larry.dvgdsl#//@pattern.0/@ainip/@vi"/>
+          <ownedStyle xmi:type="diagram:Square" uid="_03t7AUofEe2JzIgDzLkLsw" labelSize="12" showIcon="false" borderSize="1" borderSizeComputationExpression="1" labelPosition="node" width="8" height="3" color="255,255,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@nodeMappings[name='RealVSPInit']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@nodeMappings[name='RealVSPInit']"/>
+        </ownedBorderedNodes>
+        <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+        <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+        <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+        <ownedStyle xmi:type="diagram:Square" uid="_03tT8EofEe2JzIgDzLkLsw" labelSize="12" showIcon="false" borderSize="3" borderSizeComputationExpression="3" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']/@borderedNodeMappings[name='InitPort']/@conditionnalStyles.2/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']/@borderedNodeMappings[name='InitPort']"/>
+      </ownedBorderedNodes>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_03G3AUofEe2JzIgDzLkLsw" labelSize="12" showIcon="false" borderSize="1" borderSizeComputationExpression="1">
+        <labelFormat>bold</labelFormat>
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_03HeEUofEe2JzIgDzLkLsw" name=" INIT" width="8" height="5">
+      <target xmi:type="bbdvgtcl:INIT" href="Larry.dvgdsl#//@pattern.1"/>
+      <semanticElements xmi:type="bbdvgtcl:INIT" href="Larry.dvgdsl#//@pattern.1"/>
+      <ownedBorderedNodes xmi:type="diagram:DNode" uid="_03uiEEofEe2JzIgDzLkLsw" name="Larry:CurrentPosition" width="5" height="5">
+        <target xmi:type="bbdvgtcl:InitPort" href="Larry.dvgdsl#//@pattern.1/@ainip"/>
+        <semanticElements xmi:type="bbdvgtcl:InitPort" href="Larry.dvgdsl#//@pattern.1/@ainip"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" uid="_03zakEofEe2JzIgDzLkLsw" name="CVSPI: 1" width="7" height="3" resizeKind="NSEW">
+          <target xmi:type="vi:ComplexVSPInit" href="Larry.dvgdsl#//@pattern.1/@ainip/@vi"/>
+          <semanticElements xmi:type="vi:ComplexVSPInit" href="Larry.dvgdsl#//@pattern.1/@ainip/@vi"/>
+          <ownedStyle xmi:type="diagram:Square" uid="_039yoEofEe2JzIgDzLkLsw" labelSize="12" showIcon="false" labelColor="255,255,255" borderSize="1" borderSizeComputationExpression="1" labelPosition="node" width="7" height="3" color="0,0,0">
+            <labelFormat>bold</labelFormat>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']/@borderedNodeMappings[name='InitPort']/@borderedNodeMappings[name='ComplexVSPInit']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']/@borderedNodeMappings[name='InitPort']/@borderedNodeMappings[name='ComplexVSPInit']"/>
+        </ownedBorderedNodes>
+        <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+        <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+        <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+        <ownedStyle xmi:type="diagram:Square" uid="_03yMcEofEe2JzIgDzLkLsw" labelSize="12" showIcon="false" borderSize="3" borderSizeComputationExpression="3" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']/@borderedNodeMappings[name='InitPort']/@conditionnalStyles.2/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']/@borderedNodeMappings[name='InitPort']"/>
+      </ownedBorderedNodes>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_03HeEkofEe2JzIgDzLkLsw" labelSize="12" showIcon="false" borderSize="1" borderSizeComputationExpression="1">
+        <labelFormat>bold</labelFormat>
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_kvtqxEohEe2JzIgDzLkLsw" name=" INIT" width="8" height="5">
+      <target xmi:type="bbdvgtcl:INIT" href="Larry.dvgdsl#//@pattern.2"/>
+      <semanticElements xmi:type="bbdvgtcl:INIT" href="Larry.dvgdsl#//@pattern.2"/>
+      <ownedBorderedNodes xmi:type="diagram:DNode" uid="_kvuR0kohEe2JzIgDzLkLsw" name="Larry:MaxWeight (kg)" width="5" height="5">
+        <target xmi:type="bbdvgtcl:InitPort" href="Larry.dvgdsl#//@pattern.2/@ainip"/>
+        <semanticElements xmi:type="bbdvgtcl:InitPort" href="Larry.dvgdsl#//@pattern.2/@ainip"/>
+        <ownedBorderedNodes xmi:type="diagram:DNode" uid="_kwHTYUohEe2JzIgDzLkLsw" name="[5.0]" width="8" height="3" resizeKind="NSEW">
+          <target xmi:type="vi:RealVSPInit" href="Larry.dvgdsl#//@pattern.2/@ainip/@vi"/>
+          <semanticElements xmi:type="vi:RealVSPInit" href="Larry.dvgdsl#//@pattern.2/@ainip/@vi"/>
+          <ownedStyle xmi:type="diagram:Square" uid="_kwHTYkohEe2JzIgDzLkLsw" labelSize="12" showIcon="false" borderSize="1" borderSizeComputationExpression="1" labelPosition="node" width="8" height="3" color="255,255,255">
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@nodeMappings[name='RealVSPInit']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@nodeMappings[name='RealVSPInit']"/>
+        </ownedBorderedNodes>
+        <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+        <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+        <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+        <ownedStyle xmi:type="diagram:Square" uid="_kwGsUEohEe2JzIgDzLkLsw" labelSize="12" showIcon="false" borderSize="3" borderSizeComputationExpression="3" color="255,255,255">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']/@borderedNodeMappings[name='InitPort']/@conditionnalStyles.2/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']/@borderedNodeMappings[name='InitPort']"/>
+      </ownedBorderedNodes>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_kvuR0EohEe2JzIgDzLkLsw" labelSize="12" showIcon="false" borderSize="1" borderSizeComputationExpression="1">
+        <labelFormat>bold</labelFormat>
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer/@containerMappings[name='INIT']"/>
+    </ownedDiagramElements>
+    <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']"/>
+    <filterVariableHistory xmi:type="diagram:FilterVariableHistory" uid="_028e8UofEe2JzIgDzLkLsw"/>
+    <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/dvg.design/description/dvg.odesign#//@ownedViewpoints[name='DVGViewpoint']/@ownedRepresentations[name='Dvg']/@defaultLayer"/>
+    <target xmi:type="bbdvgtcl:DVG" href="Larry.dvgdsl#/"/>
+  </diagram:DSemanticDiagram>
+</xmi:XMI>

@@ -1,0 +1,5 @@
+BuildingBlockDescription Larry dvg Larry {  
+	BuildingBlock DetectObjects { } 
+	BuildingBlock PickAndPlace { } 
+	Container GotoLocation => "BBRepo.GotoLocation"  
+}

@@ -1,0 +1,34 @@
+DVG Larry {  
+	
+	INIT INITLarryVelocity { 
+		InitPort LarryVelocity => "BBRepo.GotoLocation.Velocity" {
+			VariabilityType CONSTANT 
+			RepresentationType ABSOLUTE 
+			Description "Larry:MaxVelocity (mm/s)" 
+			RealVSPInit [ 1000.0 ]
+		} 
+	}
+	
+	INIT INITLarryStartPosition {
+		InitPort LarryStartPosition => "BBRepo.GotoLocation.CurrentPosition" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			Description "Larry:CurrentPosition" 
+			ComplexVSPInit {   
+				[  
+					Element x RealInit [ -2500.0 ], 
+					Element y RealInit [ 1000.0 ]  
+				]
+			}
+		} 
+	}	
+	
+	INIT INITLarryMaxWeight {
+		InitPort LarryMaxWeight => "BBRepo.PickAndPlace.MaxWeight" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			Description "Larry:MaxWeight (kg)"
+			RealVSPInit [ 5.0 ]
+		}
+	}	
+}
