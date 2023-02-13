@@ -1,0 +1,181 @@
+DVG AllocOrderPicking outputName OrderPickingTime FinalOperation MIN { 
+	DMAGR DMAGR_1 {
+		DAGGR { 
+			OutputPort DAGGRVelocity => "BBRepo.GotoLocation.Velocity" { 
+				VariabilityType CONSTANT
+				RepresentationType ABSOLUTE
+				Description "Velocity" 
+			}
+		},
+		DAGGR {
+			OutputPort DAGGRStartPosition => "BBRepo.GotoLocation.CurrentPosition" {
+				VariabilityType CONSTANT
+				RepresentationType ABSOLUTE
+				Description "StartPosition"
+			}
+		}		
+	}
+	
+	APRO Goto1Time {
+		
+		OutputPort Goto1Time => "BBRepo.GotoLocation.Time" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+		}
+				
+		InputPort I1 => "DMAGR_1.DAGGRVelocity",
+		InputPort I2 => "DMAGR_1.DAGGRStartPosition",
+		InputPort I3 => "BBRepo.INITFetchStation.FetchStation"
+		
+		Description {
+			Core {
+				InternalInputPort I1 => I1,
+				InternalInputPort I2 => I2,
+				InternalInputPort I3 => I3
+				InternalOutputPort InternalGoto1Time => "BBRepo.GotoLocation.Time" {
+					VariabilityType CONSTANT
+					RepresentationType ABSOLUTE
+				}
+				O=f(I):
+					"double $OUT$ = 0.0;
+				 	 double tmp = Math.sqrt(Math.pow($I2[0]$-$I3[0]$,2)+Math.pow($I2[1]$-$I3[1]$,2));
+				 	 $OUT$ = tmp/$I1$;
+					"
+			}
+		}
+	}
+		
+	APRO Goto2Time {
+		
+		OutputPort Goto2Time => "BBRepo.GotoLocation.Time" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+		}
+				
+		InputPort I1 => "DMAGR_1.DAGGRVelocity",
+		InputPort I2 => "BBRepo.INITFetchStation.FetchStation",
+		InputPort I3 => "BBRepo.INITPickingPlace.PickingPlace"
+		
+		Description {
+			Core {
+				InternalInputPort I1 => I1,
+				InternalInputPort I2 => I2,
+				InternalInputPort I3 => I3
+				InternalOutputPort InternalGoto2Time => "BBRepo.GotoLocation.Time" {
+					VariabilityType CONSTANT
+					RepresentationType ABSOLUTE
+				}
+				O=f(I):
+					"double $OUT$ = 0.0;
+				 	 double tmp = Math.sqrt(Math.pow($I2[0]$-$I3[0]$,2)+Math.pow($I2[1]$-$I3[1]$,2));
+				 	 $OUT$ = tmp/$I1$;
+					"
+			}
+		}
+	}	
+
+	APRO Goto3Time {
+		
+		OutputPort Goto3Time => "BBRepo.GotoLocation.Time" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+		}
+				
+		InputPort I1 => "DMAGR_1.DAGGRVelocity",
+		InputPort I2 => "BBRepo.INITPickingPlace.PickingPlace",
+		InputPort I3 => "BBRepo.INITDeliverStation.DeliverStation"
+		
+		Description {
+			Core {
+				InternalInputPort I1 => I1,
+				InternalInputPort I2 => I2,
+				InternalInputPort I3 => I3
+				InternalOutputPort InternalGoto2Time => "BBRepo.GotoLocation.Time" {
+					VariabilityType CONSTANT
+					RepresentationType ABSOLUTE
+				}
+				O=f(I):
+					"double $OUT$ = 0.0;
+				 	 double tmp = Math.sqrt(Math.pow($I2[0]$-$I3[0]$,2)+Math.pow($I2[1]$-$I3[1]$,2));
+				 	 $OUT$ = tmp/$I1$;
+					"
+			}
+		}
+	}
+	
+	SAPRO SAPROCollectBoxTime {
+		
+		OutputPort CollectBoxTime => "BBRepo.CollectBox.Time" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+		}
+		
+		InputPort I1 => "Goto1Time.Goto1Time",
+		InputPort I2 => "BBRepo.INITDockToStationTime.DockToStationTime",
+		InputPort I3 => "BBRepo.INITLoadFromStationTime.LoadFromStationTime",
+		InputPort I4 => "BBRepo.INITUndockFromStationTime.UndockFromStationTime"
+		
+		O=f(I): "double $OUT$ = $I1$+$I2$+$I3$+$I4$;"
+	}
+	
+	INIT INITDetectObjectsTime {
+		InitPort DetectObjectsTime => "AllocOrderPicking.Seq_OrderPicking.C3.DetectObjects.Time" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			RealVSPInit [ 11.0 ]
+		} 
+	}
+	
+	INIT INITPickAndPlaceTime {
+		InitPort PickAndPlaceTime => "AllocOrderPicking.Seq_OrderPicking.C4.PickAndPlace.Time" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			RealVSPInit [ 16.0 ]
+		} 
+	}
+	
+	INIT INITNumberObjects {
+		InitPort NumberObjects => "AllocOrderPicking.AllocOrderPicking.M1.NumberObjects" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			IntegerVSPInit [ 1 ]
+		} 
+	}	
+	
+	SAPRO SAPROPickAndPlaceTime {
+		
+		OutputPort OverallPickAndPlaceTime => "AllocOrderPicking.Seq_OrderPicking.C4.PickAndPlace.Time" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+		}
+		
+		InputPort I1 => "INITPickAndPlaceTime.PickAndPlaceTime",
+		InputPort I2 => "INITNumberObjects.NumberObjects"
+		
+		O=f(I): "double $OUT$ = $I1$*$I2$;"
+	}	
+	
+	SAPRO SAPROOrderPickingTime {
+		
+		OutputPort OrderPickingTime => "AllocOrderPicking.AllocOrderPicking.Time" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+		}
+		
+		InputPort I1 => "SAPROCollectBoxTime.CollectBoxTime",
+		InputPort I2 => "Goto2Time.Goto2Time",
+		InputPort I3 => "INITDetectObjectsTime.DetectObjectsTime",
+		InputPort I4 => "SAPROPickAndPlaceTime.OverallPickAndPlaceTime",
+		InputPort I5 => "Goto3Time.Goto3Time"
+		
+		O=f(I): "double $OUT$ = $I1$+$I2$+$I3$+$I4$+$I5$;"
+	}	
+}		
+	 
+ 
+ 
+  
+  
+  
+  
+  

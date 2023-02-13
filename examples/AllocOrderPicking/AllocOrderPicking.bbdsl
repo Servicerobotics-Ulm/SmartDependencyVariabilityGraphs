@@ -1,0 +1,22 @@
+BuildingBlockDescription AllocOrderPicking dvg AllocOrderPicking {          
+	ALLOCATABLE BuildingBlock AllocOrderPicking {      
+		Inputs {  
+			Mandatory M1 NumberObjects 
+		}
+		allocationCandidates(Robotino, Larry, Macy, Robotino_2) 
+		VariabilityEntitySet {  
+			PropertySet { 
+				Time is UdoTime 
+			}
+		} 
+		Decomposition(Seq_OrderPicking)
+	}
+	
+	Sequential Seq_OrderPicking {
+		Container C1 => "BBRepo.CollectBox",
+		Container C2 => "BBRepo.GotoLocation",
+		Container C3 { BuildingBlock DetectObjects { VariabilityEntitySet { PropertySet { Time is UdoTime } } } },
+		Container C4 { BuildingBlock PickAndPlace { VariabilityEntitySet { PropertySet { Time is UdoTime } } } },
+		Container C5 => "BBRepo.GotoLocation"
+	}	
+}
