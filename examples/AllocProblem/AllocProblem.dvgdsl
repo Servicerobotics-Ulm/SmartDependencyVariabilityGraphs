@@ -1,0 +1,12 @@
+DVG AllocProblem outputName AllocProblemTime FinalOperation MIN {
+	SAPRO SAPROAllocProblemTime { 
+		OutputPort AllocProblemTime => "AllocProblem.AllocProblem.Time" {
+			VariabilityType ACTIVE 
+			RepresentationType ABSOLUTE
+			Description Time 
+		}
+		ExtInputPort I1 => "AllocTransportation.SAPROTransportationTime.TransportationTime" { RepresentationType ABSOLUTE DataObject UdoTime },
+		ExtInputPort I2 => "OrderPickingEQUF.OrderPickingVsSharedOrderPicking.OrderPickingEQUFTime" { RepresentationType ABSOLUTE DataObject UdoTime }
+		O=f(I): "double $OUT$ = Math.max($I1$, $I2$);"
+	}
+}

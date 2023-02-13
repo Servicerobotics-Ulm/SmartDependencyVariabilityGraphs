@@ -1,0 +1,13 @@
+BuildingBlockDescription AllocProblem dvg AllocProblem {                     
+	ALLOCATABLE BuildingBlock AllocProblem {    
+		allocationCandidates (Robotino, Larry, Macy, Robotino_2)
+		VariabilityEntitySet { PropertySet { Time is UdoTime } }    
+		Decomposition(ParallelAllocProblem)   
+	}
+	
+	Parallel ParallelAllocProblem { 
+		policy WAITFORALL
+		Container C1 => "AllocTransportation.AllocTransportation",
+		Container C2 => "AllocOrderPickingEQUF.AllocOrderPickingEQUF"
+	}
+}
