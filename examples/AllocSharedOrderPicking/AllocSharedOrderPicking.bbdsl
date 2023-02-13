@@ -1,0 +1,65 @@
+BuildingBlockDescription AllocSharedOrderPicking dvg AllocSharedOrderPicking {                            
+	ALLOCATABLE BuildingBlock AllocSharedOrderPicking {              
+		Inputs { 
+			Mandatory M1 NumberObjects is UdoSimpleInteger         
+		}
+		allocationCandidates (Robotino, Larry, Macy, Robotino_2)   
+		VariabilityEntitySet {   
+			PropertySet {    
+				Time is UdoTime    
+			}
+		}
+		sharedresources 2
+		Decomposition(Pa_SharedOrderPicking, Seq_Collaboration) 
+	} 
+	Parallel Pa_SharedOrderPicking {        
+		policy WAITFORALL
+		Container C1 [0] => "BBRepo.CollectBox",    
+		Container C2 [1] { 
+			COMPOSED BuildingBlock ApproachAndDetect {
+				VariabilityEntitySet { 
+					PropertySet { 
+						Time is UdoTime  
+					}
+				}
+				Decomposition(Seq_ApproachAndDetect)
+			}
+		} 
+	}
+
+	Sequential Seq_ApproachAndDetect {
+		Container C1 => "BBRepo.GotoLocation", 
+		Container C2 { 
+			BuildingBlock DetectObjects { 
+				VariabilityEntitySet { 
+					PropertySet { 
+						Time is UdoTime
+					}
+				}
+			}
+		}
+	}
+	
+	Sequential Seq_Collaboration {
+		Container C1 [0] => "BBRepo.GotoLocation",
+		Container C2 [0] { 
+			IDENTIFYING BuildingBlock DockToRobot { 
+				VariabilityEntitySet { 
+					PropertySet { 
+						Time is UdoTime
+					}
+				} 
+			}
+		}, 
+		Container C3 [1] { 
+			IDENTIFYING BuildingBlock PickAndPlace { 
+				VariabilityEntitySet { 
+					PropertySet { 
+						Time is UdoTime
+					}
+				} 
+			}
+		},
+		Container C4 [0] => "BBRepo.GotoLocation"
+	}
+}
