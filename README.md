@@ -5,11 +5,11 @@ The model-driven implementation in Eclipse allows users to describe via DSLs:
 1) Building blocks at different levels of abstraction, their variability entities and the decomposition relationships between building blocks.
 2) Dependency Variability Graphs: The graph-based dependency relationships between variability entities (including their values by applying function composition).
 
-Furthermore, it offers an implementation of the LISP-based DSL [SmartTCL](https://wiki.servicerobotik-ulm.de/about-smartsoft:robotic-behavior:smarttcl) with the Eclipse Modeling Tools. This allows to program concrete behavior for simulated or real robots in combination with the [SmartSoft Approach](https://wiki.servicerobotik-ulm.de/about-smartsoft:approach). 
-
 ![SmartDVG-2](https://user-images.githubusercontent.com/95618174/184313669-f6b2ac7e-745f-457a-bbca-5f195e153078.png)
 
-A code generator is then able to generate a solver of such models that determines requirements-related and environmental-contextual variant bindings of building blocks. Requirements specified by the endusers of these building blocks can be constraints for specific properties of the model (a property is a special subtype of a variability entity) and/or preference specifications for modeled conflict of objectives between properties.  
+A code generator is then able to generate a solver of such models that determines requirements-related and environmental-contextual variant bindings of building blocks. Requirements specified by the endusers of these building blocks can be constraints for specific properties of the model (a property is a special subtype of a variability entity) and/or preference specifications for modeled conflict of objectives between properties.
+
+Furthermore, it offers an implementation of the LISP-based DSL [SmartTCL](https://wiki.servicerobotik-ulm.de/about-smartsoft:robotic-behavior:smarttcl) with the Eclipse Modeling Tools. This allows to program concrete behavior for simulated or real robots in combination with the [SmartSoft Approach](https://wiki.servicerobotik-ulm.de/about-smartsoft:approach). 
 
 # Installation
 To try it out, you need to do the following:
