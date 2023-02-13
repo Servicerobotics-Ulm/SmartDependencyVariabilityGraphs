@@ -1,0 +1,98 @@
+BuildingBlockDescription BBRepo {                         
+		
+	BuildingBlock GotoLocation { 
+		
+		Inputs { 
+			Mandatory M1 GoalPosition is UdoLocation2D  
+		}
+		
+		VariabilityEntitySet { 
+			
+			ParameterSet {
+				Velocity is UdoTranslationalVelocity 
+			} 
+			
+			PropertySet {
+				Time is UdoTime	
+			}
+			
+			ContextSet {
+				CurrentPosition is UdoLocation2D
+			}
+		}
+	}
+	
+	BuildingBlock PickAndPlace {
+		VariabilityEntitySet { 
+			PropertySet { 
+				Time is UdoTime,
+				MaxWeight is UdoMaxWeight
+			}
+		}
+	}
+	
+	BuildingBlock DockToStation {
+		VariabilityEntitySet { 
+			PropertySet { 
+				Time is UdoTime
+			}
+		}	
+	}
+	
+	BuildingBlock LoadFromStation {
+		VariabilityEntitySet { 
+			PropertySet { 
+				Time is UdoTime
+			}
+		}		
+	}
+	
+	BuildingBlock UnloadToStation {
+		VariabilityEntitySet { 
+			PropertySet { 
+				Time is UdoTime
+			}
+		}		
+	}
+	
+	BuildingBlock UndockFromStation {
+		VariabilityEntitySet { 
+			PropertySet { 
+				Time is UdoTime
+			}
+		}		
+	}
+	
+	SUPER_IDENTIFYING BuildingBlock CollectBox {
+		VariabilityEntitySet { 
+			PropertySet { 
+				Time is UdoTime
+			}
+		}
+		Decomposition(Seq_CollectBox)		
+	}
+	
+	SUPER_IDENTIFYING BuildingBlock DeliverBox {
+	    VariabilityEntitySet {
+	        PropertySet { 
+	            Time is UdoTime
+	        }
+	    }
+	    Decomposition(Seq_DeliverBox)      	
+	}    
+		
+	Sequential Seq_CollectBox {
+		Container C1 => GotoLocation,
+		Container C2 => DockToStation, 
+		Container C3 => LoadFromStation, 
+		Container C4 => UndockFromStation
+	}
+	
+	Sequential Seq_DeliverBox { 
+        Container C1 => GotoLocation,
+        Container C2 => DockToStation,
+        Container C3 => UnloadToStation,
+        Container C4 => UndockFromStation
+    }	
+	 
+}

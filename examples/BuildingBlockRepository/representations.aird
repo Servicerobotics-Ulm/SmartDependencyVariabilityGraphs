@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" uid="_-1VTcEYpEe2XB8HQRc4skQ" version="15.0.0.202209061200">
+  <semanticResources>BuildingBlockRepository.bbdsl</semanticResources>
+  <semanticResources>platform:/resource/DataObjectRepository/DataObjectRepository.dordsl</semanticResources>
+  <semanticResources>BuildingBlockRepository.dvgdsl</semanticResources>
+</viewpoint:DAnalysis>

@@ -1,0 +1,81 @@
+DVG BBRepo {
+	
+	INIT INITDockToStationTime {
+		InitPort DockToStationTime => "BBRepo.DockToStation.Time" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			RealVSPInit [ 11.0 ]
+		} 
+	}
+	
+	INIT INITUndockFromStationTime {
+		InitPort UndockFromStationTime => "BBRepo.UndockFromStation.Time" { 
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			RealVSPInit [ 3.0 ]
+		}
+	}
+	
+	INIT INITLoadFromStationTime {
+		InitPort LoadFromStationTime => "BBRepo.LoadFromStation.Time" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			RealVSPInit [ 6.0 ]
+		} 
+	}	
+	
+	INIT INITUnloadToStationTime {
+		InitPort UnloadToStationTime => "BBRepo.UnloadToStation.Time" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			RealVSPInit [ 6.0 ]
+		}
+	}
+	
+	INIT INITFetchStation {     
+		InitPort FetchStation => "BBRepo.GotoLocation.M1.GoalPosition" { 
+			VariabilityType CONSTANT 
+			RepresentationType ABSOLUTE
+			Interface INTERNAL   
+			ComplexVSPInit {   
+				[  
+					//Element x RealInit [ -12300.0 ],
+					//Element y RealInit [ 12500.0 ] 
+					Element x RealInit [ 1180.0 ], 
+					Element y RealInit [ 3560.0 ]
+					  
+				]
+			}
+		}
+	}
+
+	INIT INITPickingPlace {
+		InitPort PickingPlace => "BBRepo.GotoLocation.M1.GoalPosition" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			Interface INTERNAL
+			ComplexVSPInit { 
+				[  
+					Element x RealInit [ -5420.0 ],
+					Element y RealInit [ 2180.0 ]  
+				]
+			}
+		}
+	}		
+
+	INIT INITDeliverStation {
+		InitPort DeliverStation => "BBRepo.GotoLocation.M1.GoalPosition" {
+			VariabilityType CONSTANT
+			RepresentationType ABSOLUTE
+			Interface INTERNAL
+			ComplexVSPInit { 
+				[  
+					//Element x RealInit [ 1180.0 ],
+					//Element y RealInit [ 3560.0 ]  
+					Element x RealInit [ 2670.0],
+					Element y RealInit [ 5900.0 ]  
+				]
+			}
+		}
+	}			
+}
