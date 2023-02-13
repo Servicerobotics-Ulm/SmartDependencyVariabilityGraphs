@@ -1,0 +1,103 @@
+DataObjectRepo {                                                                       
+
+	UnboundedDataObjectDef UdoSimpleString {         
+		ElementDef ESimpleString is String
+	}  
+	
+	UnboundedDataObjectDef UdoSimpleReal {  
+		ElementDef ESimpleReal is Real  
+	}  
+	
+	UnboundedDataObjectDef UdoSimpleBool { 
+		ElementDef ESimpleBool is Bool
+	}
+	
+	UnboundedDataObjectDef UdoSimpleInteger {
+		ElementDef ESimpleInteger is Integer
+	}
+		
+	UnboundedDataObjectDef UdoTranslationalVelocity {
+		ElementDef TranslationalVelocity is Real
+	}
+
+	UnboundedDataObjectDef UdoCPU {
+		ElementDef CPU is String
+	}				
+		
+	UnboundedDataObjectDef UdoTime {
+		ElementDef Time is Real 
+		SIUnit "time" 				
+	}
+
+	UnboundedDataObjectDef UdoEnergy {
+		ElementDef Energy is Real
+	}
+
+	UnboundedDataObjectDef UdoExecutionTime {
+		ElementDef ExecutionTime is Real
+	}
+		
+	UnboundedDataObjectDef UdoVisibility { 
+		ElementDef Visiblity is Real
+	}
+
+	UnboundedDataObjectDef UdoTraVel {
+		ElementDef TraVel is Real
+	}
+
+	UnboundedDataObjectDef UdoRotVel {
+		ElementDef RotVel is Real
+	}	
+		
+	UnboundedDataObjectDef UdoTraAcc {
+		ElementDef TraAcc is Real
+	}
+
+	UnboundedDataObjectDef UdoRotAcc {
+		ElementDef RotAcc is Real
+	}
+		
+	UnboundedDataObjectDef UdoAccuracy {
+		ElementDef Accuracy is Real
+	}
+		
+	UnboundedDataObjectDef UdoLaserData { 
+		ElementDef distance is Real ["*"],
+		ElementDef intensity is Real ["*"],
+		ElementDef size is Integer
+	}
+
+	UnboundedDataObjectDef UdoLocation2D {
+		ElementDef x is Real,
+		ElementDef y is Real
+	}
+		
+	UnboundedDataObjectDef UdoSafetyDistance {
+		ElementDef SafetyDistance is Real
+	}
+	
+	UnboundedDataObjectDef UdoModel {
+		ElementDef Model is String
+	}
+	
+	UnboundedDataObjectDef UdoDimension {
+		ElementDef Dimension is String
+	}
+		
+	UnboundedDataObjectDef UdoHFOV {	
+		ElementDef HFOV is Real	
+	}
+	
+	UnboundedDataObjectDef UdoResolution {
+		ElementDef Resolution is Real 
+	}
+		
+	UnboundedDataObjectDef UdoMaxWeight { 
+		ElementDef Weight is Real 
+	}
+	
+	BoundedDataObjectDef BdoKinematicDOFs {
+		ElementDef KinematicDOFs is String
+		StringVSPInit ["2D", "3D"]
+	}	
+}
