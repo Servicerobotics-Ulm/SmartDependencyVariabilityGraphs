@@ -1,0 +1,14 @@
+BuildingBlockDescription Macy dvg Macy {  
+	
+	BuildingBlock CollectBox { }
+	
+	BuildingBlock DockToRobot { }  
+	 
+	BuildingBlock DeliverBox { } 
+	
+	BuildingBlock DetectObjects { }
+	
+	BuildingBlock PickAndPlace { }
+	
+	Container GotoLocation => "BBRepo.GotoLocation"
+}
