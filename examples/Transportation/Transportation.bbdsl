@@ -1,0 +1,33 @@
+BuildingBlockDescription Transportation dvg Transportation {                                                              
+	   
+	BuildingBlock Transportation {      
+		VariabilityEntitySet {
+			PropertySet {  
+				Time is UdoTime 
+			}
+		}
+		Decomposition (Seq_CollectBox, Seq_DeliverBox) 
+	} 
+	
+	Sequential Seq_CollectBox {
+		Container C1 => "BBRepo.GotoLocation",
+		Container C2 { 
+			BuildingBlock DockToStation {}
+		},
+		Container C3 {
+			BuildingBlock LoadFromStation {}
+		},
+		Container C4 {
+			BuildingBlock UndockFromStation {}
+		}		
+	}
+	
+	Sequential Seq_DeliverBox {
+		Container C1 => "BBRepo.GotoLocation",
+		Container C2 => "Seq_CollectBox.C2.DockToStation",
+		Container C3 {
+			BuildingBlock UnloadToStation {}
+		},
+		Container C4 => "Seq_CollectBox.C4.UndockFromStation"
+	}	
+}
